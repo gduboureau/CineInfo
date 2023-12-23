@@ -34,6 +34,14 @@ services:
       POSTGRES_PASSWORD: cineinfo123/
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  redis:
+    image: redis:latest
+    volumes:
+      - redis-data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+
 
 volumes:
   postgres_data:
+  redis-data:
