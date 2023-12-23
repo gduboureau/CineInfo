@@ -1,22 +1,16 @@
 import express from 'express';
 import fetch from 'node-fetch';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import routes from './routes.js';
 import { connectToRedis, getFromCache, saveToCache, removeFromCache, closeConnection } from './redis/redis.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
+app.use(bodyParser.json());
+app.use(cors());
 
 app.get('/', async (req, res) => {
-  // Exemple connection postgres
-
-  /*try {
-    const result = await db.query('SELECT * FROM public."Users"');
-    res.send(result.rows); 
-  } catch (error) {
-    console.error('Erreur lors de la requête:', error);
-    res.status(500).send('Erreur lors de la requête'); 
-  }*/
-
-
   // Exemple connection redis 
 
   
@@ -47,6 +41,8 @@ app.get('/', async (req, res) => {
     closeConnection();
   }*/
 });
+
+app.use('/', routes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
