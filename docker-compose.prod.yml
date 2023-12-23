@@ -26,3 +26,15 @@ services:
       POSTGRES_DB: cineinfo_projet
       POSTGRES_USER: cineinfo
       POSTGRES_PASSWORD: cineinfo123/
+  reverseproxy:
+    restart: always
+    build:
+      context: reverse-proxy/
+      dockerfile: ./Dockerfile.prod
+    depends_on:
+      - backend
+      - frontend
+    volumes:
+      - ./reverse-proxy/log:/var/log/nginx
+    ports:
+      - 8090:80

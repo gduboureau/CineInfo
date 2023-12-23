@@ -1,0 +1,18 @@
+.logged-nav {
+    background: #284360;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    min-width: 430px;
+}
+
+.logged-nav .logout {
+    font-size: 18px;
+    transition: color .4s ease-in-out, box-shadow .4s ease-in-out;
+    padding: 8px;
+    border-radius: 10px;
+    color: #FEFEFE;
+    text-decoration: none;
+}

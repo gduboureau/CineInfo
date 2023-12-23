@@ -1,0 +1,70 @@
+import React, { useState } from 'react';
+import ShowPassword from "../../pages/connection/assets/show.png";
+import HidePassword from "../../pages/connection/assets/hide.png"
+
+import '../../pages/connection/assets/login.css';
+import '../../pages/connection/assets/signup.css';
+
+const AuthForm = ({ type, onSubmit }) => {
+    const [mail, setMail] = useState('');
+    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
+    const [firstname, setFirstname] = useState('');
+    const [lastname, setLastname] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [eyeIcon, setEyeIcon] = useState(HidePassword);
+
+    const togglePassword = () => {
+        setShowPassword(!showPassword);
+        setEyeIcon(showPassword ? HidePassword : ShowPassword);
+    };
+
+    const handleSubmit = async () => {
+        try {
+            await onSubmit({ mail, password, username, firstname, lastname });
+        } catch (error) {
+            console.error('Authentication Error:', error.message);
+        }
+    };
+
+    return (
+        <div className={`${type}-container`}>
+            <p>{type === 'login' ? 'Connectez-vous à votre compte' : 'Créez votre compte'}</p>
+            <form className={`${type}-form`}>
+                <label>Adresse mail</label>
+                <input type="text" value={mail} onChange={(e) => setMail(e.target.value)} />
+
+                <label>Mot de passe</label>
+                <span>
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        name="password"
+                        placeholder="Entrez votre mot de passe"
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <img src={eyeIcon} alt="eye-icon" onClick={togglePassword} />
+                </span>
+
+                {type === 'signup' && (
+                    <>
+                        <label>Nom d'utilisateur</label>
+                        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+
+                        <label>Prénom</label>
+                        <input type="text" value={firstname} onChange={(e) => setFirstname(e.target.value)} />
+
+                        <label>Nom</label>
+                        <input type="text" value={lastname} onChange={(e) => setLastname(e.target.value)} />
+                    </>
+                )}
+
+                <button type="button" onClick={handleSubmit}>
+                    {type === 'login' ? 'Se connecter' : 'S\'inscrire'}
+                </button>
+            </form>
+        </div>
+    );
+};
+
+export default AuthForm;
