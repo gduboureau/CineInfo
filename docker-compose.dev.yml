@@ -9,6 +9,15 @@ services:
       - "8080:8080"
     volumes:
       - ./backend:/app
+    depends_on:
+      - database
+    environment:
+      NODE_ENV: development
+      DB_USER: cineinfo
+      DATABASE_HOST: postgresql-cineinfo.alwaysdata.net
+      DATABASE_NAME: cineinfo_projet
+      DB_PASSWORD: cineinfo123/
+      DATABASE_PORT: 5432
   frontend:
     build:
       context: ./frontend
@@ -17,3 +26,14 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend:/app
+  database:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: cineinfo_projet
+      POSTGRES_USER: cineinfo
+      POSTGRES_PASSWORD: cineinfo123/
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
