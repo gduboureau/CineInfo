@@ -1,5 +1,5 @@
 # backend/Dockerfile
-FROM node:12
+FROM node:latest
 WORKDIR /app
 
 COPY package*.json ./
