@@ -1,5 +1,5 @@
-import Login from "../connexion/Login"
-import Register from "../connexion/Register"
+import Login from "../connection/Login"
+import Register from "../connection/Register"
 import { Routes, Route } from 'react-router-dom';
 
 
