@@ -8,7 +8,7 @@ const getPopularMoviesWithCache = async () => {
         await connectToRedis();
         const cachedData = await getFromCache(cacheKey);
         if (cachedData) {
-            return cachedData;
+            return JSON.parse(cachedData);
         }
         const popularMovies = await getPopularMovies();
         if (popularMovies) {
@@ -23,7 +23,6 @@ const getPopularMoviesWithCache = async () => {
     } finally {
         closeConnection();
     }
-    
 };
 
 export { getPopularMoviesWithCache };

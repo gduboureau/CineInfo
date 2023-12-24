@@ -16,13 +16,7 @@ async function connectToRedis() {
 
 async function getFromCache(key) {
     console.log(`Getting ${key} from Redis`);
-    return await client.get(key, (err, data) => {
-        if (err) {
-            console.error(err);
-        } else {
-            return JSON.parse(data);
-        }
-    });
+    return await client.get(key);
 }
 
 async function saveToCache(key, data) {

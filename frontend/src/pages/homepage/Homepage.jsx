@@ -17,19 +17,15 @@ const Homepage = () => {
         };
 
         fetchData();
-    }, []); // Empty dependency array ensures the effect runs only once
-
-    // console.log(data);
-    // const first15Movies = data.slice(0, 15);
-    // console.log(first15Movies);
+    }, []);
 
     return (
         <div>
             <div className="home-carroussel">
                 <h2>Top 15 Popular Movies</h2>
                 <ul>
-                    {data.map(movie => (
-                        <li key={movie.id}>{movie.title}</li>
+                    {data.slice(0, 15).map((movie, index) => (
+                        <li key={index}>{movie.original_title}</li>
                     ))}
                 </ul>
             </div>
