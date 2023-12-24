@@ -1,7 +1,7 @@
 // redis.js
 import { createClient } from 'redis';
 
-const client = createClient({ url: 'redis://redis:6379' });
+const client = createClient({ url: 'redis://localhost:6379' });
 
 async function connectToRedis() {
     if (client.isOpen) {
@@ -27,7 +27,7 @@ async function getFromCache(key) {
 
 async function saveToCache(key, data) {
     console.log(`Saving ${key} to Redis`);
-    await client.set(key, JSON.stringify(data), (err, reply) => {
+    await client.set(key, JSON.stringify(data), (err, reply) => { 
         if (err) {
             console.error(err);
         } else {

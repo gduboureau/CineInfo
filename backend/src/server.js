@@ -3,17 +3,25 @@ import fetch from 'node-fetch';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import routes from './routes.js';
-import { connectToRedis, getFromCache, saveToCache, removeFromCache, closeConnection } from './redis/redis.js';
+import { getPopularMoviesWithCache } from './redisRequest.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/', async (req, res) => {
+app.get('/popular-movies', async (req, res) => {
+  try {
+    const popularMovies = await getPopularMoviesWithCache();
+    res.json(popularMovies);
+} catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+}
+});
+
   // Exemple connection redis 
 
-  
+
   /*try {
     await connectToRedis();
 
@@ -40,7 +48,6 @@ app.get('/', async (req, res) => {
   } finally {
     closeConnection();
   }*/
-});
 
 app.use('/', routes);
 
