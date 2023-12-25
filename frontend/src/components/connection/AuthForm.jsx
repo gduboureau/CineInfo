@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ShowPassword from "../../pages/connection/assets/show.png";
 import HidePassword from "../../pages/connection/assets/hide.png"
+import { Link } from 'react-router-dom';
 
 import '../../pages/connection/assets/login.css';
 import '../../pages/connection/assets/signup.css';
@@ -31,6 +32,18 @@ const AuthForm = ({ type, onSubmit }) => {
         <div className={`${type}-container`}>
             <p>{type === 'login' ? 'Connectez-vous à votre compte' : 'Créez votre compte'}</p>
             <form className={`${type}-form`}>
+                {type === 'signup' && (
+                    <>
+                        <label>Nom d'utilisateur</label>
+                        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+
+                        <label>Prénom</label>
+                        <input type="text" value={firstname} onChange={(e) => setFirstname(e.target.value)} />
+
+                        <label>Nom</label>
+                        <input type="text" value={lastname} onChange={(e) => setLastname(e.target.value)} />
+                    </>
+                )}
                 <label>Adresse mail</label>
                 <input type="text" value={mail} onChange={(e) => setMail(e.target.value)} />
 
@@ -46,22 +59,19 @@ const AuthForm = ({ type, onSubmit }) => {
                     <img src={eyeIcon} alt="eye-icon" onClick={togglePassword} />
                 </span>
 
-                {type === 'signup' && (
-                    <>
-                        <label>Nom d'utilisateur</label>
-                        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-
-                        <label>Prénom</label>
-                        <input type="text" value={firstname} onChange={(e) => setFirstname(e.target.value)} />
-
-                        <label>Nom</label>
-                        <input type="text" value={lastname} onChange={(e) => setLastname(e.target.value)} />
-                    </>
-                )}
-
                 <button type="button" onClick={handleSubmit}>
                     {type === 'login' ? 'Se connecter' : 'S\'inscrire'}
                 </button>
+                {type === 'login' && (
+                    <div className='link'>
+                        <p>Vous n'avez pas de compte ? <Link to="/signup">Inscrivez-vous </Link></p>
+                    </div>
+                )}
+                {type === 'signup' && (
+                    <div className='link'>
+                        <p>Vous avez déjà un compte ? <Link to="/login">Connectez-vous </Link></p>
+                    </div>
+                )}
             </form>
         </div>
     );

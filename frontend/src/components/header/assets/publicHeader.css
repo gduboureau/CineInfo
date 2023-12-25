@@ -1,18 +1,101 @@
-.public-nav {
-    background: #284360;
-    padding: 10px 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    min-width: 430px;
+header {
+    background-color: #0c0c0c;
 }
 
-.public-nav .login {
-    font-size: 18px;
-    transition: color .4s ease-in-out, box-shadow .4s ease-in-out;
+.public-nav {
+    display: flex;
+    align-items: center;
+}
+
+.public-nav .homelink img {
+    width: 120px;
+    height: 100px;
+}
+
+.public-nav .categories {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    
+}
+
+
+.public-nav .categories .category-with-submenu {
+    position: relative;
+    margin: 0 15px;
+    margin-right: 50px;
+}
+
+.public-nav .categories .category-with-submenu a {
+    color: #fff;
+    text-decoration: none;
+    transition: border-bottom .4s ease-in-out;
+    font-size: 16px;
     padding: 8px;
-    border-radius: 10px;
+}
+
+.public-nav .categories .category-with-submenu .submenu {
+    display: none;
+    position: absolute;
+    width: 190px;
+    top: 100%; 
+    left: -40px;
+    background-color: #0c0c0c;
+    padding: 10px 10px;
+    z-index: 1;
+    text-align: left;
+}
+
+.public-nav .categories .category-with-submenu:hover .submenu {
+    display: block;
+}
+
+.public-nav .categories .category-with-submenu .submenu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.public-nav .categories .category-with-submenu .submenu li {
+    padding: 10px;
+    border-bottom: none;
+}
+
+.public-nav .categories .category-with-submenu .submenu li  a{
+    color: #fff;
+    text-decoration: none;
+}
+
+.public-nav .right-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.public-nav .right-header .login {
+    padding: 8px;
     color: #FEFEFE;
     text-decoration: none;
 }
+
+.public-nav .right-header .search-input {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 30px;
+    padding: 8px 16px;
+    margin-right: 50px;
+    background-color: #fff;
+    width: 200px;
+}
+
+.public-nav .right-header .search-input input {
+    border: none;
+    outline: none;
+}
+

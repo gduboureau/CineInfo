@@ -8,7 +8,7 @@ const Login = () => {
   const handleLogin = async ({ mail, password }) => {
     if (!mail || !password) return setError('Veuillez remplir tous les champs');
     try {
-      const response = await fetch('http://localhost:8080/login', {
+      const response = await fetch('http://localhost:8080/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ const Login = () => {
       } else {
         accountService.saveToken(data.token);
       }
-    }  catch (error) {
+    } catch (error) {
       console.error('Erreur de connexion :', error.message);
     }
   };
@@ -37,6 +37,7 @@ const Login = () => {
       <AuthForm type="login" onSubmit={handleLogin} />
       {error && <div style={{ color: 'red' }}>{error}</div>}
     </div>
+
   );
 };
 

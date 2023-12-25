@@ -8,7 +8,7 @@ const Signup = () => {
     const handleRegister = async ({ mail, password, username, firstname, lastname }) => {
         if (!mail || !password || !username || !firstname || !lastname) return setError('Veuillez remplir tous les champs');
         try {
-            const response = await fetch('http://localhost:8080/register', {
+            const response = await fetch('http://localhost:8080/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

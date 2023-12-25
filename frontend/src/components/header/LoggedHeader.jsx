@@ -9,7 +9,6 @@ const LoggedHeader = () => {
         accountService.logout();
     }
 
-
     return (
         <header>
             <nav className="logged-nav">

@@ -16,35 +16,33 @@ async function connectToRedis() {
 
 async function getFromCache(key) {
     console.log(`Getting ${key} from Redis`);
-    return await client.get(key, (err, data) => {
-        if (err) {
-            console.error(err);
-        } else {
-            return JSON.parse(data);
-        }
-    });
+    try {
+        const data = await client.get(key);
+        return JSON.parse(data);
+    }
+    catch (error) {
+        console.error(error);
+    }
 }
 
 async function saveToCache(key, data) {
     console.log(`Saving ${key} to Redis`);
-    await client.set(key, JSON.stringify(data), (err, reply) => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log(reply);
-        }
-    });
+    try {
+        await client.set(key, JSON.stringify(data));
+    }
+    catch (error) {
+        console.error(error);
+    }
 }
 
 async function removeFromCache(key) {
     console.log(`Removing ${key} from Redis`);
-    await client.del(key, (err, reply) => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log(reply);
-        }
-    });
+    try {
+        await client.del(key);
+    }
+    catch (error) {
+        console.error(error);
+    }
 }
 
 function closeConnection() {
