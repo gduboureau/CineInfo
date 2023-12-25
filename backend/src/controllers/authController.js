@@ -13,7 +13,7 @@ export const login = async (req, res) => {
             return res.json({ error: 'Cette adresse mail ne correspond à aucun compte' });
         }
 
-        if(password !== result.rows[0].password){
+        if (password !== result.rows[0].password) {
             return res.json({ error: 'Mot de passe incorrect' });
         }
 
@@ -41,7 +41,7 @@ export const register = async (req, res) => {
 
         await db.query('INSERT INTO public."users" (mail, password, username, firstname, lastname) VALUES ($1, $2, $3, $4, $5)', [mail, password, username, firstname, lastname]);
 
-        const result =  await db.query('SELECT * FROM public."users" WHERE username = $1', [username]);
+        const result = await db.query('SELECT * FROM public."users" WHERE username = $1', [username]);
         const token = jwt.sign({ userId: result.rows[0].id }, secretKey, { expiresIn: '1h' });
         res.json({ token });
     } catch (error) {
