@@ -7,6 +7,7 @@ import '../../pages/connection/assets/login.css';
 import '../../pages/connection/assets/signup.css';
 
 const AuthForm = ({ type, onSubmit }) => {
+    
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
