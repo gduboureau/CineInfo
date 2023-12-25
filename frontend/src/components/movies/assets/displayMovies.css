@@ -11,9 +11,13 @@
     border-radius: 20px;
 }
 
-.movies-container .movie img{
+.movies-container .movie img {
     width: 100%;
     height: auto;
     cursor: pointer;
     border-radius: 20px 20px 0 0;
+}
+
+.movies-container .movie .title {
+    cursor: pointer;
 }
