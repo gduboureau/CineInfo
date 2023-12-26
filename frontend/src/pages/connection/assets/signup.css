@@ -38,14 +38,14 @@
     margin-bottom: 5px;
 }
 
-.signup-container .signup-form .fieldset input:not([type="password"]) {
+.signup-container .signup-form .fieldset input:not([id="password"]) {
     padding: 18px 20px;
     border-radius: 4px;
     margin-bottom: 20px;
     border: 1.5px solid #e7e7e9;
 }
 
-.signup-container .signup-form .fieldset input:not([type="password"]):focus {
+.signup-container .signup-form .fieldset input:not([id="password"]):focus {
     outline-color: #0c0c0c;
 }
 

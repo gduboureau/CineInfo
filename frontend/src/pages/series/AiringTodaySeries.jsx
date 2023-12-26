@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import DisplaySeries from "../../components/series/DisplaySeries";
+import "./assets/series.css";
 
 const AiringTodaySeries = () => {
     const [series, setSeries] = useState([]);
@@ -20,7 +21,7 @@ const AiringTodaySeries = () => {
 
     return (
         <div className="airing-today-series">
-            <h2>Séries diffusées aujourd'hui</h2>
+            <h2 className="serie-title">Séries diffusées aujourd'hui</h2>
             <DisplaySeries series={series} />
         </div>
     )

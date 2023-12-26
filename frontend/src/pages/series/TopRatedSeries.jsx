@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import DisplaySeries from "../../components/series/DisplaySeries";
+import "./assets/series.css";
 
 const TopRatedSeries = () => {
     const [series, setSeries] = useState([]);
@@ -20,7 +21,7 @@ const TopRatedSeries = () => {
 
     return (
         <div className="top-rated-series">
-            <h2>Séries les mieux notées</h2>
+            <h2 className="serie-title">Séries les mieux notées</h2>
             <DisplaySeries series={series} />
         </div>
     )

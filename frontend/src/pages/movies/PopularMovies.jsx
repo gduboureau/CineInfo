@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import DisplayMovies from "../../components/movies/DisplayMovies";
+import "./assets/movies.css";
 
 const PopularMovies = () => {
     const [movies, setMovies] = useState([]);
@@ -20,7 +21,7 @@ const PopularMovies = () => {
 
     return (
         <div className="popular-movies">
-            <h2>Films populaires</h2>
+            <h2 className="movie-title">Films populaires</h2>
             <DisplayMovies movies={movies} />
         </div>
     )

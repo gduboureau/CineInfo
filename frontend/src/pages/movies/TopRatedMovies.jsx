@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import DisplayMovies from "../../components/movies/DisplayMovies";
+import "./assets/movies.css";
 
 const TopRatedMovies = () => {
     const [movies, setMovies] = useState([]);
@@ -20,7 +21,7 @@ const TopRatedMovies = () => {
 
     return (
         <div className="top-rated-movies">
-            <h2>Films les mieus notés</h2>
+            <h2 className="movie-title">Films les mieux notés</h2>
             <DisplayMovies movies={movies} />
         </div>
     )
