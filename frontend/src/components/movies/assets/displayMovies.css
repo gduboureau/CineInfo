@@ -33,7 +33,7 @@
 .movies-container .movie .movie-details .title {
     cursor: pointer;
     flex: 1;
-    margin: 10px 10px 10px 10px;
+    margin: 10px 10px 0 10px;
     font-weight: bold;
 }
 
@@ -44,7 +44,7 @@
 .movies-container .movie .movie-details .date {
     position: relative;
     bottom: 0;
-    height: 15%;
+    height: 20%;
     margin: 10px 0 10px 10px;
     color: rgba(0,0,0,.6);
     font-size: 1em;

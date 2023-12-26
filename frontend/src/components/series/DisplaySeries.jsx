@@ -17,7 +17,7 @@ const DisplaySeries = ({ series }) => {
         <div className="series-container">
             {series.map((serie) => (
                 <div key={serie.id} className="serie">
-                    <img src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2/${serie.poster_path}`} alt={serie.name} onClick={() => handleClick(serie.id, serie.name)} />
+                    <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${serie.poster_path}`} alt={serie.name} onClick={() => handleClick(serie.id, serie.name)} />
                     <div className="serie-details">
                         <div className="serie-note">
                             <p>{Math.ceil(serie.vote_average * 10)}%</p>

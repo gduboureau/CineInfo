@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-import DisplaySeries from "../../components/series/DisplaySeries";
-import "./assets/series.css";
+import DisplaySeries from "../../components/series/DisplaySeries"
 
-const TopRatedSeries = () => {
+const AllSeries = () => {
     const [series, setSeries] = useState([]);
     const [page, setPage] = useState(1);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/series/top-rated?page=${page}`, {
+        fetch(`http://localhost:8080/series/discover?page=${page}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -16,6 +15,7 @@ const TopRatedSeries = () => {
         })
             .then((response) => response.json())
             .then((data) => {
+                console.log(data);
                 setSeries(prevSeries => {
                     const newSeries = data.filter(newSerie => !prevSeries.some(prevSerie => prevSerie.id === newSerie.id));
                     return [...prevSeries, ...newSeries];
@@ -28,14 +28,12 @@ const TopRatedSeries = () => {
         setPage(prevPage => prevPage + 1);
     }
 
-
     return (
-        <div className="top-rated-series">
-            <h2 className="serie-title">Séries les mieux notées</h2>
+        <div>
             <DisplaySeries series={series} />
             <button onClick={handleLoadMore}>Voir plus</button>
         </div>
     )
 }
 
-export default TopRatedSeries;
+export default AllSeries;
