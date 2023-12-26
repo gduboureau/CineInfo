@@ -14,8 +14,7 @@ const fetchMovies = async (req, res, cacheKey, apiUrl) => {
         }
 
         const tmdbResponse = await fetch(apiUrl);
-        const tmdbData = await tmdbResponse.json();
-        const movies = tmdbData.results;
+        const movies = await tmdbResponse.json();
         await saveToCache(cacheKey, movies);
         res.json(movies);
     } catch (error) {
@@ -47,3 +46,24 @@ export const TopRatedMovies = async (req, res) => {
     const apiUrl = `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=fr-FR`;
     await fetchMovies(req, res, cacheKey, apiUrl);
 };
+
+export const MovieDetails = async (req, res) => {
+    const { id } = req.params;
+    const cacheKey = `movie_${id}`;
+    let apiUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=fr-FR`;
+    await fetchMovies(req, res, cacheKey, apiUrl);
+}
+
+export const MovieCredits = async (req, res) => {
+    const { id } = req.params;
+    const cacheKey = `movie_${id}_credits`;
+    let apiUrl = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=fr-FR`;
+    await fetchMovies(req, res, cacheKey, apiUrl);
+}
+
+export const MovieVideos = async (req, res) => {
+    const { id } = req.params;
+    const cacheKey = `movie_${id}_videos`;
+    let apiUrl = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=fr-FR`;
+    await fetchMovies(req, res, cacheKey, apiUrl);
+}

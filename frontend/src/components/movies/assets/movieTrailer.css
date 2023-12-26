@@ -1,0 +1,32 @@
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+}
+
+.modal-content {
+    max-width: 800px;
+    width: 100%;
+    margin: auto;
+    z-index: 1001;
+    padding: 20px;
+}
+
+.modal-video {
+    width: 100%;
+    height: 400px;
+}
+
+.div-click-trailer {
+    cursor: pointer;
+}
+
+.div-click-trailer:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+}

@@ -26,6 +26,7 @@ header {
     position: relative;
     margin: 0 15px;
     margin-right: 50px;
+    z-index: 5;
 }
 
 .public-nav .categories .category-with-submenu a {
