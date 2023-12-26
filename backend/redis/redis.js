@@ -21,24 +21,12 @@ async function getFromCache(key) {
 
 async function saveToCache(key, data) {
     console.log(`Saving ${key} to Redis`);
-    await client.set(key, JSON.stringify(data), (err, reply) => { 
-        if (err) {
-            console.error(err);
-        } else {
-            console.log(reply);
-        }
-    });
+    await client.set(key, JSON.stringify(data));
 }
 
 async function removeFromCache(key) {
     console.log(`Removing ${key} from Redis`);
-    await client.del(key, (err, reply) => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log(reply);
-        }
-    });
+    await client.del(key);
 }
 
 function closeConnection() {
