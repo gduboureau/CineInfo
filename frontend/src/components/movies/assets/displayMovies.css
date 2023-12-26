@@ -18,6 +18,37 @@
     border-radius: 20px 20px 0 0;
 }
 
-.movies-container .movie .title {
+.movies-container .movie .movie-details .title {
     cursor: pointer;
+}
+
+.movies-container .movie .movie-details{
+    width: 100%;
+    padding: 26px 10px 12px;
+    position: relative;
+    white-space: normal;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.movies-container .movie .movie-details .movie-note {
+    position: absolute;
+    top: -25px;
+    left: 10px;
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%;
+    justify-content: center;
+    background-color: #0c0c0c;
+    display: flex;
+    align-items: center;
+    border: 2px solid #ffffff;
+    border-style: double;
+}
+
+.movies-container .movie .movie-details .movie-note p {
+    color: #fff;
+    font-size: 12px;
 }

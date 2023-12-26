@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import AuthForm from '../../components/connection/AuthForm';
 import { accountService } from '../../utils/AccountService';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
-  const [error, setError] = useState('');
 
   const handleLogin = async ({ mail, password }) => {
-    if (!mail || !password) return setError('Veuillez remplir tous les champs');
+    if (!mail || !password) return toast.error('Veuillez remplir tous les champs');
     try {
       const response = await fetch('http://localhost:8080/auth/login', {
         method: 'POST',
@@ -23,7 +24,7 @@ const Login = () => {
       const data = await response.json();
 
       if (data.error) {
-        setError(data.error);
+        toast.error(data.error);
       } else {
         accountService.saveToken(data.token);
       }
@@ -35,7 +36,7 @@ const Login = () => {
   return (
     <div>
       <AuthForm type="login" onSubmit={handleLogin} />
-      {error && <div style={{ color: 'red' }}>{error}</div>}
+      <ToastContainer />
     </div>
 
   );

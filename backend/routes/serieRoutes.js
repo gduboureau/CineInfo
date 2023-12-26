@@ -1,5 +1,5 @@
 import express from 'express';
-import { PopularSeries, AiringTodaySeries, TopRatedSeries } from '../controllers/serieController.js';
+import { PopularSeries, AiringTodaySeries, TopRatedSeries } from '../src/controllers/serieController.js';
 
 const router = express.Router();
 

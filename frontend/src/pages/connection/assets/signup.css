@@ -1,10 +1,11 @@
 .signup-container {
-    max-width: 40%;
+    max-width: 50%;
     margin: auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
 }
 
 .signup-container p {
@@ -20,29 +21,104 @@
     align-items: center;
 }
 
-.signup-container .signup-form  img {
+.signup-container .signup-form .name {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    column-gap: 20px;
+}
+
+.signup-container .signup-form .fieldset {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.signup-container .signup-form .fieldset label {
+    margin-bottom: 5px;
+}
+
+.signup-container .signup-form .fieldset input:not([type="password"]) {
+    padding: 18px 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1.5px solid #e7e7e9;
+}
+
+.signup-container .signup-form .fieldset input:not([type="password"]):focus {
+    outline-color: #0c0c0c;
+}
+
+.signup-container .signup-form .input-mail {
+    padding: 18px 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1.5px solid #e7e7e9;
+}
+
+.signup-container .signup-form .input-mail:focus {
+    outline-color: #0c0c0c;
+}
+
+.signup-container .signup-form span:focus-within {
+    border: 2px solid #0c0c0c;
+}
+
+.signup-container .signup-form img {
     width: 25px;
     height: 25px;
     cursor: pointer;
-    vertical-align: center;
-    margin: 15px
+    margin: 5px 10px;
 }
 
 .signup-container .signup-form span {
     display: flex;
-    width: 70%;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     border-radius: 4px;
-    border: 2px solid #ccc;
+    border: 1.5px solid #e7e7e9;
+    margin-bottom: 20px;
 }
 
 .signup-container .signup-form span input {
     border: none;
     outline: none;
     width: 100%;
-    padding: 10px;
     font-size: 16px;
     border-radius: 4px;
+    padding: 18px 20px;
+}
+
+.signup-container .signup-form button {
+    width: 40%;
+    margin: 20px 0;
+    padding: 20px 24px;
+    font-size: 16px;
+    border-radius: 50px;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    background-color: #0c0c0c;
+    border: none;
+    cursor: pointer;
+}
+
+.signup-container .signup-form button:hover {
+    background-color: #1a1a1a;
+}
+
+.signup-container .signup-form .link p {
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.signup-container .signup-form .link a {
+    font-size: 14px;
+    text-decoration: none;
+    color: #3b3838;
+}
+
+.signup-container .signup-form .link a:hover {
+    text-decoration: underline;
 }
