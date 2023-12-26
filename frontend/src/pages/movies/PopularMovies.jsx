@@ -20,7 +20,7 @@ const PopularMovies = () => {
 
     return (
         <div className="popular-movies">
-            <h3>Films populaires</h3>
+            <h2>Films populaires</h2>
             <DisplayMovies movies={movies} />
         </div>
     )

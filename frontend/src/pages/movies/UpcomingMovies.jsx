@@ -20,7 +20,7 @@ const UpcomingMovies = () => {
 
     return (
         <div className="upcoming-movies">
-            <h3>Films à venir</h3>
+            <h2>Films à venir</h2>
             <DisplayMovies movies={movies} />
         </div>
     )

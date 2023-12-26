@@ -20,7 +20,7 @@ const NowPlayingMovies = () => {
 
     return (
         <div className="now-playing-movies">
-            <h3>Films du moment</h3>
+            <h2>Films du moment</h2>
             <DisplayMovies movies={movies} />
         </div>
     )

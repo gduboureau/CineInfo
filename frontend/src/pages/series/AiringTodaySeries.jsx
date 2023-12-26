@@ -20,7 +20,7 @@ const AiringTodaySeries = () => {
 
     return (
         <div className="airing-today-series">
-            <h3>Séries diffusées aujourd'hui</h3>
+            <h2>Séries diffusées aujourd'hui</h2>
             <DisplaySeries series={series} />
         </div>
     )

@@ -20,7 +20,7 @@ const TopRatedMovies = () => {
 
     return (
         <div className="top-rated-movies">
-            <h3>Films les mieus notés</h3>
+            <h2>Films les mieus notés</h2>
             <DisplayMovies movies={movies} />
         </div>
     )

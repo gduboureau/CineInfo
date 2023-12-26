@@ -16,13 +16,13 @@ const DisplayMovies = ({ movies }) => {
         <div className="movies-container">
             {movies.map((movie) => (
                 <div key={movie.id} className="movie">
-                    <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} onClick={() => handleClick(movie.id, movie.title)} />
+                    <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}`} alt={movie.title} onClick={() => handleClick(movie.id, movie.title)} />
                     <div className="movie-details">
                         <div className="movie-note">
                             <p>{Math.ceil(movie.vote_average * 10)}%</p>
                         </div>
                         <p className="title" onClick={() => handleClick(movie.id, movie.title)}>{movie.title}</p>
-                        <p>{moment(movie.release_date).locale('fr').format('D MMM YYYY')}</p>
+                        <p className="date">{moment(movie.release_date).locale('fr').format('D MMM YYYY')}</p>
                     </div>
                 </div>
             ))}

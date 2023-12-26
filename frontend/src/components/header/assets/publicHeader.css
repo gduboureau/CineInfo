@@ -39,7 +39,7 @@ header {
 .public-nav .categories .category-with-submenu .submenu {
     display: none;
     position: absolute;
-    width: 190px;
+    width: 205px;
     top: 100%; 
     left: -40px;
     background-color: #0c0c0c;

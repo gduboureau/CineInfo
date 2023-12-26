@@ -20,7 +20,7 @@ const TopRatedSeries = () => {
 
     return (
         <div className="top-rated-series">
-            <h3>Séries les mieux notées</h3>
+            <h2>Séries les mieux notées</h2>
             <DisplaySeries series={series} />
         </div>
     )

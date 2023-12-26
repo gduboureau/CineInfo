@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AuthForm from '../../components/connection/AuthForm';
 import { accountService } from '../../utils/AccountService';
 import { ToastContainer, toast } from 'react-toastify';

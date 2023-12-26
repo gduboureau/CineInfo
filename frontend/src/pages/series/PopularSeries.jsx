@@ -20,7 +20,7 @@ const PopularSeries = () => {
 
     return (
         <div className="popular-series">
-            <h3>Séries populaires</h3>
+            <h2>Séries populaires</h2>
             <DisplaySeries series={series} />
         </div>
     )
