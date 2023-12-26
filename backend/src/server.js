@@ -1,8 +1,7 @@
 import express from 'express';
-import fetch from 'node-fetch';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import routes from './routes.js';
+import routes from './routes/index.js';
 import { getPopularMoviesWithCache } from './redisRequest.js';
 
 const app = express();

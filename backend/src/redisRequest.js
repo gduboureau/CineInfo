@@ -1,4 +1,4 @@
-import { connectToRedis, getFromCache, saveToCache, closeConnection } from '../redis/redis.js';
+import { connectToRedis, getFromCache, saveToCache, closeConnection } from './redis/redis.js';
 import { getPopularMovies } from './apiRequest.js';
 
 const getPopularMoviesWithCache = async () => {
