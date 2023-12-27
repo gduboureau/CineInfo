@@ -6,6 +6,7 @@ const apiKey = '7f0799a761376830477332b8577e17fe';
 const fetchMovies = async (req, res, cacheKey, apiUrl) => {
     try {
         /*await connectToRedis();
+        /*await connectToRedis();
         const cachedData = await getFromCache(cacheKey);
 
         if (cachedData) {
@@ -16,6 +17,7 @@ const fetchMovies = async (req, res, cacheKey, apiUrl) => {
         const tmdbResponse = await fetch(apiUrl);
         const tmdbData = await tmdbResponse.json();
         const movies = tmdbData.results;
+        //await saveToCache(cacheKey, movies);
         //await saveToCache(cacheKey, movies);
         res.json(movies);
     } catch (error) {
@@ -45,27 +47,39 @@ const fetchMovie = async (req, res, cacheKey, apiUrl) => {
 };
 
 
+export const DiscoverMovies = async (req, res) => {
+    const page = req.query.page || 1;
+    const cacheKey = `discover_movies_page_${page}`;
+    const apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&include_adult=false&language=fr-FR&sort_by=popularity.desc&page=${page}`;
+    await fetchMovies(req, res, cacheKey, apiUrl);
+};
+
+
 export const PopularMovies = async (req, res) => {
-    const cacheKey = 'popular_movies';
-    const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=fr-FR`;
+    const page = req.query.page || 1;
+    const cacheKey = `popular_movies_page_${page}`;
+    const apiUrl = `https://api.themoviedb.org/3/movie/popular?page=${page}&api_key=${apiKey}&language=fr-FR`;
     await fetchMovies(req, res, cacheKey, apiUrl);
 };
 
 export const NowPlayingMovies = async (req, res) => {
-    const cacheKey = 'now_playing_movies';
-    const apiUrl = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=fr-FR`;
+    const page = req.query.page || 1;
+    const cacheKey = `now_playing_movies_page_${page}`;
+    const apiUrl = `https://api.themoviedb.org/3/movie/now_playing?page=${page}&api_key=${apiKey}&language=fr-FR`;
     await fetchMovies(req, res, cacheKey, apiUrl);
 };
 
 export const UpcomingMovies = async (req, res) => {
-    const cacheKey = 'upcoming_movies';
-    const apiUrl = `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=fr-FR`;
+    const page = req.query.page || 1;
+    const cacheKey = `upcoming_movies_page_${page}`;
+    const apiUrl = `https://api.themoviedb.org/3/movie/upcoming?page=${page}&api_key=${apiKey}&language=fr-FR`;
     await fetchMovies(req, res, cacheKey, apiUrl);
 };
 
 export const TopRatedMovies = async (req, res) => {
-    const cacheKey = 'top_rated_movies';
-    const apiUrl = `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=fr-FR`;
+    const page = req.query.page || 1;
+    const cacheKey = `top_rated_movies_page_${page}`;
+    const apiUrl = `https://api.themoviedb.org/3/movie/top_rated?page=${page}&api_key=${apiKey}&language=fr-FR`;
     await fetchMovies(req, res, cacheKey, apiUrl);
 };
 

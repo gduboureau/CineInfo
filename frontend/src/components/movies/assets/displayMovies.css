@@ -7,8 +7,11 @@
 .movie {
     width: calc(20% - 60px);
     margin: 20px 30px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5);
     border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .movies-container .movie img {
@@ -18,6 +21,53 @@
     border-radius: 20px 20px 0 0;
 }
 
-.movies-container .movie .title {
+.movies-container .movie .movie-details {
+    background-color: #fff;
+    padding: 20px 10px 12px;
+    position: relative;
+    white-space: normal;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    border-radius: 0 0 20px 20px;
+}
+
+.movies-container .movie .movie-details .title {
     cursor: pointer;
+    flex: 1;
+    margin: 10px 10px 0 10px;
+    font-weight: bold;
+}
+
+.movies-container .movie .movie-details .title:hover {
+    color: rgba(0,0,0,.7);
+}
+
+.movies-container .movie .movie-details .date {
+    position: relative;
+    bottom: 0;
+    height: 20%;
+    margin: 10px 0 10px 10px;
+    color: rgba(0,0,0,.6);
+    font-size: 1em;
+}
+
+.movies-container .movie .movie-details .movie-note {
+    position: absolute;
+    top: -25px;
+    left: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    justify-content: center;
+    background-color: #0c0c0c;
+    display: flex;
+    align-items: center;
+    border: 2px solid #ffffff;
+    border-style: double;
+}
+
+.movies-container .movie .movie-details .movie-note p {
+    color: #fff;
+    font-size: 12px;
 }

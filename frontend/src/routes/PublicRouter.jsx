@@ -15,6 +15,8 @@ import TopRatedMovies from "../pages/movies/TopRatedMovies";
 import PopularSeries from "../pages/series/PopularSeries";
 import AiringTodaySeries from "../pages/series/AiringTodaySeries";
 import TopRatedSeries from "../pages/series/TopRatedSeries";
+import AllMovies from "../pages/movies/AllMovies";
+import AllSeries from "../pages/series/AllSeries";
 
 
 const PublicRouter = () => {
@@ -25,10 +27,12 @@ const PublicRouter = () => {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/search" element={<Research />} /> 
+                <Route path="/movies" element={<AllMovies />} />
                 <Route path="/movies/popular" element={<PopularMovies />} />
                 <Route path="/movies/now-playing" element={<NowPlayingMovies />} />
                 <Route path="/movies/upcoming" element={<UpcomingMovies />} />
                 <Route path="/movies/top-rated" element={<TopRatedMovies />} />
+                <Route path="/tv" element={<AllSeries />} />
                 <Route path="/tv/popular" element={<PopularSeries />} />
                 <Route path="/tv/airing-today" element={<AiringTodaySeries />} />
                 <Route path="/tv/top-rated" element={<TopRatedSeries />} />

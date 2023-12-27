@@ -35,30 +35,39 @@ const AuthForm = ({ type, onSubmit }) => {
             <form className={`${type}-form`}>
                 {type === 'signup' && (
                     <>
-                        <label>Nom d'utilisateur</label>
-                        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-
-                        <label>Prénom</label>
-                        <input type="text" value={firstname} onChange={(e) => setFirstname(e.target.value)} />
-
-                        <label>Nom</label>
-                        <input type="text" value={lastname} onChange={(e) => setLastname(e.target.value)} />
+                        <div className='name'>
+                            <div className="fieldset">
+                                <label>Prénom</label>
+                                <input type="text" value={firstname} onChange={(e) => setFirstname(e.target.value)} />
+                            </div>
+                            <div className='fieldset'>
+                                <label>Nom</label>
+                                <input type="text" value={lastname} onChange={(e) => setLastname(e.target.value)} />
+                            </div>
+                        </div>
+                        <div className='fieldset'>
+                            <label>Nom d'utilisateur</label>
+                            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+                        </div>
                     </>
                 )}
-                <label>Adresse mail</label>
-                <input type="text" value={mail} onChange={(e) => setMail(e.target.value)} />
+                <div className='fieldset'>
+                    <label>Adresse mail</label>
+                    <input type="text" className="input-mail" value={mail} onChange={(e) => setMail(e.target.value)} />
+                </div>
 
-                <label>Mot de passe</label>
-                <span>
-                    <input
-                        type={showPassword ? "text" : "password"}
-                        id="password"
-                        name="password"
-                        placeholder="Entrez votre mot de passe"
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <img src={eyeIcon} alt="eye-icon" onClick={togglePassword} />
-                </span>
+                <div className='fieldset'>
+                    <label>Mot de passe</label>
+                    <span>
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            id="password"
+                            name="password"
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <img src={eyeIcon} alt="eye-icon" onClick={togglePassword} />
+                    </span>
+                </div>
 
                 <button type="button" onClick={handleSubmit}>
                     {type === 'login' ? 'Se connecter' : 'S\'inscrire'}

@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import DisplayMovies from '../../components/movies/DisplayMovies';
 
-import DisplayMovies from "../../components/movies/DisplayMovies";
-import "./assets/movies.css";
-
-const TopRatedMovies = () => {
+const AllMovies = () => {
     const [movies, setMovies] = useState([]);
     const [page, setPage] = useState(1);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/movies/top-rated?page=${page}`, {
+        fetch(`http://localhost:8080/movies/discover?page=${page}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -28,14 +26,12 @@ const TopRatedMovies = () => {
         setPage(prevPage => prevPage + 1);
     };
 
-
     return (
-        <div className="top-rated-movies">
-            <h2 className="movie-title">Films les mieux notés</h2>
+        <div className='all-movies'>
             <DisplayMovies movies={movies} />
             <button onClick={handleLoadMore}>Voir plus</button>
         </div>
-    )
-}
+    );
+};
 
-export default TopRatedMovies;
+export default AllMovies;

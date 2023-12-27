@@ -64,7 +64,7 @@ const Research = () => {
                         {movies.map((movie) => (
                             <div key={movie.id} className="wrapper">
                                 {movie.poster_path ? (
-                                    <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} onClick={() => handleItemClick(selectedCategory, movie.id, movie.title)} />
+                                    <img src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}`} alt={movie.title} onClick={() => handleItemClick(selectedCategory, movie.id, movie.title)} />
                                 ) : (
                                     <div className="icon-div" onClick={() => handleItemClick(selectedCategory, movie.id, movie.title)}>
                                         <FontAwesomeIcon icon={faImage} className="icon" />
@@ -84,7 +84,7 @@ const Research = () => {
                         {tv.map((serie) => (
                             <div key={serie.id} className="wrapper">
                                 {serie.poster_path ? (
-                                    <img src={`https://image.tmdb.org/t/p/w200${serie.poster_path}`} alt={serie.name} onClick={() => handleItemClick(selectedCategory, serie.id, serie.name)} />
+                                    <img src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2/${serie.poster_path}`} alt={serie.name} onClick={() => handleItemClick(selectedCategory, serie.id, serie.name)} />
                                 ) : (
                                     <div className="icon-div" onClick={() => handleItemClick(selectedCategory, serie.id, serie.name)}>
                                         <FontAwesomeIcon icon={faImage} className="icon" />

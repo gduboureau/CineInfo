@@ -1,0 +1,53 @@
+.carouselbycategory{
+    display: relative;
+    margin: 0px auto;
+    padding: 0px;
+    width: 90%;
+}
+
+.carouselbycategory .carousel-item{
+    transition: all 0.4s ease-in-out;
+    width: 80% !important;
+    padding: 40px 10px;
+    cursor: pointer;
+}
+
+.carouselbycategory .carousel-item:hover{
+    transform: scale(1.07);
+    cursor: pointer;
+}
+
+.carouselbycategory .carousel-item img{
+    width: 110%;    
+    border-radius: 10px;
+    transition: filter 0.4s ease;
+}
+
+.carouselbycategory .slick-slider .arrow.left{
+    position: absolute;
+    color: #f5f5f5;
+    top: 50%;
+    left: -3%;
+    transform: translateY(-50%);
+    z-index: 1;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 22px;
+}
+
+.carouselbycategory .slick-slider .arrow.right{
+    position: absolute;
+    color: #f5f5f5;
+    top: 50%;
+    right: -3.2%;
+    transform: translateY(-50%);
+    z-index: 1;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 22px;
+}
+
+.carouselbycategory .slick-slider .arrow.right:hover, 
+.carouselbycategory .slick-slider .arrow.left:hover{
+    transform: translateY(-50%) scale(1.4);
+}

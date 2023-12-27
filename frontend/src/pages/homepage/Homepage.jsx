@@ -1,33 +1,59 @@
 import React from "react";
 import { useState, useEffect } from 'react';
+import MainCarousel from './MainCarousel';
+import CarouselByCategory from './CarouselByCategory';
+import './assets/Homepage.css';
 
 const Homepage = () => {
 
-    const [data, setData] = useState([]);
+  const [mainMovies, setMainMovies] = useState([]);
+  const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
+  const [topRatedMovies, setTopRatedMovies] = useState([]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('http://localhost:8080/popular-movies');
-                const responseJson = await response.json();
-                setData(responseJson);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
+  useEffect(() => {
+      fetch("http://localhost:8080/movies/popular", {
+          method: "GET",
+          headers: {
+              "Content-Type": "application/json",
+          },
+      })
+          .then((response) => response.json())
+          .then((data) => setMainMovies(data))
+          .catch((error) => console.error("Erreur de recherche :", error));
 
-        fetchData();
-    }, []);
+        fetch("http://localhost:8080/movies/now-playing", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => setNowPlayingMovies(data))
+            .catch((error) => console.error("Erreur de recherche :", error));
+
+            fetch("http://localhost:8080/movies/top-rated", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => setTopRatedMovies(data))
+                .catch((error) => console.error("Erreur de recherche :", error));
+  }, []);
 
     return (
-        <div>
+        <div style={{backgroundColor: '#0c0c0c'}} className="home">
             <div className="home-carroussel">
-                <h2>Top 15 Popular Movies</h2>
-                <ul>
-                    {data.slice(0, 15).map((movie, index) => (
-                        <li key={index}>{movie.original_title}</li>
-                    ))}
-                </ul>
+                <MainCarousel movies={mainMovies}/>
+            </div>
+            <div className="home-nowplayingmovies">
+                <h3>Actuellement au cinéma</h3>
+                <CarouselByCategory movies={nowPlayingMovies}/>
+            </div>
+            <div className="home-toprated">
+                <h3>Les mieux notés</h3>
+                <CarouselByCategory movies={topRatedMovies}/>
             </div>
         </div>
     )
