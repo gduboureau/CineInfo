@@ -1,0 +1,24 @@
+.movie-video-container .video-item p {
+    color: white;
+}
+
+.movie-video-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.movie-video-container .video-item {
+    width: calc(40% + 120px); 
+    margin: 10px;
+    text-align: center;
+}
+
+.movie-video-container .no-video-message {
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
