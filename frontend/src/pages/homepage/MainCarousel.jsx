@@ -47,11 +47,13 @@ const MainCarousel  = ({ movies }) => {
             {movies.slice(0, 10).map((movie, index) => (
               <div key={index} className={`carousel-item`}>
                 <img src={`https://image.tmdb.org/t/p/w1920_and_h1080_multi_faces${movie.backdrop_path}`} alt={`Slide ${index + 1}`} />
+                <div className='content-overlay'>
                   <p className='title'>{movie.title}</p>
                   <p className='dureenote'>1h50 | {movie.vote_average.toFixed(1)}/10</p>
                   <p className='overview'>{movie.overview.length > 500 ? 
                       movie.overview.substring(0, 500) + '...' : movie.overview}
                   </p>
+                </div>
               </div>
             ))}
         </Slider>
