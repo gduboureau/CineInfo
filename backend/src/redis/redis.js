@@ -1,7 +1,7 @@
 // redis.js
 import { createClient } from 'redis';
 
-const client = createClient({ url: 'redis://localhost:6379' });
+const client = createClient({ url: 'redis://redis:6379' });
 
 async function connectToRedis() {
     if (client.isOpen) {

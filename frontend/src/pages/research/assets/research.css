@@ -11,6 +11,10 @@
     width: 12%;
 }
 
+.search .search-panel h3 {
+    color: #fff;
+}
+
 .search .search-results{
     flex: 1;
 }
@@ -23,6 +27,7 @@
 
 .search .search-panel ul li {
     padding: 10px;
+    color: #fff;
     border-bottom: 1px solid #ccc;
 }
 
@@ -32,6 +37,7 @@
     padding: 10px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
     margin: 20px 20px;
+    background-color: #fff;
 }
 
 .search .search-results .wrapper img {

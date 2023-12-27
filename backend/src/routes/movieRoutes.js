@@ -1,5 +1,5 @@
 import express from 'express';
-import { PopularMovies, NowPlayingMovies, UpcomingMovies, TopRatedMovies, DiscoverMovies } from '../src/controllers/movieController.js';
+import { PopularMovies, NowPlayingMovies, UpcomingMovies, TopRatedMovies, DiscoverMovies } from '../controllers/movieController.js';
 
 const router = express.Router();
 

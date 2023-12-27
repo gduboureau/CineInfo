@@ -22,12 +22,14 @@
 }
 
 .series-container .serie .serie-details {
+    background-color: #fff;
     padding: 20px 10px 12px;
     position: relative;
     white-space: normal;
     display: flex;
     flex-direction: column;
     flex: 1;
+    border-radius: 0 0 20px 20px;
 }
 
 .series-container .serie .serie-details .name {
@@ -44,7 +46,7 @@
 .series-container .serie .serie-details .date {
     position: relative;
     bottom: 0;
-    height: 15%;
+    height: 20%;
     margin: 10px 0 10px 10px;
     color: rgba(0,0,0,.6);
     font-size: 1em;

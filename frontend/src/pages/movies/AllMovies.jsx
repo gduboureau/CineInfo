@@ -27,7 +27,7 @@ const AllMovies = () => {
     };
 
     return (
-        <div>
+        <div className='all-movies'>
             <DisplayMovies movies={movies} />
             <button onClick={handleLoadMore}>Voir plus</button>
         </div>
