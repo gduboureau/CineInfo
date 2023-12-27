@@ -1,0 +1,20 @@
+.media-list .media-title {
+    margin-left: 30px;
+    margin-top: 40px;
+    color: #fff;
+}
+
+.media-list button {
+    width: 96%;
+    margin: 30px;
+    font-size: 1.5em;
+    font-weight: 700;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.media-list button:hover {
+    color: rgba(0, 0, 0, .6);
+}

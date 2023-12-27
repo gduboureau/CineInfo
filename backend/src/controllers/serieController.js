@@ -24,10 +24,40 @@ const fetchSeries = async (req, res, cacheKey, apiUrl) => {
     }
 };
 
+export const SerieGenres = async (req, res) => {
+    const cacheKey = 'serie_genres';
+    const apiUrl = `https://api.themoviedb.org/3/genre/tv/list?api_key=${apiKey}&language=fr-FR`;
+    try {
+        /*await connectToRedis();
+        const cachedData = await getFromCache(cacheKey);
+
+        if (cachedData) {
+            console.log(`Serving ${cacheKey} from cache.`);
+            return res.json(cachedData);
+        }*/
+
+        const tmdbResponse = await fetch(apiUrl);
+        const tmdbData = await tmdbResponse.json();
+        const genres = tmdbData.genres;
+        //await saveToCache(cacheKey, genres);
+        res.json(genres);
+    } catch (error) {
+        console.error(`Error fetching ${cacheKey}:`, error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
 export const DiscoverSeries = async (req, res) => {
     const page = req.query.page || 1;
-    const cacheKey = `discover_series_page_${page}`;
-    const apiUrl = `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&include_adult=false&language=fr-FR&page=${page}`;
+    const genres = req.query.genres || '';
+    let cacheKey = `discover_series_page_${page}`;
+    if(genres){
+        cacheKey += `_${genres}`;
+    }
+    let apiUrl = `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&include_adult=false&language=fr-FR&page=${page}`;
+    if (genres) {
+        apiUrl += `&with_genres=${genres}`;
+    }
     await fetchSeries(req, res, cacheKey, apiUrl);
 }
 

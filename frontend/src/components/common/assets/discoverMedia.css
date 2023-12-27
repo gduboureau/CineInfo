@@ -1,0 +1,91 @@
+.discover-media {
+    display: flex;
+    flex-direction: row;
+}
+
+.discover-media .filter-panel {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    width: 15%;
+}
+
+.discover-media .filter-panel button {
+    margin: 5px;
+    border-radius: 10px;
+    background-color: #fff;
+    color: #0c0c0c;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.discover-media .filter-panel button:hover {
+    background-color: #484747;
+
+}
+
+.discover-media .genres-panel {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    margin: 5px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.discover-media .genres-panel .genres-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+.discover-media .genres-panel .genre-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+
+}
+
+.discover-media .genres-panel li {
+    width: fit-content;
+    background-color: #040404;
+    color: #fff;
+    margin: 5px 5px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.discover-media .genres-panel ul .selected {
+    background-color: #484747;
+    color: #fff;
+}
+
+
+.discover-media .media-display {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.discover-media .media-display button {
+    width: 96%;
+    margin: 30px;
+    font-size: 1.5em;
+    font-weight: 700;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.discover-media .media-display button:hover {
+    color: rgba(0, 0, 0, .6);
+}

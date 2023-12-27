@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from 'moment';
 import 'moment/locale/fr';
@@ -11,6 +11,13 @@ const DisplayMovies = ({ movies }) => {
     const handleClick = (id, title) => {
         navigate(`/movie/${id}/${title}`);
     }
+
+    useEffect(() => {
+        const movieElements = document.querySelectorAll('.movie');
+        movieElements.forEach((element) => {
+            element.classList.add('visible');
+        });
+    }, [movies]);
 
     return (
         <div className="movies-container">

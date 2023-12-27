@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from 'moment';
 import 'moment/locale/fr';
@@ -12,6 +12,13 @@ const DisplaySeries = ({ series }) => {
     const handleClick = (id, name) => {
         navigate(`/tv/${id}/${name}`);
     }
+
+    useEffect(() => {
+        const serieElements = document.querySelectorAll('.serie');
+        serieElements.forEach((element) => {
+            element.classList.add('visible');
+        });
+    }, [series]);
 
     return (
         <div className="series-container">

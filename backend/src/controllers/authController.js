@@ -17,7 +17,7 @@ export const login = async (req, res) => {
             return res.json({ error: 'Mot de passe incorrect' });
         }
 
-        const token = jwt.sign({ userId: result.rows[0].id }, secretKey, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: result.rows[0].user_id }, secretKey, { expiresIn: '1h' });
         res.json({ token });
     } catch (error) {
         console.error('Erreur lors de la connexion :', error.message);
