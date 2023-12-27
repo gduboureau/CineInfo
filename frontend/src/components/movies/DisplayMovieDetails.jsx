@@ -40,7 +40,7 @@ const DisplayMovieDetails = ({ movie, crew, actors, videos, images }) => {
                             </div>
                             <div className="movie-header-infos">
                                 <div className="movie-title">
-                                    <p>{movie.title}</p>
+                                    <p> {movie.title}</p>
                                 </div>
                                 <div className="movie-date-trailer">
                                     <span>{formattedDate} - &nbsp;{`${hours}h ${minutes}m`} &nbsp;{videos.length !== 0 ? "-" : ""}</span>

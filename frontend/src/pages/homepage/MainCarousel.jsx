@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 import Slider from 'react-slick';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +9,9 @@ import 'slick-carousel/slick/slick-theme.css';
 import './assets/MainCarousel.css';
 
 const MainCarousel  = ({ movies }) => {
+
+  const navigate = useNavigate();
+
   function Arrow({ direction, onClick }) {
     return (
       <div
@@ -38,14 +42,16 @@ const MainCarousel  = ({ movies }) => {
     autoplaySpeed: 7000
   };
 
-
+  const handleMovieClick = (movie) => {
+    navigate(`/movie/${movie.id}/${movie.title}`);
+  };
 
   return (
     <div className="carousel-popmovies-container">
       <div className="carousel-popmovies">
         <Slider {...settings}>
             {movies.slice(0, 10).map((movie, index) => (
-              <div key={index} className={`carousel-item`}>
+              <div key={index} className={`carousel-item`} onClick={() => handleMovieClick(movie)}>
                 <img src={`https://image.tmdb.org/t/p/w1920_and_h1080_multi_faces${movie.backdrop_path}`} alt={`Slide ${index + 1}`} />
                 <div className='content-overlay'>
                   <p className='title'>{movie.title}</p>

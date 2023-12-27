@@ -53,6 +53,7 @@
 .movie-details-container .background-container .movie-title {
     font-weight: bold;
     font-size: 30px;
+    margin-left: 0px;
 }
 
 .movie-details-container .background-container .movie-date-trailer {
