@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./assets/displayMovieDetails.css";
 import MovieTrailer from "./MovieTrailer";
 import Actors from "../Actors";
 import Videos from "../Videos";
 import Images from "../Images";
+import Recommendations from "../Recommendations";
 
-const DisplayMovieDetails = ({ movie, crew, actors, videos, images }) => {
+const DisplayMovieDetails = ({ movie, crew, actors, videos, images, recommendations }) => {
 
     const [selectedCategory, setSelectedCategory] = useState("actors");
+
+    useEffect(() => {
+        setSelectedCategory("actors");
+        window.scrollTo(0, 0);
+    }, [movie]);
 
     const releaseDate = new Date(movie.release_date);
     const year = releaseDate.getFullYear();
@@ -116,7 +122,7 @@ const DisplayMovieDetails = ({ movie, crew, actors, videos, images }) => {
                     {selectedCategory === "actors" && <Actors actors={actors} />}
                     {selectedCategory === "video" && <Videos videos={videos} />}
                     {selectedCategory === "image" && <Images images={images} />}
-                    {selectedCategory === "recommandation" && "Contenu des recommandations"}
+                    {selectedCategory === "recommandation" && <Recommendations movies={recommendations} />}
                     {selectedCategory === "avis" && "Contenu des avis"}
                 </div>
             </div>

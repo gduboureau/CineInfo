@@ -86,27 +86,34 @@ export const TopRatedMovies = async (req, res) => {
 export const MovieDetails = async (req, res) => {
     const { id } = req.params;
     const cacheKey = `movie_${id}`;
-    let apiUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=fr-FR`;
+    const apiUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=fr-FR`;
     await fetchMovie(req, res, cacheKey, apiUrl);
 }
 
 export const MovieCredits = async (req, res) => {
     const { id } = req.params;
     const cacheKey = `movie_${id}_credits`;
-    let apiUrl = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=fr-FR`;
+    const apiUrl = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=fr-FR`;
     await fetchMovie(req, res, cacheKey, apiUrl);
 }
 
 export const MovieVideos = async (req, res) => {
     const { id } = req.params;
     const cacheKey = `movie_${id}_videos`;
-    let apiUrl = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=fr-FR`;
+    const apiUrl = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=fr-FR`;
     await fetchMovie(req, res, cacheKey, apiUrl);
 }
 
 export const MovieImages = async (req, res) => {
     const { id } = req.params;
     const cacheKey = `movie_${id}_images`;
-    let apiUrl = `https://api.themoviedb.org/3/movie/${id}/images?api_key=${apiKey}`;
+    const apiUrl = `https://api.themoviedb.org/3/movie/${id}/images?api_key=${apiKey}`;
     await fetchMovie(req, res, cacheKey, apiUrl);
+}
+
+export const MovieRecommendations = async (req, res) => {
+    const { id } = req.params;
+    const cacheKey = `movie_${id}_recommendations`;
+    const apiUrl = `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${apiKey}&language=fr-FR`;
+    await fetchMovies(req, res, cacheKey, apiUrl);
 }

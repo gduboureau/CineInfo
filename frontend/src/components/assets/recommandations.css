@@ -1,0 +1,25 @@
+.small-movies-container .movie {
+    font-size: 10px;
+    width: 150px;
+    color: black;
+}
+
+.small-movies-container .movie .date {
+    margin-bottom: 100px;
+}
+
+.movies-recommandations-container .show-more-movies {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.movies-recommandations-container .arrow-movies:hover {
+    opacity: 0.4;
+}
+
+.small-movies-container .movie:hover {
+    transform: scale(1.1);
+    transition: 0.3s;
+    opacity: 0.8;
+}

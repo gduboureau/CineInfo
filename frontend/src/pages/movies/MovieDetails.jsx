@@ -11,6 +11,7 @@ const MovieDetails = () => {
     const [MovieCreditsCrew, setMovieCreditsCrew] = useState([]);
     const [MovieVideos, setMovieVideos] = useState([]);
     const [MovieImages, setMovieImages] = useState([]);
+    const [MovieRecommendations, setMovieRecommendations] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -30,13 +31,18 @@ const MovieDetails = () => {
             (response) => response.json()
         );
 
-        Promise.all([fetchMovieDetails, fetchMovieCredits, fetchMovieVideos, fetchMovieImages])
-            .then(([movieDetailsData, creditsData, videosData, imagesData]) => {
+        const fetchMovieRecommendations = fetch(`http://localhost:8080/movies/${id}/recommendations`).then(
+            (response) => response.json()
+        );
+
+        Promise.all([fetchMovieDetails, fetchMovieCredits, fetchMovieVideos, fetchMovieImages, fetchMovieRecommendations])
+            .then(([movieDetailsData, creditsData, videosData, imagesData, recommendationsData]) => {
                 setMovieDetails(movieDetailsData);
                 setMovieCreditsCrew(creditsData.crew);
                 setMovieCreditsActors(creditsData.cast);
                 setMovieVideos(videosData.results);
                 setMovieImages(imagesData.backdrops);
+                setMovieRecommendations(recommendationsData);
             })
             .catch((error) => console.error("Erreur de récupération des données du film :", error)).finally(() => setLoading(false));
     }, [id]);
@@ -46,7 +52,7 @@ const MovieDetails = () => {
     return (
         <div className="movie-detail">
             <DisplayMovieDetails movie={MovieDetails} crew={MovieCreditsCrew} actors={MovieCreditsActors} 
-            videos={MovieVideos} images={MovieImages}/>
+            videos={MovieVideos} images={MovieImages} recommendations={MovieRecommendations}/>
         </div>
     );
 }
