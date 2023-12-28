@@ -16,6 +16,12 @@
     font-size: 12px;
 }
 
+.actor-item:hover {
+    transform: scale(1.1);
+    transition: 0.3s;
+    opacity: 0.8;
+}
+
 .actors-container .actor-item img {
     width: 100%; 
     border-top-left-radius: 10px;

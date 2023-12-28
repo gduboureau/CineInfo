@@ -1,3 +1,9 @@
+.small-movies-container {
+    margin-right: 30px;
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
 .small-movies-container .movie {
     font-size: 10px;
     width: 150px;

@@ -100,7 +100,6 @@
 .movie-details-container .movie-details-categories {
     display: flex;
     flex-direction: column;
-    background: rgb(0, 0, 0);
     color: white;
 }
 

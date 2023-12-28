@@ -15,7 +15,7 @@ const Recommendations = ({ movies }) => {
     const displayedMovies = movies.slice(0, visibleRecommendations);
 
     return (
-        <div className="movies-recommandations-container">
+        <div className="movies-recommandations-container no-space-between">
             <div className="small-movies-container">
                 <DisplayMovies movies={displayedMovies} />
                 {movies.length > displayedMovies.length && (
