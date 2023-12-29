@@ -1,0 +1,16 @@
+.settings-content{
+    padding: 0 40px;
+}
+
+.settings .title-group {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    margin: 10px 0;
+    color: #fff;
+}
+
+.settings .title-group h2 {
+    margin: 0;
+    margin-right: 40px;
+}

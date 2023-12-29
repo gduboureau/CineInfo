@@ -8,7 +8,6 @@ import './assets/headerComponent.css';
 
 const HeaderComponent = ({ isLogged }) => {
     const [userInfos, setUserInfos] = useState('');
-    const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
     
@@ -44,11 +43,9 @@ const HeaderComponent = ({ isLogged }) => {
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
                     setUserInfos(data);
                 })
-                .catch(error => console.error('Erreur de requête :', error))
-                .finally(() => setLoading(false));
+                .catch(error => console.error('Erreur de requête :', error));
         }
     }, [isLogged]);
 
@@ -67,12 +64,6 @@ const HeaderComponent = ({ isLogged }) => {
         window.location.reload();
 
     }
-
-
-    if(loading){
-        return <div>Chargement...</div>
-    }
-    
 
     return (
         <header>
@@ -109,8 +100,10 @@ const HeaderComponent = ({ isLogged }) => {
                     </div>
                     <div className='account'>
                         {isLogged ? (
-                            <Link to="/account">
-                                <p>{userInfos.firstname[0]}{userInfos.lastname[0]}</p>
+                            <Link to={`/account/${userInfos.username}`}>
+                               {userInfos && userInfos.firstname && userInfos.lastname && (
+                                    <p>{userInfos.firstname[0]}{userInfos.lastname[0]}</p>
+                                )}
                             </Link>
                         ) : (
                             <Link to="/login" className="login">

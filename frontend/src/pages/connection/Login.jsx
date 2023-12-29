@@ -1,10 +1,12 @@
 import React from 'react';
 import AuthForm from '../../components/connection/AuthForm';
+import { useNavigate } from 'react-router';
 import { accountService } from '../../utils/AccountService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
+  const navigate = useNavigate();
 
   const handleLogin = async ({ mail, password }) => {
     if (!mail || !password) return toast.error('Veuillez remplir tous les champs');
@@ -27,6 +29,7 @@ const Login = () => {
         toast.error(data.error);
       } else {
         accountService.saveToken(data.token);
+        navigate(`/account/${data.username}`);
       }
     } catch (error) {
       console.error('Erreur de connexion :', error.message);

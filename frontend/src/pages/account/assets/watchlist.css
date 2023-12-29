@@ -1,0 +1,43 @@
+.watchlist-content{
+    padding: 0 40px;
+}
+
+.watchlist .title-group {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    margin: 10px 0;
+    color: #fff;
+}
+
+.watchlist .title-group h2 {
+    margin: 0;
+    margin-right: 40px;
+}
+
+.watchlist .title-group .tabs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.watchlist .title-group .tabs h3 {
+    margin: 20px 20px;
+    font-size: 1em;
+    font-weight: 700;
+    cursor: pointer;
+    padding-bottom: 4px;
+    border-width: 4px;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+}
+
+.watchlist .title-group .tabs .active-tab {
+    border-bottom-color: #fff;  
+}
+
+.watchlist .movies-content, 
+.watchlist .series-content {
+    color: #fff;
+}
+
