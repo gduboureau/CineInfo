@@ -37,7 +37,9 @@
     padding: 10px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
     margin: 20px 20px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.83);
+    border-radius: 5px;
+    align-items: center;
 }
 
 .search .search-results .wrapper img {
@@ -45,6 +47,7 @@
     height: 141px;
     margin-right: 20px;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 .search .search-results .wrapper .icon-div {
