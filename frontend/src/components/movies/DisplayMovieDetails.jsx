@@ -6,6 +6,9 @@ import Actors from "../Actors";
 import Videos from "../Videos";
 import Images from "../Images";
 import Recommendations from "../Recommendations";
+import MovieOptions from "./MovieOptions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
 
 const DisplayMovieDetails = ({ movie, crew, actors, videos, images, recommendations }) => {
 
@@ -42,7 +45,14 @@ const DisplayMovieDetails = ({ movie, crew, actors, videos, images, recommendati
                     <div className="background-container" style={backgroundStyle}>
                         <div className="movie-header-container">
                             <div className="movie-image">
-                                <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}`} alt={movie.title} />
+                                {movie.poster_path ? (
+                                    <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}`} alt={movie.title} />
+                                ) : (
+                                    <div className="icon-div">
+                                        <FontAwesomeIcon icon={faImage} className="icon" />
+                                    </div>
+                                
+                                )}
                             </div>
                             <div className="movie-header-infos">
                                 <div className="movie-title">
@@ -52,6 +62,7 @@ const DisplayMovieDetails = ({ movie, crew, actors, videos, images, recommendati
                                     <span>{formattedDate} - &nbsp;{`${hours}h ${minutes}m`} &nbsp;{videos.length !== 0 ? "-" : ""}</span>
                                     <MovieTrailer videos={videos} />
                                 </div>
+                                <MovieOptions movie={movie}/>
                                 <div className="movie-tagline">
                                     <p>{movie.tagline}</p>
                                 </div>
@@ -74,7 +85,7 @@ const DisplayMovieDetails = ({ movie, crew, actors, videos, images, recommendati
                                         </li>
                                         <li>
                                             <div className="crew-item">
-                                                <p className="title">Poducteur</p>
+                                                <p className="title">Producteur</p>
                                                 <p className="value">{topProducer ? topProducer.name : "Non disponible"}</p>
                                             </div>
                                         </li>

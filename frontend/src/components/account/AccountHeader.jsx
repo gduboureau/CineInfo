@@ -6,11 +6,13 @@ import './assets/accountHeader.css';
 const AccountHeader = () => {
     const [userInfos, setUserInfos] = useState('');
 
+    const token = sessionStorage.getItem('token');
+
     useEffect(() => {
         fetch('http://localhost:8080/user/infos', {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+                'Authorization': `Bearer ${token}`,
             },
         })
             .then(response => response.json())
@@ -18,7 +20,7 @@ const AccountHeader = () => {
                 setUserInfos(data);
             })
             .catch(error => console.error('Erreur de requête :', error));
-    }, []);
+    }, [token]);
 
     return (
         <div className="account-header">

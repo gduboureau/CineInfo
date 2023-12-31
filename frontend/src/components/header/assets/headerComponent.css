@@ -29,6 +29,7 @@ header {
     position: relative;
     margin: 0 15px;
     margin-right: 50px;
+
 }
 
 .public-nav .categories .category-with-submenu a,
@@ -51,6 +52,7 @@ header {
     padding: 10px 10px;
     z-index: 1;
     text-align: left;
+    z-index: 3;
 }
 
 .public-nav .categories .category-with-submenu:hover .submenu,

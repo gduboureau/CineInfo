@@ -40,8 +40,8 @@
     padding: 50px;
     border-radius: 50%;
     cursor: pointer;
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
 }
 
 .account-header .account-logo p a {
@@ -69,11 +69,16 @@
     border-top: 1px solid #000;
 }
 
+.account-header .account-categories nav{
+    width: 100%;
+    margin : 0 100px;
+}
+
 .account-header .account-categories ul {
     display: flex;
     flex-direction: row;
     width: 100%;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     cursor: pointer;
     padding-left: 0;
@@ -81,11 +86,14 @@
 
 .account-header .account-categories ul li {
     list-style: none;
-    margin-right: 100px;
     border-bottom: 3px solid transparent;
 }
 
 .account-header .account-categories ul li:hover {
+    border-bottom: 3px solid #000;
+}
+
+.account-header .account-categories ul .active-tab {
     border-bottom: 3px solid #000;
 }
 

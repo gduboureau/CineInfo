@@ -9,3 +9,11 @@ CREATE TABLE public.users (
     firstname character varying(100) NOT NULL,
     lastname character varying(100) NOT NULL
 );
+
+DROP TABLE IF EXISTS FavoriteMovies;
+CREATE TABLE public.FavoriteMovies (
+    id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id uuid REFERENCES users(user_id),
+    movie_id INT NOT NULL,
+    CONSTRAINT unique_favorite_movie UNIQUE (user_id, movie_id)
+);

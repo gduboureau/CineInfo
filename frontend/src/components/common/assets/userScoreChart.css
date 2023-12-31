@@ -1,0 +1,27 @@
+.user-score-chart {
+    position: relative;
+    text-align: center;
+    background-color: #0c0c0c;
+    border-radius: 50%;
+}
+
+.user-score-chart .percent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.user-score-chart .percent span {
+    display: block;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.chart-canvas:hover ~ .percent {
+    visibility: hidden;
+}
+
+.chart-canvas {
+    border-radius: 50%;
+}

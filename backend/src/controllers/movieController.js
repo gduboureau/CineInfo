@@ -44,12 +44,34 @@ const fetchMovie = async (req, res, cacheKey, apiUrl) => {
     }
 };
 
+export const MovieGenres = async (req, res) => {
+    const cacheKey = 'movie_genres';
+    const apiUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=fr-FR`;
+    try {
+        /*await connectToRedis();
+        const cachedData = await getFromCache(cacheKey);
+
+        if (cachedData) {
+            console.log(`Serving ${cacheKey} from cache.`);
+            return res.json(cachedData);
+        }*/
+
+        const tmdbResponse = await fetch(apiUrl);
+        const tmdbData = await tmdbResponse.json();
+        const genres = tmdbData.genres;
+        //await saveToCache(cacheKey, genres);
+        res.json(genres);
+    } catch (error) {
+        console.error(`Error fetching ${cacheKey}:`, error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
 export const DiscoverMovies = async (req, res) => {
     const page = req.query.page || 1;
     const genres = req.query.genres || '';
     let cacheKey = `discover_movies_page_${page}`;
     let apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&include_adult=false&language=fr-FR&page=${page}`;
-
     if (genres) {
         cacheKey += `_${genres}`;
         apiUrl += `&with_genres=${genres}`;
