@@ -1,8 +1,8 @@
-.ratings-content{
-    padding: 0 40px;
+.account-options-content{
+    padding: 0 30px;
 }
 
-.ratings .title-group {
+.account-options-content .title-group {
     width: 100%;
     display: flex;
     align-items: baseline;
@@ -10,18 +10,18 @@
     color: #fff;
 }
 
-.ratings .title-group h2 {
+.account-options-content .title-group h2 {
     margin: 0;
     margin-right: 40px;
 }
 
-.ratings .title-group .tabs {
+.account-options-content .title-group .tabs {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.ratings .title-group .tabs h3 {
+.account-options-content .title-group .tabs h3 {
     margin: 20px 20px;
     font-size: 1em;
     font-weight: 700;
@@ -32,12 +32,7 @@
     border-bottom-color: transparent;
 }
 
-.ratings .title-group .tabs .active-tab {
-    border-bottom-color: #fff;  
-}
-
-.ratings .movies-content, 
-.ratings .series-content {
-    color: #fff;
+.account-options-content .title-group .tabs .active-tab {
+    border-bottom-color: #fff;
 }
 

@@ -6,9 +6,9 @@ import Actors from "../Actors";
 import Videos from "../Videos";
 import Images from "../Images";
 import Recommendations from "../Recommendations";
-import MovieOptions from "./MovieOptions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
+import MediaOptions from "../common/MediaOptions";
 
 const DisplayMovieDetails = ({ movie, crew, actors, videos, images, recommendations }) => {
 
@@ -62,7 +62,7 @@ const DisplayMovieDetails = ({ movie, crew, actors, videos, images, recommendati
                                     <span>{formattedDate} - &nbsp;{`${hours}h ${minutes}m`} &nbsp;{videos.length !== 0 ? "-" : ""}</span>
                                     <MovieTrailer videos={videos} />
                                 </div>
-                                <MovieOptions movie={movie}/>
+                                <MediaOptions media={movie} mediaType={"movies"}/>
                                 <div className="movie-tagline">
                                     <p>{movie.tagline}</p>
                                 </div>

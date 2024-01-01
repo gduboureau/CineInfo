@@ -24,25 +24,26 @@ const fetchMovies = async (req, res, cacheKey, apiUrl) => {
     }
 };
 
-const fetchMovie = async (req, res, cacheKey, apiUrl) => {
+export const fetchMovie = async (cacheKey, apiUrl) => {
     try {
         /*await connectToRedis();
         const cachedData = await getFromCache(cacheKey);
 
         if (cachedData) {
             console.log(`Serving ${cacheKey} from cache.`);
-            return res.json(cachedData);
+            return cachedData;
         }*/
 
         const tmdbResponse = await fetch(apiUrl);
         const movie = await tmdbResponse.json();
         //await saveToCache(cacheKey, movies);
-        res.json(movie);
+        return movie;
     } catch (error) {
         console.error(`Error fetching ${cacheKey}:`, error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        throw new Error('Internal Server Error');
     }
 };
+
 
 export const MovieGenres = async (req, res) => {
     const cacheKey = 'movie_genres';
@@ -111,28 +112,32 @@ export const MovieDetails = async (req, res) => {
     const { id } = req.params;
     const cacheKey = `movie_${id}`;
     const apiUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=fr-FR`;
-    await fetchMovie(req, res, cacheKey, apiUrl);
+    const movie = await  fetchMovie(cacheKey, apiUrl);
+    res.json(movie);
 }
 
 export const MovieCredits = async (req, res) => {
     const { id } = req.params;
     const cacheKey = `movie_${id}_credits`;
     const apiUrl = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=fr-FR`;
-    await fetchMovie(req, res, cacheKey, apiUrl);
+    const movie = await  fetchMovie(cacheKey, apiUrl);
+    res.json(movie);
 }
 
 export const MovieVideos = async (req, res) => {
     const { id } = req.params;
     const cacheKey = `movie_${id}_videos`;
     const apiUrl = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=fr-FR`;
-    await fetchMovie(req, res, cacheKey, apiUrl);
+    const movie = await  fetchMovie(cacheKey, apiUrl);
+    res.json(movie);
 }
 
 export const MovieImages = async (req, res) => {
     const { id } = req.params;
     const cacheKey = `movie_${id}_images`;
     const apiUrl = `https://api.themoviedb.org/3/movie/${id}/images?api_key=${apiKey}`;
-    await fetchMovie(req, res, cacheKey, apiUrl);
+    const movie = await  fetchMovie(cacheKey, apiUrl);
+    res.json(movie);
 }
 
 export const MovieRecommendations = async (req, res) => {

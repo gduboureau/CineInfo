@@ -17,3 +17,12 @@ CREATE TABLE public.FavoriteMovies (
     movie_id INT NOT NULL,
     CONSTRAINT unique_favorite_movie UNIQUE (user_id, movie_id)
 );
+
+DROP TABLE IF EXISTS MovieRatings;
+CREATE TABLE public.MovieRatings (
+    id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id uuid REFERENCES users(user_id),
+    movie_id INT NOT NULL,
+    rating DECIMAL(2, 1) NOT NULL,
+    CONSTRAINT unique_movie_rating UNIQUE (user_id, movie_id)
+);
