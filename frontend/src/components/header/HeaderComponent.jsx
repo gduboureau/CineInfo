@@ -3,14 +3,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Logo from './assets/logo-cine.png';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import './assets/headerComponent.css';
 
 const HeaderComponent = ({ isLogged }) => {
     const [userInfos, setUserInfos] = useState('');
+    const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
 
     const navigate = useNavigate();
-    
+
     const categories = [
         {
             title: 'Films',
@@ -75,21 +77,35 @@ const HeaderComponent = ({ isLogged }) => {
                 </div>
                 <ul className="categories">
                     {categories.map((category, index) => (
-                        <li key={index} className="category-with-submenu">
-                            <Link to={`/${category.path}`} className="category">
+                        <li key={index} className="category-with-submenu" onMouseEnter={() => setIsSubMenuOpen(category.title)}
+                        onMouseLeave={() => setIsSubMenuOpen(false)}>
+                            <Link
+                                to={`/${category.path}`}
+                                className="category"
+                            >
                                 {category.title}
                             </Link>
-                            <div className="submenu">
-                                <ul>
-                                    {category.submenu.map((subitem, subindex) => (
-                                        <li key={subindex}>
-                                            <Link to={subitem.path} className="subcategory">
-                                                {subitem.title}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
+                            <AnimatePresence>
+                                {isSubMenuOpen === category.title && (
+                                    <motion.div
+                                        className="submenu"
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        <ul>
+                                            {category.submenu.map((subitem, subindex) => (
+                                                <li key={subindex}>
+                                                    <Link to={subitem.path} className="subcategory">
+                                                        {subitem.title}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </li>
                     ))}
                 </ul>
@@ -101,7 +117,7 @@ const HeaderComponent = ({ isLogged }) => {
                     <div className='account'>
                         {isLogged ? (
                             <Link to={`/account/${userInfos.username}`}>
-                               {userInfos && userInfos.firstname && userInfos.lastname && (
+                                {userInfos && userInfos.firstname && userInfos.lastname && (
                                     <p>{userInfos.firstname[0]}{userInfos.lastname[0]}</p>
                                 )}
                             </Link>

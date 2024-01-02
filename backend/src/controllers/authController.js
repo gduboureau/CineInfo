@@ -7,10 +7,10 @@ export const login = async (req, res) => {
     const { mail, password } = req.body;
 
     try {
-        const result = await db.query('SELECT * FROM public."users" WHERE mail = $1', [mail]);
+        const result = await db.query('SELECT * FROM public."users" WHERE mail = $1 OR username = $1', [mail]);
 
         if (result.rows.length === 0) {
-            return res.json({ error: 'Cette adresse mail ne correspond à aucun compte' });
+            return res.json({ error: 'Cette adresse mail ou ce nom d\'utilisateur ne correspond à aucun compte' });
         }
 
         if (password !== result.rows[0].password) {

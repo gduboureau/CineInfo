@@ -19,6 +19,12 @@
     opacity: 1;
 }
 
+.movies-container .movie.visible:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+    opacity: 0.8;
+}
+
 .movies-container .movie img {
     width: 100%;
     height: auto;

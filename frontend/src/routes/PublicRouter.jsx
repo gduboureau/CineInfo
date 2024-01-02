@@ -17,10 +17,6 @@ import AiringTodaySeries from "../pages/series/AiringTodaySeries";
 import TopRatedSeries from "../pages/series/TopRatedSeries";
 import AllMovies from "../pages/movies/AllMovies";
 import AllSeries from "../pages/series/AllSeries";
-import Ratings from "../pages/account/Ratings";
-import Watchlist from "../pages/account/Watchlist";
-import Favorites from "../pages/account/Favorites";
-import Settings from "../pages/account/Settings";
 
 
 const PublicRouter = () => {
@@ -42,11 +38,6 @@ const PublicRouter = () => {
                 <Route path="/tv/top-rated" element={<TopRatedSeries />} />
                 <Route path="/movie/:id/:title" element={<MovieDetails />} />
                 <Route path="/tv/:id/:name" element={<SerieDetails />} />
-                <Route path="/account/:username" element={<Watchlist />} />
-                <Route path="/account/:username/ratings" element={<Ratings />} />
-                <Route path="/account/:username/watchlist" element={<Watchlist />} />
-                <Route path="/account/:username/favorites" element={<Favorites />} />
-                <Route path="/account/:username/settings" element={<Settings />} />
                 <Route path="*" element={<Error />} />
             </Route>
         </Routes>

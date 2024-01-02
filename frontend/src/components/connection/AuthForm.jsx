@@ -7,7 +7,7 @@ import '../../pages/connection/assets/login.css';
 import '../../pages/connection/assets/signup.css';
 
 const AuthForm = ({ type, onSubmit }) => {
-    
+
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
@@ -51,8 +51,9 @@ const AuthForm = ({ type, onSubmit }) => {
                         </div>
                     </>
                 )}
+
                 <div className='fieldset'>
-                    <label>Adresse mail</label>
+                    {type === 'login' ? <label>Adresse mail ou nom d'utilisateur</label> : <label>Adresse mail</label>}
                     <input type="text" className="input-mail" value={mail} onChange={(e) => setMail(e.target.value)} />
                 </div>
 

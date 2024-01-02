@@ -20,6 +20,12 @@
     opacity: 1;
 }
 
+.series-container .serie.visible:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+    opacity: 0.8;
+}
+
 .series-container .serie img {
     width: 100%;
     height: auto;
