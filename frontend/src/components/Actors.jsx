@@ -23,7 +23,8 @@ const Actors = ({ actors }) => {
                             ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
                             : NoPicture
                     } />
-                    <p>{actor.name}</p>
+                    <p className="actor-name">{actor.name}</p>
+                    <p>{actor.character || actor.roles[0].character}</p>
                 </div>
             ))}
             {actors.length > visibleActors && (

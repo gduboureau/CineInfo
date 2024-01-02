@@ -24,6 +24,27 @@ const fetchSeries = async (req, res, cacheKey, apiUrl) => {
     }
 };
 
+export const fetchSerie = async (cacheKey, apiUrl) => {
+    try {
+        /*await connectToRedis();
+        const cachedData = await getFromCache(cacheKey);
+
+        if (cachedData) {
+            console.log(`Serving ${cacheKey} from cache.`);
+            return cachedData;
+        }*/
+
+        const tmdbResponse = await fetch(apiUrl);
+        const serie = await tmdbResponse.json();
+        //await saveToCache(cacheKey, movies);
+        return serie;
+    } catch (error) {
+        console.error(`Error fetching ${cacheKey}:`, error);
+        throw new Error('Internal Server Error');
+    }
+};
+
+
 export const SerieGenres = async (req, res) => {
     const cacheKey = 'serie_genres';
     const apiUrl = `https://api.themoviedb.org/3/genre/tv/list?api_key=${apiKey}&language=fr-FR`;
@@ -81,3 +102,56 @@ export const TopRatedSeries = async (req, res) => {
     const apiUrl = `https://api.themoviedb.org/3/tv/top_rated?api_key=${apiKey}&language=fr-FR&page=${page}`;
     await fetchSeries(req, res, cacheKey, apiUrl);
 };
+
+export const SeriesDetails = async (req, res) => {
+    const { id } = req.params;
+    const cacheKey = `series_details_${id}`;
+    const apiUrl = `https://api.themoviedb.org/3/tv/${id}?api_key=${apiKey}&language=fr-FR`;
+    const data = await fetchSerie(cacheKey, apiUrl);
+    res.json(data);
+}
+
+export const SeriesDetailsBySeason = async (req, res) => {
+    const { id, season } = req.params;
+    const cacheKey = `series_details_${id}_${season}`;
+    const apiUrl = `https://api.themoviedb.org/3/tv/${id}/season/${season}?api_key=${apiKey}&language=fr-FR`;
+    const data = await fetchSerie(cacheKey, apiUrl);
+    res.json(data);
+};
+
+export const SeriesCreditsBySeason = async (req, res) => {
+    const { id, season } = req.params;
+    const cacheKey = `series_credits_${id}_${season}`;
+    const apiUrl = `https://api.themoviedb.org/3/tv/${id}/season/${season}/aggregate_credits?api_key=${apiKey}&language=fr-FR`;
+    const data = await fetchSerie(cacheKey, apiUrl);
+    res.json(data);
+};
+
+export const SeriesVideosBySeason = async (req, res) => {
+    const { id, season } = req.params;
+    const cacheKey = `series_videos_${id}_${season}`;
+    const apiUrl = `https://api.themoviedb.org/3/tv/${id}/season/${season}/videos?api_key=${apiKey}&language=fr-FR`;
+    const data = await fetchSerie(cacheKey, apiUrl);
+    res.json(data);
+    
+};
+
+export const SeriesImagesBySeason = async (req, res) => {
+    const { id, season } = req.params;
+    const cacheKey = `series_images_${id}_${season}`;
+    const apiUrl = `https://api.themoviedb.org/3/tv/${id}/season/${season}/images?api_key=${apiKey}`;
+    const data = await fetchSerie(cacheKey, apiUrl);
+    res.json(data);
+};
+
+export const SeriesRecommendations = async (req, res) => {
+    const { id } = req.params;
+    const cacheKey = `series_recommendations_${id}`;
+    const apiUrl = `https://api.themoviedb.org/3/tv/${id}/similar?api_key=${apiKey}`;
+    const data = await fetchSerie(cacheKey, apiUrl);
+    res.json(data);
+};
+
+
+
+

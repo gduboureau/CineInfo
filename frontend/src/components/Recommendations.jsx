@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./assets/recommandations.css";
 import DisplayMovies from "./movies/DisplayMovies";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,12 +6,11 @@ import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 
 const Recommendations = ({ movies }) => {
 
-    const [visibleRecommendations, setVisibleRecommendations] = useState(6);
+    const [visibleRecommendations, setVisibleRecommendations] = useState(5);
 
     const handleShowMore = () => {
-        setVisibleRecommendations(prevVisibleRecommendations => prevVisibleRecommendations + 6);
+        setVisibleRecommendations(prevVisibleRecommendations => prevVisibleRecommendations + 5);
     }
-
     const displayedMovies = movies.slice(0, visibleRecommendations);
 
     return (
