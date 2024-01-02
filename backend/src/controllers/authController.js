@@ -42,7 +42,7 @@ export const register = async (req, res) => {
         await db.query('INSERT INTO public."users" (mail, password, username, firstname, lastname) VALUES ($1, $2, $3, $4, $5)', [mail, password, username, firstname, lastname]);
 
         const result = await db.query('SELECT * FROM public."users" WHERE username = $1', [username]);
-        const token = jwt.sign({ userId: result.rows[0].id }, secretKey, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: result.rows[0].user_id }, secretKey, { expiresIn: '1h' });
         res.json({ token });
     } catch (error) {
         console.error('Erreur lors de l\'enregistrement de l\'utilisateur :', error.message);
