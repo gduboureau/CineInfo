@@ -5,6 +5,7 @@ import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import NoPicture from "./assets/no-picture.png";
 
 const Actors = ({ actors }) => {
+
     const [visibleActors, setVisibleActors] = useState(10);
 
     const handleShowMore = () => {

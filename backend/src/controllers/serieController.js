@@ -111,35 +111,27 @@ export const SeriesDetails = async (req, res) => {
     res.json(data);
 }
 
-export const SeriesDetailsBySeason = async (req, res) => {
-    const { id, season } = req.params;
-    const cacheKey = `series_details_${id}_${season}`;
-    const apiUrl = `https://api.themoviedb.org/3/tv/${id}/season/${season}?api_key=${apiKey}&language=fr-FR`;
+export const SeriesCredits = async (req, res) => {
+    const { id } = req.params;
+    const cacheKey = `series_credits_${id}`;
+    const apiUrl = `https://api.themoviedb.org/3/tv/${id}/aggregate_credits?api_key=${apiKey}&language=fr-FR`;
     const data = await fetchSerie(cacheKey, apiUrl);
     res.json(data);
 };
 
-export const SeriesCreditsBySeason = async (req, res) => {
-    const { id, season } = req.params;
-    const cacheKey = `series_credits_${id}_${season}`;
-    const apiUrl = `https://api.themoviedb.org/3/tv/${id}/season/${season}/aggregate_credits?api_key=${apiKey}&language=fr-FR`;
-    const data = await fetchSerie(cacheKey, apiUrl);
-    res.json(data);
-};
-
-export const SeriesVideosBySeason = async (req, res) => {
-    const { id, season } = req.params;
-    const cacheKey = `series_videos_${id}_${season}`;
-    const apiUrl = `https://api.themoviedb.org/3/tv/${id}/season/${season}/videos?api_key=${apiKey}&language=fr-FR`;
+export const SeriesVideos = async (req, res) => {
+    const { id } = req.params;
+    const cacheKey = `series_videos_${id}`;
+    const apiUrl = `https://api.themoviedb.org/3/tv/${id}/videos?api_key=${apiKey}&language=fr-FR`;
     const data = await fetchSerie(cacheKey, apiUrl);
     res.json(data);
     
 };
 
-export const SeriesImagesBySeason = async (req, res) => {
-    const { id, season } = req.params;
-    const cacheKey = `series_images_${id}_${season}`;
-    const apiUrl = `https://api.themoviedb.org/3/tv/${id}/season/${season}/images?api_key=${apiKey}`;
+export const SeriesImages = async (req, res) => {
+    const { id } = req.params;
+    const cacheKey = `series_images_${id}`;
+    const apiUrl = `https://api.themoviedb.org/3/tv/${id}/images?api_key=${apiKey}`;
     const data = await fetchSerie(cacheKey, apiUrl);
     res.json(data);
 };
@@ -152,6 +144,19 @@ export const SeriesRecommendations = async (req, res) => {
     res.json(data);
 };
 
+export const SeriesDetailsBySeason = async (req, res) => {
+    const { id, season  } = req.params;
+    const cacheKey = `series_details_${id}_season_${season }`;
+    const apiUrl = `https://api.themoviedb.org/3/tv/${id}/season/${season }?api_key=${apiKey}&language=fr-FR`;
+    const data = await fetchSerie(cacheKey, apiUrl);
+    res.json(data);
+}
 
 
-
+export const SeriesVideosBySeason = async (req, res) => {
+    const { id, season  } = req.params;
+    const cacheKey = `series_videos_${id}_season_${season }`;
+    const apiUrl = `https://api.themoviedb.org/3/tv/${id}/season/${season }/videos?api_key=${apiKey}`;
+    const data = await fetchSerie(cacheKey, apiUrl);
+    res.json(data);
+}

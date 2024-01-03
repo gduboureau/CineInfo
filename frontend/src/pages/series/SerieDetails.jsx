@@ -1,38 +1,56 @@
 import React, {useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
-import SerieDataSeason from "../../components/series/SerieDataSeason";
 import DisplaySerieDetails from "../../components/series/DisplaySerieDetails";
 
 const SerieDetails = () => {
 
     const { id } = useParams();
-    const [selectedSeason, setSelectedSeason] = useState(1);
-    const [serieDetails, setSerieDetails] = useState([]);
-
-    const {
-        serieSeasonsDetails,
-        serieSeasonsCreditsActors,
-        serieSeasonsCreditsCrew,
-        serieSeasonsVideos,
-        serieSeasonsImages,
-        serieSeasonsRecommendations
-    } = SerieDataSeason({season: selectedSeason, id: id});
+    const [SerieDetails, setSerieDetails] = useState([]);
+    const [SerieCreditsActors, setSerieCreditsActors] = useState([]);
+    const [SerieCreditsCrew, setSerieCreditsCrew] = useState([]);
+    const [SerieVideos, setSerieVideos] = useState([]);
+    const [SerieImages, setSerieImages] = useState([]);
+    const [SerieRecommendations, setSerieRecommendations] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/series/${id}`).then((response) => response.json()).then((data) => {
-            setSerieDetails(data);
-        });
-    }, [id, selectedSeason]);
 
-    const handleSeasonChange = (newSeason) => {
-        setSelectedSeason(newSeason);
-    };
+        const fetchSerieDetails = fetch(`http://localhost:8080/series/${id}`).then((response) =>
+            response.json()
+        );
+
+        const fetchSerieCredits = fetch(`http://localhost:8080/series/${id}/credits`).then((response) => 
+            response.json()
+        );
+
+        const fetchSerieVideos = fetch(`http://localhost:8080/series/${id}/videos`).then(
+            (response) => response.json()
+        );
+
+        const fetchSerieImages = fetch(`http://localhost:8080/series/${id}/images`).then(
+            (response) => response.json()
+        );
+
+        const fetchSerieRecommendations = fetch(`http://localhost:8080/series/${id}/recommendations`).then(
+            (response) => response.json()
+        );
+
+        Promise.all([fetchSerieDetails,fetchSerieCredits,fetchSerieVideos,fetchSerieImages,fetchSerieRecommendations])
+            .then(([SerieDetailsData, creditsData, videosData, imagesData, recommendationsData]) => {
+                setSerieDetails(SerieDetailsData);
+                setSerieCreditsActors(creditsData.cast);
+                setSerieCreditsCrew(creditsData.crew);
+                setSerieVideos(videosData.results);
+                setSerieImages(imagesData.posters);
+                setSerieRecommendations(recommendationsData.results);
+            })
+            .catch((error) => console.error("Erreur de récupération des données de la série :", error));
+    }, [id]);
 
     return (
         <div>
-            <DisplaySerieDetails serie={serieDetails} season={serieSeasonsDetails} crew={serieSeasonsCreditsCrew}
-            actors={serieSeasonsCreditsActors} videos={serieSeasonsVideos} images={serieSeasonsImages} 
-            recommendations={serieSeasonsRecommendations}  selectedSeason={selectedSeason} handleSeasonChange={handleSeasonChange}/>
+            <DisplaySerieDetails serie={SerieDetails} crew={SerieCreditsCrew}
+            actors={SerieCreditsActors} videos={SerieVideos} images={SerieImages} 
+            recommendations={SerieRecommendations} />
         </div>
     );
 }
