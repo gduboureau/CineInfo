@@ -37,7 +37,6 @@ const DisplaySerieDetails = ({ serie, season, crew, actors, videos, images, reco
         backgroundImage: `url('https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/${serie.backdrop_path}')`,
     };
 
-
     const seasons = [...Array(serie.number_of_seasons).keys()].map((seasonNumber) => seasonNumber + 1);
     const otherSeasons = seasons.filter((seasonNumber) => seasonNumber !== selectedSeason);
 
@@ -49,8 +48,8 @@ const DisplaySerieDetails = ({ serie, season, crew, actors, videos, images, reco
                     <div className="background-container" style={backgroundStyle}>
                         <div className="serie-header-container">
                             <div className="serie-image">
-                                {serie.poster_path ? (
-                                    <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${season.poster_path}`} alt={serie.title} />
+                                {season.poster_path ? (
+                                    <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${season.poster_path}`} alt={season.name} />
                                 ) : (
                                     <div className="icon-div">
                                         <FontAwesomeIcon icon={faImage} className="icon" />
@@ -80,7 +79,7 @@ const DisplaySerieDetails = ({ serie, season, crew, actors, videos, images, reco
                                     <span>{formattedDate} &nbsp;{videos.length !== 0 && videos.type === "Trailer" ? "-" : ""}</span>
                                     <MovieTrailer videos={videos} />
                                 </div>
-                                <MediaOptions media={season} mediaType={"series"} />
+                                <MediaOptions media={serie} mediaType={"series"} />
                                 <div className="serie-tagline">
                                     <p>{serie.tagline}</p>
                                 </div>

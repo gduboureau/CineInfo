@@ -26,3 +26,20 @@ CREATE TABLE public.MovieRatings (
     rating DECIMAL(2, 1) NOT NULL,
     CONSTRAINT unique_movie_rating UNIQUE (user_id, movie_id)
 );
+
+DROP TABLE IF EXISTS FavoriteSeries;
+CREATE TABLE public.FavoriteSeries (
+    id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id uuid REFERENCES users(user_id),
+    serie_id INT NOT NULL,
+    CONSTRAINT unique_favorite_serie UNIQUE (user_id, serie_id)
+);
+
+DROP TABLE IF EXISTS SerieRatings;
+CREATE TABLE public.SerieRatings (
+    id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id uuid REFERENCES users(user_id),
+    serie_id INT NOT NULL,
+    rating DECIMAL(2, 1) NOT NULL,
+    CONSTRAINT unique_serie_rating UNIQUE (user_id, serie_id)
+);

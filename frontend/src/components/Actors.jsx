@@ -17,19 +17,19 @@ const Actors = ({ actors }) => {
         <div className="actors-container">
             {displayedActors.map((actor) => (
                 <div key={actor.id} className="actor-item">
-                    <img 
-                     src={
-                        actor.profile_path
-                            ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
-                            : NoPicture
-                    } />
+                    <img
+                        src={
+                            actor.profile_path
+                                ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}`
+                                : NoPicture
+                        } alt={actor.id} />
                     <p className="actor-name">{actor.name}</p>
                     <p>{actor.character || actor.roles[0].character}</p>
                 </div>
             ))}
             {actors.length > visibleActors && (
                 <div className="show-more-actors">
-                    <FontAwesomeIcon className="arrow-actors" icon={faArrowDown} style={{color: "#ffffff", cursor: "pointer"}} onClick={handleShowMore}/>
+                    <FontAwesomeIcon className="arrow-actors" icon={faArrowDown} style={{ color: "#ffffff", cursor: "pointer" }} onClick={handleShowMore} />
                 </div>
             )}
         </div>
