@@ -37,3 +37,7 @@
 .actors-container .arrow-actors:hover {
     opacity: 0.4;
 }
+
+.actors-container .actor-name {
+    font-weight: bold;
+}

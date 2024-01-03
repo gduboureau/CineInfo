@@ -1,0 +1,218 @@
+.serie-details-container .background-link {
+    display: block;
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    position: relative;
+}
+
+.serie-details-container .background-container {
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.serie-details-container .background-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72));
+    z-index: 1;
+}
+
+.serie-details-container .background-container .serie-header {
+    overflow: auto;
+    max-height: 500px;
+}
+
+.serie-details-container .background-container .serie-title-and-season {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.serie-details-container .background-container .serie-title-and-season .serie-title {
+    font-weight: bold;
+    font-size: 30px;
+    margin-right: 10px;
+}
+
+.serie-details-container .background-container .serie-title-and-season .serie-season-selector {
+    margin-left: 10px;
+}
+
+.serie-details-container .background-container .custom-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.serie-details-container .background-container .custom-dropdown-button {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.custom-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: transparent;
+    min-width: 160px;
+    z-index: 1;
+    margin-left: 5px;
+    max-height: 80px;
+    overflow-y: auto;
+
+}
+
+.custom-dropdown-content a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.custom-dropdown:hover .custom-dropdown-content {
+    display: block;
+}
+
+.custom-dropdown .icon-left {
+  transition: transform 0.3s ease-in-out; 
+  cursor: pointer;
+}
+
+.custom-dropdown:hover .icon-left {
+  transform: rotate(180deg); 
+}
+
+
+
+.serie-details-container .background-container .serie-header-container {
+    display: flex;
+}
+
+.serie-details-container .background-container .serie-image img {
+    width: 325px;
+    margin-left: 50px;
+    margin-top: 70px;
+    border-radius: 15px;
+    position: relative;
+    z-index: 2;
+}
+
+.serie-details-container .background-container .serie-image .icon-div {
+    width: 325px;
+    height: 489px;
+    margin-left: 50px;
+    margin-top: 70px;
+    border-radius: 15px;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(128, 128, 128, 0.2);
+}
+
+.serie-details-container .background-container .serie-image .icon-div .icon {
+    width: 50%;
+    height: auto;
+    color: rgba(128, 128, 128, 0.5);
+}
+
+.serie-details-container .background-container .serie-header-infos {
+    margin-left: 50px;
+    margin-top: 50px;
+    z-index: 2;
+    position: relative;
+    color: white;
+}
+
+.serie-details-container .background-container .serie-title {
+    font-weight: bold;
+    font-size: 30px;
+    margin-left: 0px;
+}
+
+.serie-details-container .background-container .serie-date-trailer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.serie-details-container .background-container .serie-date-trailer span {
+    margin-right: 10px;
+}
+
+.serie-details-container .background-container .serie-tagline {
+    opacity: 0.7;
+}
+
+.serie-details-container .background-container .serie-description {
+    font-size: 15px;
+    margin-right: 60px;
+    text-align: justify;
+}
+
+.serie-details-container .background-container .serie-crew {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+}
+
+
+.serie-details-container .background-container .serie-crew .title {
+    font-weight: bold;
+    font-size: 17px;
+    margin-bottom: 2px;
+}
+
+.serie-details-container .background-container .serie-crew .value {
+    margin: 0;
+}
+
+.serie-details-container .background-container .serie-crew li:not(:first-child) {
+    margin-left: 100px;
+}
+
+.serie-details-container .serie-details-categories {
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.serie-details-container .category-titles {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 0.1px solid rgb(76, 76, 76);
+}
+
+.serie-details-container .serie-details-category-title {
+    margin-left: 40px;
+    margin-right: 40px;
+    cursor: pointer;
+}
+
+.serie-details-container .serie-details-category-title:hover {
+    color: rgb(255, 255, 255);
+    border-bottom: 2px solid rgb(255, 255, 255);
+    opacity: 0.7;
+}
+
+.serie-details-container .category-content {
+    margin-top: 10px;
+}
+
+.serie-details-container .serie-details-category-title.active {
+    color: rgb(63, 63, 63);
+    border-bottom: 2px solid rgb(63, 63, 63);
+}
