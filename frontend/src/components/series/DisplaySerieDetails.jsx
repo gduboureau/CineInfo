@@ -39,10 +39,6 @@ const DisplaySerieDetails = ({ serie, crew, actors, videos, images, recommendati
         };
     }
 
-    const seasons = [...Array(serie.number_of_seasons).keys()].map((seasonNumber) => seasonNumber + 1);
-    const otherSeasons = seasons.filter((seasonNumber) => seasonNumber !== selectedSeason);
-
-
     return (
         <div className="serie-details-container">
             <div className="serie-header">
