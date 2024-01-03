@@ -32,10 +32,13 @@ const DisplaySerieDetails = ({ serie, season, crew, actors, videos, images, reco
     const topWriter = crew.find((member) => member.department === "Writing");
     const topProducer = crew.find((member) => member.department === "Production");
 
+    let backgroundStyle = {};
 
-    const backgroundStyle = {
-        backgroundImage: `url('https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/${serie.backdrop_path}')`,
-    };
+    if (serie.backdrop_path) {
+        backgroundStyle = {
+            backgroundImage: `url('https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/${serie.backdrop_path}')`,
+        };
+    }
 
     const seasons = [...Array(serie.number_of_seasons).keys()].map((seasonNumber) => seasonNumber + 1);
     const otherSeasons = seasons.filter((seasonNumber) => seasonNumber !== selectedSeason);
@@ -44,7 +47,7 @@ const DisplaySerieDetails = ({ serie, season, crew, actors, videos, images, reco
     return (
         <div className="serie-details-container">
             <div className="serie-header">
-                <a className="background-link">
+                <div className="background-link">
                     <div className="background-container" style={backgroundStyle}>
                         <div className="serie-header-container">
                             <div className="serie-image">
@@ -111,7 +114,7 @@ const DisplaySerieDetails = ({ serie, season, crew, actors, videos, images, reco
                             </div>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
             <div className="serie-details-categories">
                 <div className="category-titles">
