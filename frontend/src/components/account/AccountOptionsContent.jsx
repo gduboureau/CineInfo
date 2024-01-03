@@ -12,7 +12,11 @@ const AccountOptionsContent = ({ media, optionType, activeTab }) => {
     const navigate = useNavigate();
 
     const handleMediaClick = (type, id, name) => {
-        navigate(`/${type.slice(0, -1)}/${id}/${name}`);
+        if (type === 'movies') {
+            navigate(`/movie/${id}/${name}`);
+        } else {
+            navigate(`/tv/${id}/${name}`);
+        }
     };
 
     const formatDate = (date) => {
@@ -26,15 +30,15 @@ const AccountOptionsContent = ({ media, optionType, activeTab }) => {
                 media.map((item) => (
                     <div className="media" key={item.id}>
                         {item.poster_path ? (
-                            <img src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2/${item.poster_path}`} alt={item.id} onClick={() => handleMediaClick(activeTab, item.id, optionType === 'series' ? item.name : item.title)} />
+                            <img src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2/${item.poster_path}`} alt={item.id} onClick={() => handleMediaClick(activeTab, item.id, activeTab === 'series' ? item.name : item.title)} />
                         ) : (
-                            <div className="icon-div" onClick={() => handleMediaClick(activeTab, item.id, optionType === 'series' ? item.name : item.title)}>
+                            <div className="icon-div" onClick={() => handleMediaClick(activeTab, item.id, activeTab === 'series' ? item.name : item.title)}>
                                 <FontAwesomeIcon icon={faImage} className="icon" />
                             </div>
                         )}
                         <div className="details">
-                            <h3 className="title" onClick={() => handleMediaClick(activeTab, item.id, optionType === 'series' ? item.name : item.title)}>
-                                {optionType === 'series' ? item.name : item.title}
+                            <h3 className="title" onClick={() => handleMediaClick(activeTab, item.id, activeTab === 'series' ? item.name : item.title)}>
+                                {activeTab === 'series' ? item.name : item.title}
                             </h3>
                             <p className="date">{item.release_date ? formatDate(item.release_date) : (item.first_air_date ? formatDate(item.first_air_date) : "")}</p>
                             <p className="overview">{item.overview}</p>

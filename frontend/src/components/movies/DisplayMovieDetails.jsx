@@ -40,7 +40,7 @@ const DisplayMovieDetails = ({ movie, crew, actors, videos, images, recommendati
         backgroundStyle = {
             backgroundImage: `url('https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/${movie.backdrop_path}')`,
         };
-    };
+    }
 
     return (
         <div className="movie-details-container">

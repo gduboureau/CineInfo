@@ -37,7 +37,11 @@ const DisplaySerieDetails = ({ serie, crew, actors, videos, images, recommendati
         backgroundStyle = {
             backgroundImage: `url('https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/${serie.backdrop_path}')`,
         };
-    };
+    }
+
+    const seasons = [...Array(serie.number_of_seasons).keys()].map((seasonNumber) => seasonNumber + 1);
+    const otherSeasons = seasons.filter((seasonNumber) => seasonNumber !== selectedSeason);
+
 
     return (
         <div className="serie-details-container">
