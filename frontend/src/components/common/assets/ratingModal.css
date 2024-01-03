@@ -1,31 +1,23 @@
 .rating-modal {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-}
-
-.rating-modal .modal-content {
     width: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
-    top: 200px;
-    left: -152px;
+    position: absolute;
+    top: 207px;
+    left: 332px;
     background: #0c0c0c;
     color: #fff;
     padding: 20px;
     border-radius: 10px;
     white-space: nowrap;
+    z-index: 1001;
 
     &::before {
         content: '';
         position: absolute;
-        top: -7%;
+        top: -10%;
         left: 50%;
         border-width: 0 10px 10px 10px;
         border-style: solid;
@@ -34,7 +26,7 @@
     }
 }
 
-.rating-modal .modal-content span.close {
+.rating-modal span.close {
     color: #fff;
     position: absolute;
     top: 5px;
@@ -44,11 +36,11 @@
     transition: all 0.2s ease-in-out;
 }
 
-.rating-modal .modal-content p {
+.rating-modal p {
     margin-top: 10px;
 }
 
-.rating-modal .modal-content .stars {
+.rating-modal .stars {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -57,13 +49,13 @@
     margin-top: 15px;
 }
 
-.rating-modal .modal-content .stars .remove-icon {
+.rating-modal .stars .remove-icon {
     width: 25px;
     height: 25px;
     margin-right: 10px;
 }
 
-.rating-modal .modal-content .stars svg {
+.rating-modal .stars svg {
     width: 35px;
     height: 35px;
 }

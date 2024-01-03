@@ -27,7 +27,6 @@ const RatingModal = ({ media, mediaType, rating, setRating, setIsRated, onClose 
     };
 
     const handleSaveNote = () => {
-        setRating(selectedRating);
         fetch(`http://localhost:8080/user/${mediaType}/addrating`, {
             method: "POST",
             headers: {
@@ -42,6 +41,7 @@ const RatingModal = ({ media, mediaType, rating, setRating, setIsRated, onClose 
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
+                setRating(selectedRating);
                 toast.success('Note enregistrée avec succès');
             })
             .catch((error) => {
@@ -51,18 +51,7 @@ const RatingModal = ({ media, mediaType, rating, setRating, setIsRated, onClose 
         onClose();
     };
 
-    const handleModalClick = (e) => {
-        if (e.target.classList.contains("rating-modal")) {
-            if (selectedRating !== 0) {
-                handleSaveNote();
-            }
-            onClose();
-        }
-    };
-
     const handleDeleteNote = () => {
-        setRating(0);
-        setIsRated(false);
         fetch(`http://localhost:8080/user/${mediaType}/deleterating`, {
             method: "POST",
             headers: {
@@ -76,6 +65,8 @@ const RatingModal = ({ media, mediaType, rating, setRating, setIsRated, onClose 
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
+                setRating(0);
+                setIsRated(false);
             })
             .catch((error) => {
                 console.error("Erreur de recherche :", error);
@@ -85,29 +76,27 @@ const RatingModal = ({ media, mediaType, rating, setRating, setIsRated, onClose 
     };
 
     return (
-        <div className="rating-modal" onMouseLeave={() => setSelectedRating(0)} onClick={handleModalClick}>
-            <div className="modal-content">
-                <span className="close" onClick={onClose}>
-                    &times;
-                </span>
-                <div className="stars">
-                    <FontAwesomeIcon className='remove-icon' icon={faCircleMinus} style={{ cursor: "pointer" }} onClick={() => handleDeleteNote()} />
-                    {[1, 2, 3, 4, 5].map((index) => (
-                        <FontAwesomeIcon
-                            key={index}
-                            icon={
-                                selectedRating >= index
-                                    ? solidStar
-                                    : selectedRating >= index - 0.5
-                                        ? halfStar
-                                        : regularStar
-                            }
-                            style={{ cursor: "pointer" }}
-                            onMouseEnter={(event) => handleStarHover(event, index)}
-                            onClick={() => handleSaveNote()}
-                        />
-                    ))}
-                </div>
+        <div className="rating-modal" onMouseLeave={() => setSelectedRating(0)}>
+            <span className="close" onClick={onClose}>
+                &times;
+            </span>
+            <div className="stars">
+                <FontAwesomeIcon className='remove-icon' icon={faCircleMinus} style={{ cursor: "pointer" }} onClick={() => handleDeleteNote()} />
+                {[1, 2, 3, 4, 5].map((index) => (
+                    <FontAwesomeIcon
+                        key={index}
+                        icon={
+                            selectedRating >= index
+                                ? solidStar
+                                : selectedRating >= index - 0.5
+                                    ? halfStar
+                                    : regularStar
+                        }
+                        style={{ cursor: "pointer" }}
+                        onMouseEnter={(event) => handleStarHover(event, index)}
+                        onClick={() => handleSaveNote()}
+                    />
+                ))}
             </div>
         </div>
     );

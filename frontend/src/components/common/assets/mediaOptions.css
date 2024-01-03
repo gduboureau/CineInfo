@@ -51,7 +51,7 @@
 
 .media-options li.icons .tooltip {
     position: relative;
-    top: 100%;
+    top: 110%;
     background: #000;
     color: #fff;
     padding: 5px;
@@ -62,7 +62,7 @@
     &::before {
         content: '';
         position: absolute;
-        top: -20%;
+        top: -25%;
         left: 50%;
         border-width: 0 10px 10px 10px;
         border-style: solid;

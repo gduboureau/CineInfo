@@ -2,6 +2,7 @@ import db from '../utils/pg.js';
 import { fetchMovie } from './movieController.js';
 
 const apiKey = '7f0799a761376830477332b8577e17fe';
+const apiToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZjA3OTlhNzYxMzc2ODMwNDc3MzMyYjg1NzdlMTdmZSIsInN1YiI6IjY1NjlhYjRkZDA0ZDFhMDBlY2ZhOTFhMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Dg7J1QNfiLW7bGCLaFo6Fz8CcwU-HABY89b7Ac_emNw';
 
 export const getUserInfos = async (req, res) => {
     const userId = req.userId;
@@ -71,7 +72,27 @@ export const addOrUpdateRatingMovie = async (req, res) => {
     const userId = req.userId;
     const { mediaId, rating } = req.body;
 
+    const tmdbRating = rating * 2;
+
     try {
+        const tmdbResponse = await fetch(`https://api.themoviedb.org/3/movie/${mediaId}/rating?api_key=${apiKey}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${apiToken}`,
+            },
+            body: JSON.stringify({
+                value: tmdbRating,
+            }),
+        });
+
+        if (!tmdbResponse.ok) {
+            throw new Error(`TMDB API error: ${tmdbResponse}`);
+        }
+
+        const tmdbData = await tmdbResponse.json();
+        console.log('TMDB Response:', tmdbData);
+
         await db.query(`
             INSERT INTO public."movieratings" (user_id, movie_id, rating)
             VALUES ($1, $2, $3)
@@ -91,6 +112,22 @@ export const deleteRatingMovie = async (req, res) => {
     const { mediaId } = req.body;
 
     try {
+        const tmdbResponse = await fetch(`https://api.themoviedb.org/3/movie/${mediaId}/rating`, {
+            method: "DELETE",
+            headers: {
+                accept: 'application/json',
+                'Content-Type': 'application/json;charset=utf-8',
+                Authorization: `Bearer ${apiToken}`,
+            }
+        });
+
+        if (!tmdbResponse.ok) {
+            throw new Error(`TMDB API error: ${tmdbResponse.statusText}`);
+        }
+
+        const tmdbData = await tmdbResponse.json();
+        console.log('TMDB Response:', tmdbData);
+
         await db.query('DELETE FROM public."movieratings" WHERE user_id = $1 AND movie_id = $2', [userId, mediaId]);
         res.json({ message: 'Note supprimée' });
     } catch (error) {
