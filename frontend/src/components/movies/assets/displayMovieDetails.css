@@ -67,6 +67,8 @@
     z-index: 2;
     position: relative;
     color: white;
+    overflow: auto;
+    max-height: 550px;
 }
 
 .movie-details-container .background-container .movie-title {
@@ -148,4 +150,16 @@
 .movie-details-container .movie-details-category-title.active {
     color: rgb(63, 63, 63);
     border-bottom: 2px solid rgb(63, 63, 63);
+}
+
+.movie-details-container .background-container .movie-header-infos::-webkit-scrollbar {
+    width: 0.5em; 
+}
+
+.movie-details-container .background-container .movie-header-infos::-webkit-scrollbar-thumb {
+    background-color: transparent; 
+}
+
+.movie-details-container .background-container .movie-header-infos::-webkit-scrollbar-track {
+    background-color: transparent; 
 }

@@ -34,14 +34,18 @@ const DisplayMovieDetails = ({ movie, crew, actors, videos, images, recommendati
     const topWriter = crew.find((member) => member.department === "Writing");
     const topProducer = crew.find((member) => member.job === "Producer");
 
-    const backgroundStyle = {
-        backgroundImage: `url('https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/${movie.backdrop_path}')`,
-    };
+    let backgroundStyle = {};
+
+    if (movie.backdrop_path) {
+        backgroundStyle = {
+            backgroundImage: `url('https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/${movie.backdrop_path}')`,
+        };
+    }
 
     return (
         <div className="movie-details-container">
             <div className="movie-header">
-                <a className="background-link">
+                <div className="background-link">
                     <div className="background-container" style={backgroundStyle}>
                         <div className="movie-header-container">
                             <div className="movie-image">
@@ -94,7 +98,7 @@ const DisplayMovieDetails = ({ movie, crew, actors, videos, images, recommendati
                             </div>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
             <div className="movie-details-categories">
                 <div className="category-titles">

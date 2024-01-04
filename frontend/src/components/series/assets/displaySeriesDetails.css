@@ -134,6 +134,8 @@
     z-index: 2;
     position: relative;
     color: white;
+    overflow: auto;
+    max-height: 550px;
 }
 
 .serie-details-container .background-container .serie-title {
@@ -215,4 +217,16 @@
 .serie-details-container .serie-details-category-title.active {
     color: rgb(63, 63, 63);
     border-bottom: 2px solid rgb(63, 63, 63);
+}
+
+.serie-details-container .background-container .serie-header-infos::-webkit-scrollbar {
+    width: 0.5em; 
+}
+
+.serie-details-container .background-container .serie-header-infos::-webkit-scrollbar-thumb {
+    background-color: transparent; 
+}
+
+.serie-details-container .background-container .serie-header-infos::-webkit-scrollbar-track {
+    background-color: transparent; 
 }

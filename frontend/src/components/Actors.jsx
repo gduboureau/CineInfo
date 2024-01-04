@@ -5,6 +5,7 @@ import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import NoPicture from "./assets/no-picture.png";
 
 const Actors = ({ actors }) => {
+
     const [visibleActors, setVisibleActors] = useState(10);
 
     const handleShowMore = () => {
@@ -24,7 +25,12 @@ const Actors = ({ actors }) => {
                                 : NoPicture
                         } alt={actor.id} />
                     <p className="actor-name">{actor.name}</p>
-                    <p>{actor.character || actor.roles[0].character}</p>
+                    <p>
+                        {actor.roles
+                            ? actor.roles[0].character
+                            : actor.character
+                        }
+                    </p>
                 </div>
             ))}
             {actors.length > visibleActors && (

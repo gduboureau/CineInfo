@@ -8,20 +8,19 @@ import { faImage } from "@fortawesome/free-solid-svg-icons";
 import MediaOptions from "../common/MediaOptions";
 import MovieTrailer from "../movies/MovieTrailer";
 import "./assets/displaySeriesDetails.css";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import DisplaySeasonDetails from "./DisplaySeasonDetails";
 
 
+const DisplaySerieDetails = ({ serie, crew, actors, videos, images, recommendations }) => {
 
-const DisplaySerieDetails = ({ serie, season, crew, actors, videos, images, recommendations, selectedSeason, handleSeasonChange }) => {
-
-    const [selectedCategory, setSelectedCategory] = useState("actors");
+    const [selectedCategory, setSelectedCategory] = useState("season-episode");
 
     useEffect(() => {
-        setSelectedCategory("actors");
+        setSelectedCategory("season-episode");
         window.scrollTo(0, 0);
     }, []);
 
-    const releaseDate = new Date(season.air_date);
+    const releaseDate = new Date(serie.first_air_date);
     const year = releaseDate.getFullYear();
     const month = releaseDate.getMonth() + 1;
     const day = releaseDate.getDate();
@@ -32,24 +31,23 @@ const DisplaySerieDetails = ({ serie, season, crew, actors, videos, images, reco
     const topWriter = crew.find((member) => member.department === "Writing");
     const topProducer = crew.find((member) => member.department === "Production");
 
+    let backgroundStyle = {};
 
-    const backgroundStyle = {
-        backgroundImage: `url('https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/${serie.backdrop_path}')`,
-    };
-
-    const seasons = [...Array(serie.number_of_seasons).keys()].map((seasonNumber) => seasonNumber + 1);
-    const otherSeasons = seasons.filter((seasonNumber) => seasonNumber !== selectedSeason);
-
+    if (serie.backdrop_path) {
+        backgroundStyle = {
+            backgroundImage: `url('https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/${serie.backdrop_path}')`,
+        };
+    }
 
     return (
         <div className="serie-details-container">
             <div className="serie-header">
-                <a className="background-link">
+                <div className="background-link">
                     <div className="background-container" style={backgroundStyle}>
                         <div className="serie-header-container">
                             <div className="serie-image">
-                                {season.poster_path ? (
-                                    <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${season.poster_path}`} alt={season.name} />
+                                {serie.poster_path ? (
+                                    <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${serie.poster_path}`} alt={serie.title} />
                                 ) : (
                                     <div className="icon-div">
                                         <FontAwesomeIcon icon={faImage} className="icon" />
@@ -62,18 +60,6 @@ const DisplaySerieDetails = ({ serie, season, crew, actors, videos, images, reco
                                     <div className="serie-title">
                                         <p>{serie.original_name}</p>
                                     </div>
-                                    <div className="serie-season-selector custom-dropdown">
-                                        <button className="custom-dropdown-button">{`Saison ${selectedSeason}`}</button>
-                                        <FontAwesomeIcon icon={faChevronDown} className="icon-left" />
-                                        <div className="custom-dropdown-content">
-                                            {otherSeasons.map((seasonNumber) => (
-                                                <a key={seasonNumber} onClick={() => handleSeasonChange(seasonNumber)}>
-                                                    {`Saison ${seasonNumber}`}
-                                                </a>
-
-                                            ))}
-                                        </div>
-                                    </div>
                                 </div>
                                 <div className="serie-date-trailer">
                                     <span>{formattedDate} &nbsp;{videos.length !== 0 && videos.type === "Trailer" ? "-" : ""}</span>
@@ -84,7 +70,7 @@ const DisplaySerieDetails = ({ serie, season, crew, actors, videos, images, reco
                                     <p>{serie.tagline}</p>
                                 </div>
                                 <div className="serie-description">
-                                    <p>{season.overview}</p>
+                                    <p>{serie.overview}</p>
                                 </div>
                                 <div>
                                     <ul className="serie-crew">
@@ -111,10 +97,16 @@ const DisplaySerieDetails = ({ serie, season, crew, actors, videos, images, reco
                             </div>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
             <div className="serie-details-categories">
                 <div className="category-titles">
+                    <div
+                        className={`serie-details-category-title ${selectedCategory === "season-episode" ? "active" : ""}`}
+                        onClick={() => setSelectedCategory("season-episode")}
+                    >
+                        <p>Saisons et épisodes</p>
+                    </div>
                     <div
                         className={`serie-details-category-title ${selectedCategory === "actors" ? "active" : ""}`}
                         onClick={() => setSelectedCategory("actors")}
@@ -147,6 +139,7 @@ const DisplaySerieDetails = ({ serie, season, crew, actors, videos, images, reco
                     </div>
                 </div>
                 <div className="category-content">
+                    {selectedCategory === "season-episode" && <DisplaySeasonDetails serie={serie}/>}
                     {selectedCategory === "actors" && <Actors actors={actors} />}
                     {selectedCategory === "video" && <Videos videos={videos} />}
                     {selectedCategory === "image" && <Images images={images} />}

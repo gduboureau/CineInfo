@@ -6,12 +6,14 @@ header {
 .logged-nav {
     display: flex;
     align-items: center;
+    height: 87px;
 }
 
 .public-nav .homelink img,
 .logged-nav .homelink img {
     width: 120px;
     height: 100px;
+    margin-left: 20px;
 }
 
 .public-nav .categories,
@@ -21,6 +23,7 @@ header {
     padding: 0;
     display: flex;
     justify-content: center;
+    margin-left: 40px;
 
 }
 
@@ -29,7 +32,6 @@ header {
     position: relative;
     margin: 0 15px;
     margin-right: 50px;
-
 }
 
 .public-nav .categories .category-with-submenu a,
@@ -52,6 +54,8 @@ header {
     padding: 10px 10px;
     text-align: left;
     z-index: 3;
+    border-radius: 15px;
+
 }
 
 .public-nav .categories .category-with-submenu:hover .submenu,
