@@ -1,0 +1,261 @@
+.review-container .review-comments{
+    display: flex;
+    align-items: center;
+    margin: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.review-container .review-cards-container {
+    display: flex;
+    position: relative;
+}
+
+.review-container .review-card {
+    position: relative;
+    width: 380px;
+    height: 200px;
+    border: 1px solid #ccc;
+    border-top-left-radius: 13px;
+    border-bottom-left-radius: 13px;
+    border-top-right-radius: 13px;
+    margin-right: 30px;
+    margin-left: 30px;
+    padding: 10px;
+    transition: transform 0.3s ease;    
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.review-container .review-card::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.78));
+    backdrop-filter: blur(2px);
+    
+}
+
+.review-container .review-card::before {
+    transform: scale(1.15);
+}
+
+.review-container .review-content{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.review-container .comment-header{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.review-cards-container .review-content {
+    font-size: 14px;
+    text-align: justify;
+    display: flex;
+    justify-content: space-between;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.review-cards-container .review-content .account-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+}
+
+.review-cards-container .review-content .account-pseudo-date {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 15px;
+}
+
+.review-cards-container .review-content .account-logo a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    font-size: 4em;
+}
+
+.review-cards-container .review-content .account-logo p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    color: black;
+}
+
+.review-cards-container .review-content .account-logo p a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    font-size: 1.2em;
+
+}
+
+.review-container .review-card::-webkit-scrollbar {
+    width: 5px; 
+}
+
+.review-container .review-card::-webkit-scrollbar-thumb {
+    background-color: #ccc; 
+}
+
+.review-container .review-card::-webkit-scrollbar-track {
+    background-color: transparent; 
+}
+
+.review-container .arrow-icon {
+    cursor: pointer;
+}
+
+.review-container .arrow-icon.disabled {
+    cursor:initial;
+    opacity: 0.5;
+}
+
+.review-container .empty-comment {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.review-container .add-comment {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 15px;
+}
+
+.review-container .add-comment button { 
+    background-color: #000000;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+}
+
+
+.review-container .add-comment button:hover { 
+    opacity: 0.7;
+    transform: scale(1.05);
+}
+
+.add-comment-container {
+    background: white;
+    border-radius: 10px;
+    width: 40%;
+    position: relative;
+    padding: 20px;
+}
+
+.add-comment-container .header-comment{
+    border-bottom: 1px solid #ddd;
+    padding: 16px;
+}
+
+
+.modal-content-comment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    
+}
+
+.add-comment-container .comment-input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+
+}
+
+.add-comment-container .header-comment{
+    font-weight: bold;
+}
+
+.add-comment-container .icon-add-comment{
+    color: #750550;
+    margin-right: 10px;
+}
+
+.add-comment-container .comment-input-container textarea {
+    min-width: 100%;
+    min-height: 300px;
+    max-width: 100%;
+    max-height: 500px;
+    border-radius: 7px;
+    border: none;
+    margin-bottom: 10px;
+    background: #ffffffde;
+    text-align: justify;
+    resize: none;
+    color: rgb(0, 0, 0);
+    outline: none;
+
+
+}
+
+.add-comment-container .close-modal-comments{
+    color: #000;
+    cursor: pointer;
+    position: absolute;
+    top: 20px; 
+    right: 20px; 
+}
+
+.add-comment-container .close-modal-comments:hover{
+    transform: scale(1.1);
+}
+
+.add-comment-container .submit-button-comment {
+    padding: 10px;
+    text-align: end;
+}
+
+.add-comment-container .submit-button-comment button{
+    background-color: #750550;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: 0;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.add-comment-container .submit-button-comment button:hover{
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.add-comment-container .alert-comment-section{
+    font-size: 10px;
+    color: grey;
+    text-align: justify;
+}

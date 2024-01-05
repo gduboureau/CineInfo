@@ -1,3 +1,7 @@
+.serie-details-container {
+    min-width: 900px;
+}
+
 .serie-details-container .background-link {
     display: block;
     width: 100%;
@@ -194,7 +198,7 @@
 .serie-details-container .category-titles {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;;
     border-bottom: 0.1px solid rgb(76, 76, 76);
 }
 

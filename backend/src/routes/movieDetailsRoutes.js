@@ -1,5 +1,7 @@
 import express from 'express';
 import { MovieDetails, MovieCredits, MovieVideos, MovieImages, MovieRecommendations } from '../controllers/movieController.js';
+import { getMovieComments, addMovieComment } from '../controllers/userMovieController.js';
+import { extractUserInfo } from '../utils/token.js';
 
 const router = express.Router({ mergeParams: true });
 
@@ -8,5 +10,8 @@ router.get('/credits', (req, res) => MovieCredits(req, res));
 router.get('/videos', (req, res) => MovieVideos(req, res));
 router.get('/images', (req, res) => MovieImages(req, res));
 router.get('/recommendations', (req, res) => MovieRecommendations(req, res));
+router.get('/comments', getMovieComments);
+router.post('/comments', extractUserInfo, addMovieComment);
+
 
 export default router;

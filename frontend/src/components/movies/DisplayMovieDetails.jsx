@@ -9,6 +9,7 @@ import Recommendations from "../Recommendations";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import MediaOptions from "../common/MediaOptions";
+import Review from "../Review";
 
 const DisplayMovieDetails = ({ movie, crew, actors, videos, images, recommendations }) => {
 
@@ -138,7 +139,7 @@ const DisplayMovieDetails = ({ movie, crew, actors, videos, images, recommendati
                     {selectedCategory === "video" && <Videos videos={videos} />}
                     {selectedCategory === "image" && <Images images={images} />}
                     {selectedCategory === "recommandation" && <Recommendations movies={recommendations} />}
-                    {selectedCategory === "avis" && "Contenu des avis"}
+                    {selectedCategory === "avis" && <Review images={images} movie={movie}/>}
                 </div>
             </div>
         </div>

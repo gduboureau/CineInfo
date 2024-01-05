@@ -45,7 +45,6 @@
     display: flex;
     flex-direction: column;
     margin-top: 90px;
-    margin-left: -160px;
 }
 
 .series-season-container .season-container .season-episodes .episode-poster{

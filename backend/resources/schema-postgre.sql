@@ -43,3 +43,22 @@ CREATE TABLE public.SerieRatings (
     rating DECIMAL(2, 1) NOT NULL,
     CONSTRAINT unique_serie_rating UNIQUE (user_id, serie_id)
 );
+
+DROP TABLE IF EXISTS MovieComments;
+CREATE TABLE public.MovieComments (
+    id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id uuid REFERENCES users(user_id),
+    movie_id INT NOT NULL,
+    comment TEXT NOT NULL,
+    date TIMESTAMP NOT NULL
+);
+
+DROP TABLE IF EXISTS SerieComments;
+CREATE TABLE public.SerieComments (
+    id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id uuid REFERENCES users(user_id),
+    serie_id INT NOT NULL,
+    comment TEXT NOT NULL,
+    date TIMESTAMP NOT NULL
+);
+

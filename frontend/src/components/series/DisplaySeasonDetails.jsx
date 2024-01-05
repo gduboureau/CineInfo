@@ -70,12 +70,13 @@ const DisplaySeasonDetails = ({ serie }) => {
         fetchSeasons();
     }, [serie.id, numberOfSeasons]);
 
+
     return (
         <div className="series-season-container">
             {seasonsData.map((season, index) => (
                 <div key={index} className="season-container">
                     <div className="season-poster">
-                        {serie.poster_path ? (
+                        {serie.poster_path !== null? (
                             <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${season.data.poster_path}`} alt={serie.title} />
                         ) : (
                             <div className="icon-div">
@@ -116,7 +117,7 @@ const DisplaySeasonDetails = ({ serie }) => {
                                 {season.data.episodes.map((episode, index) => (
                                     <div key={index} className="episode-container">
                                         <div className="episode-poster">
-                                            {serie.poster_path ? (
+                                            {serie.poster_path !== null ? (
                                                 <img src={`https://www.themoviedb.org/t/p/original/${episode.still_path}`} alt={serie.title} />
                                             ) : (
                                                 <div className="icon-div">
