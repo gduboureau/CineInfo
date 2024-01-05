@@ -12,6 +12,7 @@ import "./assets/mediaOptions.css";
 const MediaOptions = ({ media, mediaType }) => {
     const [isFavorited, setIsFavorited] = useState(false);
     const [isRated, setIsRated] = useState(false);
+    const [isWatchlisted, setIsWatchlisted] = useState(false);
     const [rating, setRating] = useState(0);
     const [isHovered, setIsHovered] = useState(null);
     const [ratingModal, setRatingModal] = useState(false);
@@ -104,6 +105,34 @@ const MediaOptions = ({ media, mediaType }) => {
             .catch((error) => console.error("Erreur de recherche :", error));
     };
 
+    const handleWatchlistClick = () => {
+        if (token === null) return;
+
+        setIsWatchlisted(!isWatchlisted);
+
+        const endpoint = isWatchlisted ? "removewatchlist" : "addwatchlist";
+
+        fetch(`http://localhost:8080/user/${mediaType}/${endpoint}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ mediaId: media.id }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                const successMessage =
+                    endpoint === 'addwatchlist'
+                        ? `Ajouté à votre watchlist avec succès`
+                        : `Retiré de votre watchlist avec succès`;
+
+                toast.success(successMessage);
+            })
+            .catch((error) => console.error("Erreur de recherche :", error));
+    };
+
     const handleRatingModal = () => {
         if (token === null) return;
         setRatingModal(true);
@@ -139,8 +168,9 @@ const MediaOptions = ({ media, mediaType }) => {
                     className="icons"
                     onMouseOver={() => setIsHovered("watchlist")}
                     onMouseOut={handleMouseOut}
+                    onClick={handleWatchlistClick}
                 >
-                    <FontAwesomeIcon icon={faBookmark} style={{ color: "white" }} />
+                    <FontAwesomeIcon icon={faBookmark} style={{ color: isWatchlisted ? "pink" : "white" }} />
                     {isHovered === "watchlist" && (
                         <span className="tooltip">
                             {token

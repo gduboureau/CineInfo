@@ -143,3 +143,136 @@ export const getSeriesRatings = async (req, res) => {
         res.status(500).json({ message: 'Erreur interne du serveur' });
     }
 };
+
+
+
+export const addSerieToWatchlist = async (req, res) => {
+    const userId = req.userId;
+    const { mediaId } = req.body;
+
+    try {
+        const cacheKey = `serie_${mediaId}`;
+        const apiUrl = `https://api.themoviedb.org/3/tv/${mediaId}?api_key=${apiKey}&language=fr-FR`;
+        const seriesDetails = await fetchSerie(cacheKey, apiUrl);
+
+        const seasons = seriesDetails.seasons;
+
+        const filteredSeasons = seasons.filter(season => season.season_number !== 0);
+
+        for (const season of filteredSeasons) {
+            const cacheKey = `series_details_${mediaId}_season_${season.season_number}`;
+            const apiUrl = `https://api.themoviedb.org/3/tv/${mediaId}/season/${season.season_number}?api_key=${apiKey}&language=fr-FR`;
+            const seasonDetails = await fetchSerie(cacheKey, apiUrl);
+            const episodes = seasonDetails.episodes;
+
+            for (const episode of episodes) {
+
+                await db.query('INSERT INTO public."watchlistseries"(user_id, serie_id, season, episode) VALUES($1, $2, $3, $4)',
+                    [userId, mediaId, season.season_number, episode.episode_number]);
+            }
+        }
+
+        res.json({ message: 'Série ajoutée à la watchlist avec succès.' });
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout de la série à la watchlist:', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+}
+
+
+export const removeSerieWatchlist = async (req, res) => {
+    const userId = req.userId;
+    const { mediaId } = req.body;
+
+    try {
+        await db.query('DELETE FROM public."watchlistseries" WHERE user_id = $1 AND serie_id = $2', [userId, mediaId]);
+        res.json({ message: 'Série supprimée de la watchlist' });
+    } catch (error) {
+        console.error('Erreur lors de la suppression de la série de la watchlist :', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+}
+
+export const getWatchlistSeries = async (req, res) => {
+    const userId = req.userId;
+
+    try {
+        const result = await db.query('SELECT * FROM public."watchlistseries" WHERE user_id = $1', [userId]);
+        const series = await Promise.all(result.rows.map(async (row) => {
+            const serieId = row.serie_id;
+            const seasonNumber = row.season;
+            const episodeNumber = row.episode;
+
+            const cacheKey = `serie_${serieId}`;
+            const apiUrl = `https://api.themoviedb.org/3/tv/${serieId}?api_key=${apiKey}&language=fr-FR`;
+
+            const serieDetails = await fetchSerie(cacheKey, apiUrl);
+
+            const cacheKeySeason = `serie_${serieId}_season_${seasonNumber}`;
+            const apiUrlSeason = `https://api.themoviedb.org/3/tv/${serieId}/season/${seasonNumber}?api_key=${apiKey}&language=fr-FR`;
+
+            const seasonDetails = await fetchSerie(cacheKeySeason, apiUrlSeason);
+
+            const episode = seasonDetails.episodes.find(episode => episode.episode_number === episodeNumber);
+            episode.seen = row.seen;
+
+            return {
+                serieId,
+                serieDetails,
+                seasons: [
+                    {
+                        seasonNumber,
+                        seasonDetails,
+                        episodes: [episode],
+                    },
+                ],
+            };
+        }));
+
+        const groupedBySeries = series.reduce((acc, item) => {
+            const { serieId, serieDetails, seasons } = item;
+            if (!acc[serieId]) {
+                acc[serieId] = {
+                    serieDetails,
+                    seasons,
+                };
+            } else {
+                const existingSeries = acc[serieId];
+                const existingSeason = existingSeries.seasons.find(season => season.seasonNumber === seasons[0].seasonNumber);
+                if (existingSeason) {
+                    existingSeason.episodes.push(...seasons[0].episodes);
+                } else {
+                    existingSeries.seasons.push(...seasons);
+                }
+            }
+            return acc;
+        }, {});
+
+        res.json(Object.values(groupedBySeries));
+    } catch (error) {
+        console.error('Erreur lors de la récupération de la watchlist :', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+};
+
+export const seenEpisodeSeries = async (req, res) => {
+    const userId = req.userId;
+    const { serieId, seasonNumber, episodeNumber, seen } = req.body;
+
+    try {
+        await db.query('UPDATE public."watchlistseries" SET seen = $1 WHERE user_id = $2 AND serie_id = $3 AND season = $4 AND episode = $5', [seen, userId, serieId, seasonNumber, episodeNumber]);
+        const message = seen ? 'Episode marqué comme vu' : 'Episode marqué comme non vu';
+        res.json({ message: message });
+    } catch (error) {
+        console.error('Erreur lors du marquage de l\'épisode comme vu ou non vu :', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+}
+
+
+
+
+
+
+
+

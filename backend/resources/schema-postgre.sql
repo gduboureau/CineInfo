@@ -43,3 +43,23 @@ CREATE TABLE public.SerieRatings (
     rating DECIMAL(2, 1) NOT NULL,
     CONSTRAINT unique_serie_rating UNIQUE (user_id, serie_id)
 );
+
+DROP TABLE IF EXISTS WatchlistMovies;
+CREATE TABLE public.WatchlistMovies (
+    id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id uuid REFERENCES users(user_id),
+    movie_id INT NOT NULL,
+    seen BOOLEAN DEFAULT FALSE NOT NULL,
+    CONSTRAINT unique_movie_watchlist UNIQUE (user_id, movie_id)
+);
+
+DROP TABLE IF EXISTS WatchlistSeries;
+CREATE TABLE public.WatchlistSeries (
+    id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id uuid REFERENCES users(user_id),
+    serie_id INT NOT NULL,
+    season INT NOT NULL,
+    episode INT NOT NULL,
+    seen BOOLEAN DEFAULT FALSE NOT NULL,
+    CONSTRAINT unique_serie_watchlist UNIQUE (user_id, serie_id, season, episode)
+);

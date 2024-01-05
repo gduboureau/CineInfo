@@ -143,3 +143,63 @@ export const getMoviesRatings = async (req, res) => {
         res.status(500).json({ message: 'Erreur interne du serveur' });
     }
 };
+
+export const watchlistMovies = async (req, res) => {
+    const userId = req.userId;
+
+    try {
+        const result = await db.query('SELECT * FROM public."watchlistmovies" WHERE user_id = $1', [userId]);
+        const moviesWithRatings = await Promise.all(result.rows.map(async (row) => {
+            const movieId = row.movie_id;
+            const cacheKey = `movie_${movieId}`;
+            const apiUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=fr-FR`;
+            const movieDetails = await fetchMovie(cacheKey, apiUrl);
+            return { ...movieDetails, seen: row.seen };
+        }));
+        res.json(moviesWithRatings);
+    } catch (error) {
+        console.error('Erreur lors de la récupération de la watchlist :', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+};
+
+
+export const addMovieWatchlist = async (req, res) => {
+    const userId = req.userId;
+    const { mediaId } = req.body;
+
+    try {
+        await db.query('INSERT INTO public."watchlistmovies" (user_id, movie_id) VALUES ($1, $2)', [userId, mediaId]);
+        res.json({ message: 'Film ajouté dans la watchlist' });
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout du film dans la watchlist :', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+}
+
+export const removeMovieWatchlist = async (req, res) => {
+    const userId = req.userId;
+    const { mediaId } = req.body;
+
+    try {
+        await db.query('DELETE FROM public."watchlistmovies" WHERE user_id = $1 AND movie_id = $2', [userId, mediaId]);
+        res.json({ message: 'Film supprimé de la watchlist' });
+    } catch (error) {
+        console.error('Erreur lors de la suppression du film de la watchlist :', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+}
+
+export const seenMovie = async (req, res) => {
+    const userId = req.userId;
+    const { mediaId, seen } = req.body;
+    
+    try {
+        await db.query('UPDATE public."watchlistmovies" SET seen = $1 WHERE user_id = $2 AND movie_id = $3', [seen, userId, mediaId]);
+        const message = seen ? 'Film vu' : 'Film non vu';
+        res.json({ message: message });
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du film vu :', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+}
