@@ -9,7 +9,7 @@ import MediaOptions from "../common/MediaOptions";
 import MovieTrailer from "../movies/MovieTrailer";
 import "./assets/displaySeriesDetails.css";
 import DisplaySeasonDetails from "./DisplaySeasonDetails";
-import Review from "../Review";
+import ReviewSerie from "./ReviewSerie";
 
 
 const DisplaySerieDetails = ({ serie, crew, actors, videos, images, recommendations }) => {
@@ -145,7 +145,7 @@ const DisplaySerieDetails = ({ serie, crew, actors, videos, images, recommendati
                     {selectedCategory === "video" && <Videos videos={videos} />}
                     {selectedCategory === "image" && <Images images={images} />}
                     {selectedCategory === "recommandation" && <Recommendations movies={recommendations} />}
-                    {selectedCategory === "avis" && <Review />}
+                    {selectedCategory === "avis" && <ReviewSerie serie={serie} images={images}/>}
                 </div>
             </div>
         </div>

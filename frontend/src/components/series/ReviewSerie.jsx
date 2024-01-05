@@ -7,7 +7,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faComment } from "@fortawesome/free-regular-svg-icons";
 import Modal from "react-modal";
 
-const Review = ({ images, movie }) => {
+const ReviewSerie = ({ serie, images }) => {
     const { id } = useParams();
     const [comments, setComments] = useState([]);
     const [activeIndex, setActiveIndex] = useState(0);
@@ -15,20 +15,32 @@ const Review = ({ images, movie }) => {
     const [commentText, setCommentText] = useState("");
     const commentsPerPage = 3;
     const isUserLoggedIn = !!sessionStorage.getItem("token");
+    const [selectedSeason, setSelectedSeason] = useState(null);
+    const [selectSeasonAddComment, setSelectSeasonAddComment] = useState(null);
 
+    const numberOfSeasons = serie.number_of_seasons;
+    let seasons = [];
+    for (let i = 1; i <= numberOfSeasons; i++) {
+        seasons.push(i);
+    }
 
     useEffect(() => {
-        fetch(`http://localhost:8080/movies/${id}/comments`)
+        fetch(`http://localhost:8080/series/${id}/comments`)
             .then((response) => {
                 if (response.ok) {
                     return response.json();
                 }
             })
             .then((data) => {
-                const sortedComments = data.sort((a, b) => new Date(b.date) - new Date(a.date));
-                setComments(sortedComments);
+                if (data) {
+                    const sortedComments = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    const filteredComments = selectedSeason
+                        ? sortedComments.filter(comment => comment.season === selectedSeason)
+                        : sortedComments.filter(comment => comment.season === null);
+                    setComments(filteredComments);
+                }
             });
-    }, [id]);
+    }, [id, selectedSeason]);
 
     const visibleComments = comments.slice(activeIndex, activeIndex + commentsPerPage);
 
@@ -44,13 +56,6 @@ const Review = ({ images, movie }) => {
 
     const handleNextClick = () => {
         setActiveIndex((prevIndex) => Math.min(comments.length - 1, prevIndex + commentsPerPage));
-    };
-
-    const randomImage = () => {
-        const randomIndex = Math.floor(Math.random() * images.length);
-        return {
-            background: `url('https://image.tmdb.org/t/p/original/${images[randomIndex].file_path}') center/cover`,
-        };
     };
 
     const openModal = () => {
@@ -69,7 +74,7 @@ const Review = ({ images, movie }) => {
     const handleCommentSubmit = () => {
         if (commentText.trim() !== "") {
             closeModal();
-            fetch(`http://localhost:8080/movies/${id}/comments`, {
+            fetch(`http://localhost:8080/series/${id}/comments`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -77,7 +82,8 @@ const Review = ({ images, movie }) => {
                 },
                 body: JSON.stringify({
                     comment: commentText,
-                    movieId: id,
+                    serieId: id,
+                    season: selectSeasonAddComment,
                     date: new Date(),
                 }),
             });
@@ -85,8 +91,45 @@ const Review = ({ images, movie }) => {
         }
     };
 
+    const handleCommentSeasonSubmit = () => {
+        if (commentText.trim() !== "") {
+            closeModal();
+            fetch(`http://localhost:8080/series/${id}/season/${selectedSeason}/comments`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                },
+                body: JSON.stringify({
+                    comment: commentText,
+                    serieId: id,
+                    season: selectSeasonAddComment,
+                    date: new Date(),
+                }),
+            });
+            window.location.reload();
+        }
+    };
+
+    const randomImage = () => {
+        const randomIndex = Math.floor(Math.random() * images.length);
+        return {
+            background: `url('https://image.tmdb.org/t/p/original/${images[randomIndex].file_path}') center/cover`,
+        };
+    };
+
     return (
-        <div className="review-container">
+        <div className="review-container-serie">
+            <div className="season-button-container"> Voir les avis de
+                <select value={selectedSeason === null ? '' : selectedSeason} onChange={(e) => setSelectedSeason(parseInt(e.target.value) || null)}>
+                    <option value="">La série</option>
+                    {seasons.map((s) => (
+                        <option key={s} value={s}>
+                            La saison {s}
+                        </option>
+                    ))}
+                </select>
+            </div>
             <div className="review-comments">
                 {visibleComments.length > 0 && (
                     <FontAwesomeIcon
@@ -95,7 +138,7 @@ const Review = ({ images, movie }) => {
                         className={`arrow-icon ${activeIndex === 0 ? "disabled" : ""}`}
                     />
                 )}
-                <div className="review-cards-container">
+                <div className="review-cards-container-serie">
                     {visibleComments.length > 0 ? (
                         visibleComments.map((comment, index) => (
                             <div
@@ -132,19 +175,23 @@ const Review = ({ images, movie }) => {
                     <FontAwesomeIcon
                         icon={faChevronRight}
                         onClick={handleNextClick}
-                        className={`arrow-icon ${activeIndex >= comments.length - commentsPerPage ? "disabled" : ""}`}
+                        className={`arrow-icon ${activeIndex > comments.length - commentsPerPage ? "disabled" : ""}`}
                     />
                 )}
             </div>
             {isUserLoggedIn ? (
                 <div className="add-comment">
-                    Vous avez vu le film ?
+                    {selectedSeason ? (
+                        <span>Vous avez vu la saison {selectedSeason} ?</span>
+                    ) : (
+                        <span>Vous avez vu la série ?</span>
+                    )}
                     <button onClick={openModal}>Laissez un avis !</button>
                     <div className="modal-container-comment">
                         <Modal
                             isOpen={showModal}
                             onRequestClose={closeModal}
-                            contentLabel="Movie Comment Modal"
+                            contentLabel="Serie Comment Modal"
                             className="modal-content-comment"
                             overlayClassName="modal-overlay"
                             ariaHideApp={false}
@@ -152,7 +199,18 @@ const Review = ({ images, movie }) => {
                             <div className="add-comment-container" >
                                 <div className="header-comment">
                                     <FontAwesomeIcon size="xl" className="icon-add-comment" icon={faComment} flip="horizontal" />
-                                    Mon avis sur {movie.original_title}
+                                    Mon avis sur {serie.original_name}
+                                    <div className="choose-option">
+                                        Vous voulez laisser un avis sur
+                                        <select value={selectSeasonAddComment === null ? '' : selectedSeason} onChange={(e) => setSelectSeasonAddComment(parseInt(e.target.value) || null)}>
+                                            <option value="">La série</option>
+                                            {seasons.map((s) => (
+                                                <option key={s} value={s}>
+                                                    La saison {s}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
                                 </div>
                                 <div className="comment-input-container">
                                     <textarea
@@ -162,7 +220,11 @@ const Review = ({ images, movie }) => {
                                     />
                                 </div>
                                 <div className="submit-button-comment">
-                                    <button onClick={handleCommentSubmit}>Soumettre</button>
+                                    {selectSeasonAddComment ? (
+                                        <button onClick={handleCommentSeasonSubmit}>Soumettre</button>
+                                    ) : (
+                                        <button onClick={handleCommentSubmit}>Soumettre</button>
+                                    )}
                                 </div>
                                 <div className="alert-comment-section">
                                     Nous vous rappelons qu'il est interdit de poster des commentaires à caractère injurieux, violents ou encore racistes. Les commentaires de ce type seront supprimés et l'utilisateur se verra banni.
@@ -182,4 +244,4 @@ const Review = ({ images, movie }) => {
     );
 };
 
-export default Review;
+export default ReviewSerie;

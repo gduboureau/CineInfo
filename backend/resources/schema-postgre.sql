@@ -58,6 +58,7 @@ CREATE TABLE public.SerieComments (
     id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
     user_id uuid REFERENCES users(user_id),
     serie_id INT NOT NULL,
+    season INT,
     comment TEXT NOT NULL,
     date TIMESTAMP NOT NULL
 );
