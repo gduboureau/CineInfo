@@ -79,7 +79,6 @@ details[open] summary:before {
 details summary:after {
     content: '';
     display: inline-block;
-    float: right;
     width: .5rem;
     height: .5rem;
     border-bottom: 1px solid currentColor;

@@ -32,11 +32,11 @@ const AccountOptions = ({ optionType }) => {
         }
     };
 
-    useEffect(() => {
+    const fetchDataAndUpdateMedia = () => {
         if (token === null) return;
         setMedia([]);
         const url = `http://localhost:8080/user/${activeTab}/${optionType}`;
-
+    
         fetch(url, {
             method: 'GET',
             headers: {
@@ -46,19 +46,15 @@ const AccountOptions = ({ optionType }) => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 if (optionType === 'watchlist' && activeTab === 'movies') {
-                    const filteredMedia = data.sort((a, b) => {
-                        const aSeen = a.seen ? 1 : 0;
-                        const bSeen = b.seen ? 1 : 0;
-                        return aSeen - bSeen;
-                    }).filter((item) => {
+                    const filteredMedia = data.filter((item) => {
                         if (seenFilter === 'all') {
                             return true;
                         } else {
                             return item.seen === (seenFilter === 'seen');
                         }
                     });
+    
                     setMedia(filteredMedia);
                 } else {
                     setMedia(data);
@@ -66,6 +62,10 @@ const AccountOptions = ({ optionType }) => {
             })
             .catch((error) => console.error('Erreur de recherche :', error))
             .finally(() => setLoading(false));
+    };
+
+    useEffect(() => {
+        fetchDataAndUpdateMedia();
     }, [token, activeTab, optionType, seenFilter]);
 
     if (loading) {
@@ -122,7 +122,7 @@ const AccountOptions = ({ optionType }) => {
                         </details>
                     )}
                 </div>
-                <AccountOptionsContent media={media} optionType={optionType} activeTab={activeTab} setMedia={setMedia} />
+                <AccountOptionsContent media={media} optionType={optionType} activeTab={activeTab} setMedia={setMedia} fetchDataAndUpdateMedia={fetchDataAndUpdateMedia} />
             </div>
         </div>
     );

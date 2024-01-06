@@ -39,11 +39,21 @@
 .account-options-media .media .details {
     flex: 1;
     margin-right: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .account-options-media .media .title {
-    margin-bottom: 5px;
+    margin: 10px 15px 5px 0;
     cursor: pointer;
+}
+
+.account-options-media .media .details .title-note {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 5px;
 }
 
 .account-options-media .media .details .overview {
@@ -62,8 +72,13 @@
 }
 
 .account-options-media .media .details .rating {
-    margin-top: 0;
-    margin-bottom: 5px;
+    background-color: #0c0c0c;
+    width: fit-content;
+    border-radius: 5px;
+    padding: 4px;
+    color: #fff;
+    font-size: 0.8em;
+    margin: 5px 0 5px 0;;
 }
 
 .account-options-media .no-content {
@@ -175,4 +190,8 @@
     width: 5px;
     background: #fff;
     transition: width 150ms ease 100ms;
+}
+
+.account-options-media .no-content {
+    margin: 10px 30px;
 }

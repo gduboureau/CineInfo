@@ -2,13 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import 'moment/locale/fr';
 import { ToastContainer, toast } from 'react-toastify';
 import "./assets/accountOptionsContent.css";
 import AccountWatchlistSeries from "./AccountWatchlistSeries";
 
-const AccountOptionsContent = ({ media, optionType, activeTab, setMedia }) => {
+const AccountOptionsContent = ({ media, optionType, activeTab, setMedia, fetchDataAndUpdateMedia }) => {
     const token = sessionStorage.getItem('token');
     const navigate = useNavigate();
 
@@ -47,6 +48,7 @@ const AccountOptionsContent = ({ media, optionType, activeTab, setMedia }) => {
                 });
                 setMedia(updatedMedia);
                 toast.success(data.message);
+                fetchDataAndUpdateMedia();
             })
             .catch((error) => console.error('Erreur de requête :', error));
     };
@@ -69,14 +71,17 @@ const AccountOptionsContent = ({ media, optionType, activeTab, setMedia }) => {
                                     </div>
                                 )}
                                 <div className="details">
-                                    <h3 className="title" onClick={() => handleMediaClick(activeTab, item.id, activeTab === 'series' ? item.name : item.title)}>
-                                        {activeTab === 'series' ? item.name : item.title}
-                                    </h3>
+                                    <div className="title-note">
+                                        <h3 className="title" onClick={() => handleMediaClick(activeTab, item.id, activeTab === 'series' ? item.name : item.title)}>
+                                            {activeTab === 'series' ? item.name : item.title}
+                                        </h3>
+                                        {optionType === 'ratings' && (
+                                            <p className="rating"><FontAwesomeIcon icon={faStar} className="icon" style={{ color: "white" }} /> {item.rating}/5</p>
+                                        )}
+                                    </div>
+
                                     <p className="date">{item.release_date ? formatDate(item.release_date) : (item.first_air_date ? formatDate(item.first_air_date) : "")}</p>
                                     <p className="overview">{item.overview}</p>
-                                    {optionType === 'ratings' && (
-                                        <p className="rating">Note : {item.rating}/5</p>
-                                    )}
                                 </div>
                                 {optionType === 'watchlist' && activeTab === "movies" && (
                                     <div className="checkbox-wrapper">

@@ -159,7 +159,7 @@ const DisplaySeasonDetails = ({ serie }) => {
                                                 <p>{new Date(episode.air_date).toLocaleDateString()} {episode.runtime ? (
                                                     <span> &bull; {episode.runtime}m</span>
                                                 ) : ""} </p> &nbsp; &nbsp;
-                                                <p className="note" onClick={(event) => handleOpenRatingModal(season.seasonNumber, episode.episode_number, event)}><FontAwesomeIcon icon={faStar} className="icon" /> {episode.vote_average ? (
+                                                <p className="note" onClick={(event) => handleOpenRatingModal(season.seasonNumber, episode.episode_number, event)} style={{ cursor: "pointer" }}><FontAwesomeIcon icon={faStar} className="icon" /> {episode.vote_average ? (
                                                     <span>{episode.vote_average.toFixed(1)}/10</span>
                                                 ) : ""}</p>
                                             </div>

@@ -35,7 +35,6 @@ const RatingEpisode = ({ serieId, seasonNumber, episodeNumber, onClose, top, lef
 
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 data.forEach((item) => {
                     if (item.serie_id === serieId && item.season === seasonNumber && item.episode === episodeNumber) {
                         setSelectedRating(item.rating);

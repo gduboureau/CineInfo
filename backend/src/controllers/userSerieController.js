@@ -14,9 +14,10 @@ export const favoriteSeries = async (req, res) => {
         const seriePromises = result.rows.map(async (favorite) => {
             const serieId = favorite.serie_id;
             try {
-                const tmdbResponse = await fetch(`https://api.themoviedb.org/3/tv/${serieId}?api_key=${apiKey}&language=fr-FR`);
-                const serie = await tmdbResponse.json();
-                return serie;
+                const cacheKey = `serie_${serieId}`;
+                const apiUrl = `https://api.themoviedb.org/3/tv/${serieId}?api_key=${apiKey}&language=fr-FR`;
+                const serieDetails = await fetchSerie(cacheKey, apiUrl);
+                return serieDetails;
             } catch (error) {
                 console.error(`Error fetching serie details:`, error);
                 return null;
@@ -57,14 +58,10 @@ export const removeFavoriteSerie = async (req, res) => {
     }
 }
 
-export const addOrUpdateRatingSerie = async (req, res) => {
-    const userId = req.userId;
-    const { mediaId, rating } = req.body;
-
+const postRating = async (url, rating) => {
     const tmdbRating = rating * 2;
-
     try {
-        const tmdbResponse = await fetch(`https://api.themoviedb.org/3/tv/${mediaId}/rating?api_key=${apiKey}`, {
+        const tmdbResponse = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -81,6 +78,43 @@ export const addOrUpdateRatingSerie = async (req, res) => {
 
         const tmdbData = await tmdbResponse.json();
         console.log('TMDB Response:', tmdbData);
+    }
+    catch (error) {
+        console.error('Erreur lors de l\'ajout ou de la mise à jour de la note :', error.message);
+        throw new Error('Internal Server Error');
+    }
+}
+
+export const deleteRating = async (url) => {
+    try {
+        const tmdbResponse = await fetch(url, {
+            method: "DELETE",
+            headers: {
+                accept: 'application/json',
+                'Content-Type': 'application/json;charset=utf-8',
+                Authorization: `Bearer ${apiToken}`,
+            }
+        });
+
+        if (!tmdbResponse.ok) {
+            throw new Error(`TMDB API error: ${tmdbResponse.statusText}`);
+        }
+
+        const tmdbData = await tmdbResponse.json();
+        console.log('TMDB Response:', tmdbData);
+    } catch (error) {
+        console.error('Erreur lors de la suppression de la note :', error.message);
+        throw new Error('Internal Server Error');
+    }
+}
+
+export const addOrUpdateRatingSerie = async (req, res) => {
+    const userId = req.userId;
+    const { mediaId, rating } = req.body;
+
+    try {
+        const url = `https://api.themoviedb.org/3/tv/${mediaId}/rating?api_key=${apiKey}`;
+        await postRating(url, rating);
 
         await db.query(`
             INSERT INTO public."serieratings" (user_id, serie_id, rating)
@@ -101,21 +135,8 @@ export const deleteRatingSerie = async (req, res) => {
     const { mediaId } = req.body;
 
     try {
-        const tmdbResponse = await fetch(`https://api.themoviedb.org/3/tv/${mediaId}/rating`, {
-            method: "DELETE",
-            headers: {
-                accept: 'application/json',
-                'Content-Type': 'application/json;charset=utf-8',
-                Authorization: `Bearer ${apiToken}`,
-            }
-        });
-
-        if (!tmdbResponse.ok) {
-            throw new Error(`TMDB API error: ${tmdbResponse.statusText}`);
-        }
-
-        const tmdbData = await tmdbResponse.json();
-        console.log('TMDB Response:', tmdbData);
+        const url = `https://api.themoviedb.org/3/tv/${mediaId}/rating`;
+        await deleteRating(url);
 
         await db.query('DELETE FROM public."serieratings" WHERE user_id = $1 AND serie_id = $2', [userId, mediaId]);
         res.json({ message: 'Note supprimée' });
@@ -144,7 +165,6 @@ export const getSeriesRatings = async (req, res) => {
         res.status(500).json({ message: 'Erreur interne du serveur' });
     }
 };
-
 
 
 export const addSerieToWatchlist = async (req, res) => {
@@ -208,7 +228,7 @@ export const getWatchlistSeries = async (req, res) => {
 
             const serieDetails = await fetchSerie(cacheKey, apiUrl);
 
-            const cacheKeySeason = `serie_${serieId}_season_${seasonNumber}`;
+            const cacheKeySeason = `series_details_${serieId}_season_${seasonNumber}`;
             const apiUrlSeason = `https://api.themoviedb.org/3/tv/${serieId}/season/${seasonNumber}?api_key=${apiKey}&language=fr-FR`;
 
             const seasonDetails = await fetchSerie(cacheKeySeason, apiUrlSeason);
@@ -274,26 +294,11 @@ export const seenEpisodeSeries = async (req, res) => {
 export const addEpisodeRating = async (req, res) => {
     const userId = req.userId;
     const { serieId, seasonNumber, episodeNumber, rating } = req.body;
-    const tmdbRating = rating * 2;
 
     try {
-        const tmdbResponse = await fetch(`https://api.themoviedb.org/3/tv/${mediaId}/season/${seasonNumber}/episode/${episodeNumber}/rating?api_key=${apiKey}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${apiToken}`,
-            },
-            body: JSON.stringify({
-                value: tmdbRating,
-            }),
-        });
+        const url = `https://api.themoviedb.org/3/tv/${serieId}/season/${seasonNumber}/episode/${episodeNumber}/rating?api_key=${apiKey}`;
+        await postRating(url, rating);
 
-        if (!tmdbResponse.ok) {
-            throw new Error(`TMDB API error: ${tmdbResponse}`);
-        }
-
-        const tmdbData = await tmdbResponse.json();
-        console.log('TMDB Response:', tmdbData);
         await db.query(`
             INSERT INTO public."episoderatings" (user_id, serie_id, season, episode, rating)
             VALUES ($1, $2, $3, $4, $5)
@@ -313,21 +318,9 @@ export const deleteEpisodeRating = async (req, res) => {
     const { serieId, seasonNumber, episodeNumber } = req.body;
 
     try {
-        const tmdbResponse = await fetch(`https://api.themoviedb.org/3/tv/${mediaId}/season/${seasonNumber}/episode/${episodeNumber}/rating`, {
-            method: "DELETE",
-            headers: {
-                accept: 'application/json',
-                'Content-Type': 'application/json;charset=utf-8',
-                Authorization: `Bearer ${apiToken}`,
-            }
-        });
+        const url = `https://api.themoviedb.org/3/tv/${serieId}/season/${seasonNumber}/episode/${episodeNumber}/rating`;
+        await deleteRating(url);
 
-        if (!tmdbResponse.ok) {
-            throw new Error(`TMDB API error: ${tmdbResponse.statusText}`);
-        }
-
-        const tmdbData = await tmdbResponse.json();
-        console.log('TMDB Response:', tmdbData);
         await db.query('DELETE FROM public."episoderatings" WHERE user_id = $1 AND serie_id = $2 AND season = $3 AND episode = $4', [userId, serieId, seasonNumber, episodeNumber]);
         res.json({ message: 'Note supprimée' });
     } catch (error) {

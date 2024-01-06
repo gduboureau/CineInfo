@@ -6,18 +6,18 @@
 .series-season-container .season-container {
     border-bottom: 0.1px solid rgb(76, 76, 76);
     display: flex;
-    padding: 20px; 
+    padding: 20px;
 }
 
 .series-season-container .season-container .season-poster img {
     width: 175px;
     border-radius: 15px;
-    margin-right: 20px; 
+    margin-right: 20px;
 }
 
-  
+
 .series-season-container .season-container .season-info .season-title .arrow-episodes .icon-left {
-    transform: rotate(180deg); 
+    transform: rotate(180deg);
 }
 
 .series-season-container .season-container .season-info .season-title {
@@ -25,18 +25,17 @@
     font-size: 20px;
 }
 
-.series-season-container .season-container .season-info .season-date{
+.series-season-container .season-container .season-info .season-date {
     margin-top: 10px;
     display: flex;
     align-items: center;
 }
 
 .series-season-container .season-container .season-info .note {
-   background-color: #fff;
-   color: black;
+    background-color: #fff;
+    color: black;
     padding: 3px;
     border-radius: 8px;
-    cursor: pointer;
 }
 
 .series-season-container .season-container .season-info .season-date .trailer-season {
@@ -55,14 +54,14 @@
     margin-left: -160px;
 }
 
-.series-season-container .season-container .season-episodes .episode-poster{
+.series-season-container .season-container .season-episodes .episode-poster {
     margin-top: 15px;
 }
 
-.series-season-container .season-container .season-episodes .episode-poster img{
+.series-season-container .season-container .season-episodes .episode-poster img {
     width: 200px;
     border-radius: 15px;
-    margin-right: 20px; 
+    margin-right: 20px;
 }
 
 .series-season-container .season-container .season-episodes .episode-container {
@@ -76,13 +75,11 @@
 
 .series-season-container .season-container .season-episodes .episode-container .episode-number {
     font-weight: bold;
-    
+
 }
 
-.series-season-container .season-container .season-episodes .episode-container .episode-date{
+.series-season-container .season-container .season-episodes .episode-container .episode-date {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-
-
