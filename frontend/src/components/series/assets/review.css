@@ -51,11 +51,17 @@
     position: relative;
 }
 
+
 .review-container-serie .comment-header{
     display: flex;
     flex-direction: row;
 }
 
+.review-container-serie .comment-header img{
+    margin-top: 5px;
+    width: 40px;
+    height: 40px;
+}
 
 .review-cards-container-serie .review-content {
     font-size: 14px;
@@ -205,6 +211,7 @@
 .add-comment-container .header-comment{
     font-weight: bold;
 }
+
 
 .add-comment-container .icon-add-comment{
     color: #750550;

@@ -7,7 +7,8 @@ CREATE TABLE public.users (
     password character varying(100) NOT NULL,
     username character varying(100) NOT NULL,
     firstname character varying(100) NOT NULL,
-    lastname character varying(100) NOT NULL
+    lastname character varying(100) NOT NULL,
+    image TEXT NOT NULL
 );
 
 DROP TABLE IF EXISTS FavoriteMovies;

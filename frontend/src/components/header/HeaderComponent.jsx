@@ -117,9 +117,7 @@ const HeaderComponent = ({ isLogged }) => {
                     <div className='account'>
                         {isLogged ? (
                             <Link to={`/account/${userInfos.username}`}>
-                                {userInfos && userInfos.firstname && userInfos.lastname && (
-                                    <p>{userInfos.firstname[0]}{userInfos.lastname[0]}</p>
-                                )}
+                                <img src={userInfos.image} alt="Photo de profil par défaut" />
                             </Link>
                         ) : (
                             <Link to="/login" className="login">

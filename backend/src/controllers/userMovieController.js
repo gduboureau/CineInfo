@@ -160,7 +160,7 @@ export const getMovieComments = async (req, res) => {
     const { id } = req.params;
     try {
         const result = await db.query(
-            'SELECT mc.id, mc.comment, mc.date, u.firstname, u.lastname, u.username, mr.rating FROM public."moviecomments" mc JOIN public.users u ON mc.user_id = u.user_id LEFT JOIN public.MovieRatings mr ON mc.user_id = mr.user_id AND mc.movie_id = mr.movie_id WHERE mc.movie_id = $1',
+            'SELECT mc.id, mc.comment, mc.date, u.username, u.image, mr.rating FROM public."moviecomments" mc JOIN public.users u ON mc.user_id = u.user_id LEFT JOIN public.MovieRatings mr ON mc.user_id = mr.user_id AND mc.movie_id = mr.movie_id WHERE mc.movie_id = $1',
             [id]
         );
         res.json(result.rows);

@@ -148,9 +148,7 @@ const ReviewSerie = ({ serie, images }) => {
                             >
                                 <div className="review-content">
                                     <div className="comment-header">
-                                        <div className="account-logo">
-                                            <p>{comment.firstname[0]}{comment.lastname[0]}</p>
-                                        </div>
+                                        <img src={comment.image} alt={`user pp ${comment.id}`}/>
                                         <div className="account-pseudo-date">
                                             <p>
                                                 <span>@{comment.username},</span> &nbsp;

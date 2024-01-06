@@ -26,7 +26,7 @@ export const login = async (req, res) => {
 };
 
 export const register = async (req, res) => {
-    const { mail, password, username, firstname, lastname } = req.body;
+    const { mail, password, username, firstname, lastname, defaultImage } = req.body;
 
     try {
         const emailExists = await db.query('SELECT * FROM public."users" WHERE mail = $1', [mail]);
@@ -39,7 +39,7 @@ export const register = async (req, res) => {
             return res.json({ error: 'Ce nom d\'utilisateur est déjà utilisé' });
         }
 
-        await db.query('INSERT INTO public."users" (mail, password, username, firstname, lastname) VALUES ($1, $2, $3, $4, $5)', [mail, password, username, firstname, lastname]);
+        await db.query('INSERT INTO public."users" (mail, password, username, firstname, lastname, image) VALUES ($1, $2, $3, $4, $5, $6)', [mail, password, username, firstname, lastname, defaultImage]);
 
         const result = await db.query('SELECT * FROM public."users" WHERE username = $1', [username]);
         const token = jwt.sign({ userId: result.rows[0].user_id }, secretKey, { expiresIn: '1h' });

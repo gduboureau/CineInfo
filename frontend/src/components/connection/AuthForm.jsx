@@ -23,11 +23,33 @@ const AuthForm = ({ type, onSubmit }) => {
 
     const handleSubmit = async () => {
         try {
-            await onSubmit({ mail, password, username, firstname, lastname });
+            let defaultImage = '';
+            if (firstname !== '' && lastname !== '') {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1000;
+                canvas.height = 1000;
+                const context = canvas.getContext('2d');
+                context.imageSmoothingQuality = 'high';
+
+                context.beginPath();
+                context.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, 0, 2 * Math.PI);
+                context.fillStyle = '#F5F5DC';
+                context.fill();
+                context.closePath();
+
+                context.font = 'bold 430px "Poppins", sans-serif';
+                context.fillStyle = '#000';
+                context.textAlign = 'center';
+                context.textBaseline = 'middle';
+                context.fillText(`${username[0].toUpperCase()}${lastname[0].toUpperCase()}`, canvas.width / 2, canvas.height / 2);
+                defaultImage = canvas.toDataURL('image/png');
+            }
+            await onSubmit({ mail, password, username, firstname, lastname, defaultImage});
         } catch (error) {
             console.error('Authentication Error:', error.message);
         }
     };
+
 
     return (
         <div className={`${type}-container`}>

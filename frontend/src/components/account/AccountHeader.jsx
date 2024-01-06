@@ -26,11 +26,7 @@ const AccountHeader = () => {
         <div className="account-header">
             <div className="account-infos">
                 <div className="account-logo">
-                    {userInfos && (
-                        <Link to={`/account/${userInfos.username}`}>
-                            <p>{userInfos.firstname[0]}{userInfos.lastname[0]}</p>
-                        </Link>
-                    )}
+                    <img src={userInfos.image} alt="Photo de profil par défaut" />
                 </div>
                 <div className="account-details">
                     {userInfos && (

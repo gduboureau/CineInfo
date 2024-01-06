@@ -56,6 +56,12 @@
     flex-direction: row;
 }
 
+.review-container .comment-header img{
+    margin-top: 5px;
+    width: 40px;
+    height: 40px;
+}
+
 
 .review-cards-container .review-content {
     font-size: 14px;

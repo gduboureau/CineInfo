@@ -3,7 +3,7 @@ import AccountHeader from "../../components/account/AccountHeader";
 
 import './assets/settings.css'
 
-const Settings = () => { //TO DO : change user infos
+const Settings = () => { 
     const [userInfos, setUserInfos] = useState([]);
 
     const token = sessionStorage.getItem('token');
@@ -36,6 +36,7 @@ const Settings = () => { //TO DO : change user infos
                             <h2>{userInfos.firstname} {userInfos.lastname}</h2>
                             <p>{userInfos.mail}</p>
                             <p>@{userInfos.username}</p>
+                            <img src={userInfos.image} alt="pp default" />
                         </div>
                     )}
 
