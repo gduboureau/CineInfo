@@ -1,6 +1,7 @@
 import React from "react";
 import Login from "../pages/connection/Login"
 import Signup from "../pages/connection/Signup";
+import ResetPassword from "../pages/connection/ResetPassword";
 import { Routes, Route } from 'react-router-dom';
 import Homepage from "../pages/homepage/Homepage";
 import Layout from "../components/header/Layout";
@@ -26,6 +27,7 @@ const PublicRouter = () => {
                 <Route index element={<Homepage />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/search" element={<Research />} />
                 <Route path="/movies" element={<AllMovies />} />
                 <Route path="/movies/popular" element={<PopularMovies />} />

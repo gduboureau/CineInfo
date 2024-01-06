@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import ShowPassword from "../../pages/connection/assets/show.png";
-import HidePassword from "../../pages/connection/assets/hide.png"
 import { Link } from 'react-router-dom';
+import ShowPassword from "../../pages/connection/assets/show.png";
+import HidePassword from "../../pages/connection/assets/hide.png";
 
 import '../../pages/connection/assets/login.css';
 import '../../pages/connection/assets/signup.css';
+import '../../pages/connection/assets/resetPassword.css';
 
 const AuthForm = ({ type, onSubmit }) => {
-
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
@@ -44,16 +44,20 @@ const AuthForm = ({ type, onSubmit }) => {
                 context.fillText(`${username[0].toUpperCase()}${lastname[0].toUpperCase()}`, canvas.width / 2, canvas.height / 2);
                 defaultImage = canvas.toDataURL('image/png');
             }
-            await onSubmit({ mail, password, username, firstname, lastname, defaultImage});
+
+            if (type === 'login' || type === 'signup') {
+                await onSubmit({ mail, password, username, firstname, lastname, defaultImage });
+            } else if (type === 'reset-password') {
+                await onSubmit({ mail });
+            }
         } catch (error) {
             console.error('Authentication Error:', error.message);
         }
     };
 
-
     return (
         <div className={`${type}-container`}>
-            <p>{type === 'login' ? 'Connectez-vous à votre compte' : 'Créez votre compte'}</p>
+            <p>{type === 'login' ? 'Connectez-vous à votre compte' : type === 'signup' ? "Créer votre compte" : "Rénitialiser votre mot de passe"}</p>
             <form className={`${type}-form`}>
                 {type === 'signup' && (
                     <>
@@ -79,27 +83,32 @@ const AuthForm = ({ type, onSubmit }) => {
                     <input type="text" className="input-mail" value={mail} onChange={(e) => setMail(e.target.value)} />
                 </div>
 
-                <div className='fieldset'>
-                    <label>Mot de passe</label>
-                    <span>
-                        <input
-                            type={showPassword ? "text" : "password"}
-                            id="password"
-                            name="password"
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <img src={eyeIcon} alt="eye-icon" onClick={togglePassword} />
-                    </span>
-                </div>
+                {type !== 'reset-password' && (
+                    <div className='fieldset'>
+                        <label>Mot de passe</label>
+                        <span>
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                id="password"
+                                name="password"
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <img src={eyeIcon} alt="eye-icon" onClick={togglePassword} />
+                        </span>
+                    </div>
+                )}
 
                 <button type="button" onClick={handleSubmit}>
-                    {type === 'login' ? 'Se connecter' : 'S\'inscrire'}
+                    {type === 'login' ? 'Se connecter' : (type === 'signup' ? 'S\'inscrire' : 'Nouveau mot de passe')}
                 </button>
+
                 {type === 'login' && (
                     <div className='link'>
                         <p>Vous n'avez pas de compte ? <Link to="/signup">Inscrivez-vous </Link></p>
+                        <p>Mot de passe oublié ? <Link to="/reset-password">Cliquer ici </Link></p>
                     </div>
                 )}
+
                 {type === 'signup' && (
                     <div className='link'>
                         <p>Vous avez déjà un compte ? <Link to="/login">Connectez-vous </Link></p>

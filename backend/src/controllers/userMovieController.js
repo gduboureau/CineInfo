@@ -1,8 +1,8 @@
 import db from '../utils/pg.js';
 import { fetchMovie } from './movieController.js';
 
-const apiKey = '7f0799a761376830477332b8577e17fe';
-const apiToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZjA3OTlhNzYxMzc2ODMwNDc3MzMyYjg1NzdlMTdmZSIsInN1YiI6IjY1NjlhYjRkZDA0ZDFhMDBlY2ZhOTFhMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Dg7J1QNfiLW7bGCLaFo6Fz8CcwU-HABY89b7Ac_emNw';
+const apiKey = process.env.APIkey;
+const apiToken = process.env.APItoken;
 
 export const favoriteMovies = async (req, res) => {
     const userId = req.userId;
