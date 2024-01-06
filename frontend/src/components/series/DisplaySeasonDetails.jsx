@@ -21,7 +21,7 @@ const DisplaySeasonDetails = ({ serie }) => {
     const [ratingModal, setRatingModal] = useState(false);
     const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
 
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
     const handleOpenRatingModal = (seasonIndex, episodeIndex, event) => {
         const noteElement = event.currentTarget;
