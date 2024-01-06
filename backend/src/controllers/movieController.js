@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import { connectToRedis, getFromCache, saveToCache } from '../redis/redis.js';
 
-const apiKey = '7f0799a761376830477332b8577e17fe';
+const apiKey = process.env.APIkey;
 
 const fetchMovies = async (req, res, cacheKey, apiUrl) => {
     try {

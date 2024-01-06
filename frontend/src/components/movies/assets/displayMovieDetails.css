@@ -1,3 +1,7 @@
+.movie-details-container {
+    min-width: 900px;
+}
+
 .movie-details-container .background-link {
     display: block;
     width: 100%;
@@ -135,6 +139,7 @@
     margin-left: 40px;
     margin-right: 40px;
     cursor: pointer;
+    color: rgb(63, 63, 63);
 }
 
 .movie-details-container .movie-details-category-title:hover {
@@ -148,8 +153,8 @@
 }
 
 .movie-details-container .movie-details-category-title.active {
-    color: rgb(63, 63, 63);
-    border-bottom: 2px solid rgb(63, 63, 63);
+    color: white;
+    border-bottom: 2px solid white;
 }
 
 .movie-details-container .background-container .movie-header-infos::-webkit-scrollbar {

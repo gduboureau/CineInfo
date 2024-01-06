@@ -40,7 +40,7 @@ const SerieDetails = () => {
                 setSerieCreditsActors(creditsData.cast);
                 setSerieCreditsCrew(creditsData.crew);
                 setSerieVideos(videosData.results);
-                setSerieImages(imagesData.posters);
+                setSerieImages(imagesData.backdrops);
                 setSerieRecommendations(recommendationsData.results);
             })
             .catch((error) => console.error("Erreur de récupération des données de la série :", error));

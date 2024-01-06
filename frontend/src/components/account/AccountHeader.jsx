@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import Loading from "../../utils/Loading";
 
 import './assets/accountHeader.css';
 
 const AccountHeader = () => {
     const [userInfos, setUserInfos] = useState('');
+    const [loading, setLoading] = useState(true);
 
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         fetch('http://localhost:8080/user/infos', {
@@ -18,19 +20,19 @@ const AccountHeader = () => {
             .then(response => response.json())
             .then(data => {
                 setUserInfos(data);
-            })
+            }).then(() => setLoading(false))
             .catch(error => console.error('Erreur de requête :', error));
     }, [token]);
+
+    if (loading) {
+        return <Loading/>
+    }
 
     return (
         <div className="account-header">
             <div className="account-infos">
                 <div className="account-logo">
-                    {userInfos && (
-                        <Link to={`/account/${userInfos.username}`}>
-                            <p>{userInfos.firstname[0]}{userInfos.lastname[0]}</p>
-                        </Link>
-                    )}
+                    <img src={userInfos.image} alt="Photo de profil par défaut" />
                 </div>
                 <div className="account-details">
                     {userInfos && (

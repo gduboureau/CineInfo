@@ -7,7 +7,8 @@ CREATE TABLE public.users (
     password character varying(100) NOT NULL,
     username character varying(100) NOT NULL,
     firstname character varying(100) NOT NULL,
-    lastname character varying(100) NOT NULL
+    lastname character varying(100) NOT NULL,
+    image TEXT NOT NULL
 );
 
 DROP TABLE IF EXISTS FavoriteMovies;
@@ -43,6 +44,27 @@ CREATE TABLE public.SerieRatings (
     rating DECIMAL(2, 1) NOT NULL,
     CONSTRAINT unique_serie_rating UNIQUE (user_id, serie_id)
 );
+
+DROP TABLE IF EXISTS MovieComments;
+CREATE TABLE public.MovieComments (
+    id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id uuid REFERENCES users(user_id),
+    movie_id INT NOT NULL,
+    comment TEXT NOT NULL,
+    date TIMESTAMP NOT NULL
+);
+
+DROP TABLE IF EXISTS SerieComments;
+CREATE TABLE public.SerieComments (
+    id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id uuid REFERENCES users(user_id),
+    serie_id INT NOT NULL,
+    season INT,
+    comment TEXT NOT NULL,
+    date TIMESTAMP NOT NULL
+);
+
+
 
 DROP TABLE IF EXISTS WatchlistMovies;
 CREATE TABLE public.WatchlistMovies (

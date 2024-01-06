@@ -1,13 +1,13 @@
 let saveToken = (token) => {
-    sessionStorage.setItem('token', token);
+    localStorage.setItem('token', token);
 }
 
 let logout = () => {
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
 }
 
 let isLogged = () => {
-    let token = sessionStorage.getItem('token');
+    let token = localStorage.getItem('token');
     return !!token
 }
 

@@ -17,7 +17,7 @@ const MediaOptions = ({ media, mediaType }) => {
     const [isHovered, setIsHovered] = useState(null);
     const [ratingModal, setRatingModal] = useState(false);
 
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
     const fetchFavorites = async () => {
         try {

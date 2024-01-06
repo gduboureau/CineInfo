@@ -1,4 +1,4 @@
-header {
+.header {
     background-color: #0c0c0c;
 }
 
@@ -24,7 +24,6 @@ header {
     display: flex;
     justify-content: center;
     margin-left: 40px;
-
 }
 
 .public-nav .categories .category-with-submenu,
@@ -55,7 +54,6 @@ header {
     text-align: left;
     z-index: 3;
     border-radius: 15px;
-
 }
 
 .public-nav .categories .category-with-submenu:hover .submenu,
@@ -82,13 +80,20 @@ header {
     text-decoration: none;
 }
 
-.public-nav .right-header,
-.logged-nav .right-header {
+.public-nav .right-header{
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-left: auto;
     margin-right: 20px;
+}
+
+.logged-nav .right-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 50px;
 }
 
 .public-nav .right-header .login,
@@ -117,20 +122,47 @@ header {
     outline: none;
 }
 
-.logged-nav .right-header .account {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    width: 25px;
-    height: 25px;
-    padding: 8px;
+.logged-nav .right-header .account img{
+    width: 40px;
+    height: 40px;
+    margin-top: 5px;
     border-radius: 50%;
-    cursor: pointer;
 }
 
 .logged-nav .right-header .account a {
     text-decoration: none;
     color: #000;
+}
+
+.logged-nav .right-header .account .profile-submenu {
+    display: none;
+    position: absolute;
+    width: 150px;
+    top: 65px;
+    right: 0;
+    background-color: #0c0c0c;
+    padding: 10px;
+    text-align: left;
+    z-index: 3;
+    border-radius: 15px;
+}
+
+.logged-nav .right-header .account:hover .profile-submenu {
+    display: block;
+}
+
+.logged-nav .right-header .account .profile-submenu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.logged-nav .right-header .account .profile-submenu li {
+    padding: 7px;
+    border-bottom: none;
+}
+
+.logged-nav .right-header .account .profile-submenu li a {
+    color: #fff;
+    text-decoration: none;
 }

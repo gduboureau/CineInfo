@@ -1,5 +1,11 @@
-.settings-content{
+.settings {
+    width: 100%;
+    height: 100%;
+}
+
+.settings-content {
     padding: 0 40px;
+    flex: 1;
 }
 
 .settings .title-group {
@@ -12,10 +18,128 @@
 
 .settings .title-group h2 {
     margin: 0;
-    margin-right: 40px;
+    margin-left: 55px;
 }
 
-.settings .settings-content .settings-infos{
+.settings .settings-content .settings-infos {
     color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow: auto;
 }
 
+.settings .settings-content .settings-infos img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.settings .settings-content .settings-infos input {
+    background-color: #ffffffde;
+    border: none;
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 10px;
+    outline: none;
+    text-align: justify;
+    color: rgb(0, 0, 0);
+    
+}
+
+.settings .settings-content .settings-infos .left-setting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #bcd0f7;
+}
+
+.settings .settings-content .settings-infos .right-setting {
+    margin-bottom: 70px;
+    margin-left: 40px;
+}
+
+.settings .settings-content .settings-infos .left-setting .firstname-lastname {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.settings .settings-content .settings-infos .left-setting .mail {
+    margin-top: 10px;
+}
+
+.settings .settings-content .settings-infos .right-setting .first-part-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20px;
+    color: #bcd0f7;
+
+}
+
+.settings .settings-content .settings-infos .right-setting .second-part-input {
+    display: flex;
+    margin-top: 20px;
+    color: #bcd0f7;
+
+}
+
+.settings .settings-content .settings-infos .right-setting .first-part-input .settings-lastname,
+.settings .settings-content .settings-infos .right-setting .first-part-input .settings-username,
+.settings .settings-content .settings-infos .right-setting .second-part-input .settings-password,
+.settings .settings-content .settings-infos .right-setting .second-part-input .submit-button-change {
+    margin-left: 40px; 
+}
+
+.settings .submit-button-change {
+    display: flex;
+    justify-content: flex-end; 
+    height: 50%;   
+    margin-top: 23px;
+}
+
+.settings .submit-button-change button {
+    background-color: #ffffffde;
+    border: none;
+    border-radius: 12px;
+    padding: 10px;
+    outline: none;
+    text-align: justify;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+  
+
+}
+
+.settings .submit-button-change button:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.settings .settings-content .settings-infos .settings-image {
+    position: relative;
+}
+
+.settings .settings-content .settings-infos .settings-image:hover .overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.settings .settings-content .settings-infos .settings-image .overlay {
+    display: none;
+    color: #000000;
+}
+
+.settings .settings-content .settings-infos .settings-image .overlay-icon {
+    font-size: 24px;
+}

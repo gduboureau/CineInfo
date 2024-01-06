@@ -1,9 +1,8 @@
 import db from '../utils/pg.js';
 import { fetchSerie } from './serieController.js';
 
-const apiKey = '7f0799a761376830477332b8577e17fe';
-const apiToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZjA3OTlhNzYxMzc2ODMwNDc3MzMyYjg1NzdlMTdmZSIsInN1YiI6IjY1NjlhYjRkZDA0ZDFhMDBlY2ZhOTFhMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Dg7J1QNfiLW7bGCLaFo6Fz8CcwU-HABY89b7Ac_emNw';
-
+const apiKey = process.env.APIkey;
+const apiToken = process.env.APItoken;
 
 export const favoriteSeries = async (req, res) => {
     const userId = req.userId;
@@ -165,6 +164,33 @@ export const getSeriesRatings = async (req, res) => {
         res.status(500).json({ message: 'Erreur interne du serveur' });
     }
 };
+
+export const addSerieComment = async (req, res) => {
+    const userId = req.userId;
+    const { serieId, comment, season, date } = req.body;
+
+    try {
+        await db.query('INSERT INTO public."seriecomments" (user_id, serie_id, comment, season, date) VALUES ($1, $2, $3, $4, $5)', [userId, serieId, comment, season, date]);
+        res.json({ message: 'Commentaire ajouté' });
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout du commentaire :', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+}
+export const getSerieComments = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await db.query(
+            'SELECT mc.id, mc.comment, mc.season, mc.date, u.firstname, u.lastname, u.username, mr.rating FROM public."seriecomments" mc JOIN public.users u ON mc.user_id = u.user_id LEFT JOIN public.SerieRatings mr ON mc.user_id = mr.user_id AND mc.serie_id = mr.serie_id WHERE mc.serie_id = $1',
+            [id]
+        );
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des commentaires :', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+}
+
 
 
 export const addSerieToWatchlist = async (req, res) => {

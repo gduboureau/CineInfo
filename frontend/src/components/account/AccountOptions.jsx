@@ -12,7 +12,7 @@ const AccountOptions = ({ optionType }) => {
     const [seenFilter, setSeenFilter] = useState('unseen');
     const detailsRef = useRef(null);
 
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
 
     const handleTabChange = (tab) => {
         setLoading(true);

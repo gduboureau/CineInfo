@@ -1,8 +1,8 @@
 import db from '../utils/pg.js';
 import { fetchMovie } from './movieController.js';
 
-const apiKey = '7f0799a761376830477332b8577e17fe';
-const apiToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZjA3OTlhNzYxMzc2ODMwNDc3MzMyYjg1NzdlMTdmZSIsInN1YiI6IjY1NjlhYjRkZDA0ZDFhMDBlY2ZhOTFhMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Dg7J1QNfiLW7bGCLaFo6Fz8CcwU-HABY89b7Ac_emNw';
+const apiKey = process.env.APIkey;
+const apiToken = process.env.APItoken;
 
 export const favoriteMovies = async (req, res) => {
     const userId = req.userId;
@@ -143,6 +143,34 @@ export const getMoviesRatings = async (req, res) => {
         res.status(500).json({ message: 'Erreur interne du serveur' });
     }
 };
+
+export const addMovieComment = async (req, res) => {
+    const userId = req.userId;
+    const { movieId, comment, date } = req.body;
+
+    try {
+        await db.query('INSERT INTO public."moviecomments" (user_id, movie_id, comment, date) VALUES ($1, $2, $3, $4)', [userId, movieId, comment, date]);
+        res.json({ message: 'Commentaire ajouté' });
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout du commentaire :', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+}
+export const getMovieComments = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await db.query(
+            'SELECT mc.id, mc.comment, mc.date, u.username, u.image, mr.rating FROM public."moviecomments" mc JOIN public.users u ON mc.user_id = u.user_id LEFT JOIN public.MovieRatings mr ON mc.user_id = mr.user_id AND mc.movie_id = mr.movie_id WHERE mc.movie_id = $1',
+            [id]
+        );
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des commentaires :', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+}
+
+
 
 export const watchlistMovies = async (req, res) => {
     const userId = req.userId;
