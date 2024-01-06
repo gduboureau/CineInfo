@@ -1,19 +1,21 @@
 import jwt from 'jsonwebtoken';
 import db from '../utils/pg.js';
 import dotenv from 'dotenv';
+import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
+
 dotenv.config();
 
 const secretKey = 'key';
 
 let config = {
-    service: 'gmail', 
+    service: 'gmail',
     auth: {
-        user: process.env.NODEJS_GMAIL_APP_USER, 
+        user: process.env.NODEJS_GMAIL_APP_USER,
         pass: process.env.GMAIL_APP_PASSWORD
-     }
-}
+    }
+};
 
 export const login = async (req, res) => {
     const { mail, password } = req.body;
@@ -25,12 +27,15 @@ export const login = async (req, res) => {
             return res.json({ error: 'Cette adresse mail ou ce nom d\'utilisateur ne correspond à aucun compte' });
         }
 
-        if (password !== result.rows[0].password) {
+        const hashedPassword = result.rows[0].password;
+        const passwordMatch = await bcrypt.compare(password, hashedPassword);
+
+        if (!passwordMatch) {
             return res.json({ error: 'Mot de passe incorrect' });
         }
 
         const token = jwt.sign({ userId: result.rows[0].user_id }, secretKey);
-        res.json({ token, username : result.rows[0].username });
+        res.json({ token, username: result.rows[0].username });
     } catch (error) {
         console.error('Erreur lors de la connexion :', error.message);
         res.status(500).json({ message: 'Erreur interne du serveur' });
@@ -51,7 +56,9 @@ export const register = async (req, res) => {
             return res.json({ error: 'Ce nom d\'utilisateur est déjà utilisé' });
         }
 
-        await db.query('INSERT INTO public."users" (mail, password, username, firstname, lastname, image) VALUES ($1, $2, $3, $4, $5, $6)', [mail, password, username, firstname, lastname, defaultImage]);
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        await db.query('INSERT INTO public."users" (mail, password, username, firstname, lastname, image) VALUES ($1, $2, $3, $4, $5, $6)', [mail, hashedPassword, username, firstname, lastname, defaultImage]);
 
         const result = await db.query('SELECT * FROM public."users" WHERE username = $1', [username]);
         const token = jwt.sign({ userId: result.rows[0].user_id }, secretKey, { expiresIn: '1h' });
@@ -73,16 +80,16 @@ export const resetPassword = async (req, res) => {
         }
 
         const randomPassword = crypto.randomBytes(8).toString('hex');
+        const hashedPassword = await bcrypt.hash(randomPassword, 10);
 
-        await db.query('UPDATE public."users" SET password = $1 WHERE mail = $2', [randomPassword, mail]);
+        await db.query('UPDATE public."users" SET password = $1 WHERE mail = $2', [hashedPassword, mail]);
 
         const transporter = nodemailer.createTransport(config);
         const mailOptions = {
             from: process.env.NODEJS_GMAIL_APP_USER,
             to: mail,
             subject: 'Nouveau mot de passe',
-            text: `Votre nouveau mot de passe est : ${randomPassword}. Nous vous recommandons de le changer dès votre prochaine connexion.
-            A bientôt sur Cineinfo !`
+            text: `Votre nouveau mot de passe est : ${randomPassword}. Nous vous recommandons de le changer dès votre prochaine connexion. A bientôt sur Cineinfo !`
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
@@ -98,6 +105,4 @@ export const resetPassword = async (req, res) => {
         console.error('Erreur lors de la réinitialisation du mot de passe :', error.message);
         res.status(500).json({ message: 'Erreur interne du serveur' });
     }
-}
-
-
+};
