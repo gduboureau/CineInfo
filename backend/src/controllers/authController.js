@@ -34,8 +34,8 @@ export const login = async (req, res) => {
             return res.json({ error: 'Mot de passe incorrect' });
         }
 
-        const token = jwt.sign({ userId: result.rows[0].user_id }, secretKey);
-        res.json({ token, username: result.rows[0].username });
+        const token = jwt.sign({ userId: result.rows[0].user_id }, secretKey, { expiresIn: '1h' });
+        res.json({ token, username: result.rows[0].username, expiration: '1h'});
     } catch (error) {
         console.error('Erreur lors de la connexion :', error.message);
         res.status(500).json({ message: 'Erreur interne du serveur' });
@@ -103,6 +103,19 @@ export const resetPassword = async (req, res) => {
         });
     } catch (error) {
         console.error('Erreur lors de la réinitialisation du mot de passe :', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+};
+
+export const extendToken = async (req, res) => {
+    const userId = req.userId;
+
+    try {
+        const result = await db.query('SELECT * FROM public."users" WHERE user_id = $1', [userId]);
+        const token = jwt.sign({ userId: result.rows[0].user_id }, secretKey, { expiresIn: '1m' });
+        res.json({ token });
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du token :', error.message);
         res.status(500).json({ message: 'Erreur interne du serveur' });
     }
 };
