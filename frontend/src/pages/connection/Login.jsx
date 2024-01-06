@@ -28,12 +28,56 @@ const Login = () => {
       if (data.error) {
         toast.error(data.error);
       } else {
-        accountService.saveToken(data.token);
+        handleToken(data.token);
         navigate(`/account/${data.username}`);
       }
     } catch (error) {
       console.error('Erreur de connexion :', error.message);
     }
+  };
+
+  const handleToken = (token) => {
+    accountService.saveToken(token);
+    localStorage.setItem('tokenExpiration', new Date(Date.now() + 60 * 60 * 1000).toISOString());
+
+    const extendTokenInterval = setInterval(() => {
+      const tokenExpiration = new Date(localStorage.getItem('tokenExpiration'));
+      const timeRemaining = tokenExpiration - Date.now();
+
+      if (timeRemaining < 55 * 60 * 1000) {
+        clearInterval(extendTokenInterval);
+
+        const shouldStayLoggedIn = window.confirm("Votre session expire dans 5 minutes. Souhaitez-vous rester connecté ?");
+        if (shouldStayLoggedIn) {
+          extendToken(token);
+        } else {
+          accountService.logout();
+          navigate('/');
+        }
+      }
+    }, 55 * 60 * 1000);
+  };
+
+  const extendToken = (token) => {
+    fetch('http://localhost:8080/auth/extend-token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ token }),
+    }).then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          toast.error(data.error);
+        } else {
+          accountService.logout();
+          accountService.saveToken(data.token);
+
+          handleToken(data.token);
+        }
+      })
+      .catch((error) => console.error('Erreur de requête :', error));
   };
 
   return (

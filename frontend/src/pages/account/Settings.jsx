@@ -42,7 +42,7 @@ const Settings = () => {
                     lastname: data.lastname,
                     username: data.username,
                     mail: data.mail,
-                    password: data.password,
+                    password: "",
                     image: data.image
                 });
             })
@@ -84,7 +84,7 @@ const Settings = () => {
         const newErrorMessages = {};
 
         Object.keys(editableFields).forEach(field => {
-            if (editableFields[field].trim() === "" && field !== "image") {
+            if (editableFields[field].trim() === "" && field !== "image" && field !== "password") {
                 isValid = false;
                 newErrorMessages[field] = "Ce champ est obligatoire";
             }
