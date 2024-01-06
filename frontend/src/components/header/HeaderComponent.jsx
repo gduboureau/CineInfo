@@ -10,6 +10,7 @@ import './assets/headerComponent.css';
 const HeaderComponent = ({ isLogged }) => {
     const [userInfos, setUserInfos] = useState('');
     const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+    const [isProfileSubMenuOpen, setIsProfileSubMenuOpen] = useState(false);
 
     const navigate = useNavigate();
 
@@ -40,7 +41,7 @@ const HeaderComponent = ({ isLogged }) => {
             fetch('http://localhost:8080/user/infos', {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 },
             })
                 .then(response => response.json())
@@ -67,6 +68,14 @@ const HeaderComponent = ({ isLogged }) => {
 
     }
 
+    const Logout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        localStorage.removeItem('userId');
+        navigate('/');
+        window.location.reload();
+    }
+
     return (
         <header>
             <nav className={isLogged ? 'logged-nav' : 'public-nav'}>
@@ -78,7 +87,7 @@ const HeaderComponent = ({ isLogged }) => {
                 <ul className="categories">
                     {categories.map((category, index) => (
                         <li key={index} className="category-with-submenu" onMouseEnter={() => setIsSubMenuOpen(category.title)}
-                        onMouseLeave={() => setIsSubMenuOpen(false)}>
+                            onMouseLeave={() => setIsSubMenuOpen(false)}>
                             <Link
                                 to={`/${category.path}`}
                                 className="category"
@@ -116,9 +125,41 @@ const HeaderComponent = ({ isLogged }) => {
                     </div>
                     <div className='account'>
                         {isLogged ? (
-                            <Link to={`/account/${userInfos.username}`}>
-                                <img src={userInfos.image} alt="Photo de profil par défaut" />
-                            </Link>
+                            <div className="profile-with-submenu" onMouseEnter={() => setIsProfileSubMenuOpen(true)}
+                                onMouseLeave={() => setIsProfileSubMenuOpen(false)}>
+                                <Link to={`/account/${userInfos.username}`}>
+                                    <img src={userInfos.image} alt="pp"/>
+                                </Link>
+                                <AnimatePresence>
+                                    {isProfileSubMenuOpen && (
+                                        <motion.div
+                                            className="profile-submenu"
+                                            initial={{ opacity: 0, y: -10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: -10 }}
+                                            transition={{ duration: 0.3 }}
+                                        >
+                                            <ul>
+                                                <li>
+                                                    <Link to={`/account/${userInfos.username}`} className="profile-subcategory">
+                                                        Mon compte
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link to={`/account/${userInfos.username}/settings`} className="profile-subcategory">
+                                                        Paramètres
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link className="profile-subcategory" onClick={Logout}>
+                                                        Se déconnecter
+                                                    </Link>
+                                                </li>
+                                            </ul>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
                         ) : (
                             <Link to="/login" className="login">
                                 Se connecter

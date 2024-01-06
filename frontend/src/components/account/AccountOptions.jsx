@@ -10,7 +10,7 @@ const AccountOptions = ({ optionType }) => {
     const [media, setMedia] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
 
     const handleTabChange = (tab) => {
         setActiveTab(tab);

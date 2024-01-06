@@ -31,7 +31,7 @@ const RatingModal = ({ media, mediaType, rating, setRating, setIsRated, onClose 
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
             body: JSON.stringify({
                 mediaId: media.id,
@@ -56,7 +56,7 @@ const RatingModal = ({ media, mediaType, rating, setRating, setIsRated, onClose 
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
             body: JSON.stringify({
                 mediaId: media.id,
