@@ -146,7 +146,7 @@ export const SeriesRecommendations = async (req, res) => {
 
 export const SeriesDetailsBySeason = async (req, res) => {
     const { id, season  } = req.params;
-    const cacheKey = `series_details_${id}_season_${season }`;
+    const cacheKey = `series_details_${id}_season_${season}`;
     const apiUrl = `https://api.themoviedb.org/3/tv/${id}/season/${season }?api_key=${apiKey}&language=fr-FR`;
     const data = await fetchSerie(cacheKey, apiUrl);
     res.json(data);

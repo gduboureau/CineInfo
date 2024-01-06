@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
@@ -55,49 +55,58 @@ const AccountOptionsContent = ({ media, optionType, activeTab, setMedia }) => {
         <div className="account-options-media">
             <ToastContainer />
             {media.length > 0 && (
-            <>
-                {(activeTab === 'series' && optionType === 'watchlist') ? (
-                    <AccountWatchlistSeries media={media} setMedia={setMedia} formatDate={formatDate}/> 
-                ) : (
-                    media.map((item) => (
-                        <div className="media" key={item.id}>
-                            {item.poster_path ? (
-                                <img src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2/${item.poster_path}`} alt={item.id} onClick={() => handleMediaClick(activeTab, item.id, activeTab === 'series' ? item.name : item.title)} />
-                            ) : (
-                                <div className="icon-div" onClick={() => handleMediaClick(activeTab, item.id, activeTab === 'series' ? item.name : item.title)}>
-                                    <FontAwesomeIcon icon={faImage} className="icon" />
+                <>
+                    {(activeTab === 'series' && optionType === 'watchlist') ? (
+                        <AccountWatchlistSeries media={media} setMedia={setMedia} formatDate={formatDate} handleMediaClick={handleMediaClick} />
+                    ) : (
+                        media.map((item) => (
+                            <div className="media" key={item.id}>
+                                {item.poster_path ? (
+                                    <img src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2/${item.poster_path}`} alt={item.id} onClick={() => handleMediaClick(activeTab, item.id, activeTab === 'series' ? item.name : item.title)} />
+                                ) : (
+                                    <div className="icon-div" onClick={() => handleMediaClick(activeTab, item.id, activeTab === 'series' ? item.name : item.title)}>
+                                        <FontAwesomeIcon icon={faImage} className="icon" />
+                                    </div>
+                                )}
+                                <div className="details">
+                                    <h3 className="title" onClick={() => handleMediaClick(activeTab, item.id, activeTab === 'series' ? item.name : item.title)}>
+                                        {activeTab === 'series' ? item.name : item.title}
+                                    </h3>
+                                    <p className="date">{item.release_date ? formatDate(item.release_date) : (item.first_air_date ? formatDate(item.first_air_date) : "")}</p>
+                                    <p className="overview">{item.overview}</p>
+                                    {optionType === 'ratings' && (
+                                        <p className="rating">Note : {item.rating}/5</p>
+                                    )}
                                 </div>
-                            )}
-                            <div className="details">
-                                <h3 className="title" onClick={() => handleMediaClick(activeTab, item.id, activeTab === 'series' ? item.name : item.title)}>
-                                    {activeTab === 'series' ? item.name : item.title}
-                                </h3>
-                                <p className="date">{item.release_date ? formatDate(item.release_date) : (item.first_air_date ? formatDate(item.first_air_date) : "")}</p>
-                                <p className="overview">{item.overview}</p>
-                                {optionType === 'ratings' && (
-                                    <p className="rating">Note : {item.rating}/5</p>
+                                {optionType === 'watchlist' && activeTab === "movies" && (
+                                    <div className="checkbox-wrapper">
+                                        <input
+                                            type="checkbox"
+                                            id={`check-${item.id}`}
+                                            checked={item.seen || false}
+                                            onChange={handleInput} />
+                                        <label htmlFor={`check-${item.id}`}>
+                                            <span></span>{/* This span is needed to create the "checkbox" element */}
+                                        </label>
+                                    </div>
                                 )}
                             </div>
-                            {optionType === 'watchlist' && activeTab === "movies" && (
-                                <div className="checkbox-wrapper">
-                                    <input type="checkbox" id={`seen-${item.id}`} checked={item.seen || false} onChange={handleInput} />
-                                </div>
-                            )}
-                        </div>
-                    )))}
+                        )))}
                 </>
             )}
-            {media.length === 0 && (
-                <p className="no-content">
-                    {optionType === 'ratings' && activeTab === 'movies' && "Vous n'avez pas encore noté de films"}
-                    {optionType === 'favorites' && activeTab === 'movies' && "Vous n'avez pas encore ajouté de films à vos favoris."}
-                    {optionType === 'watchlist' && activeTab === 'movies' && "Vous n'avez pas encore ajouté de films à votre watchlist."}
-                    {optionType === 'ratings' && activeTab === 'series' && "Vous n'avez pas encore noté de séries"}
-                    {optionType === 'favorites' && activeTab === 'series' && "Vous n'avez pas encore ajouté de séries à vos favoris."}
-                    {optionType === 'watchlist' && activeTab === 'series' && "Vous n'avez pas encore ajouté de séries à votre watchlist."}
-                </p>
-            )}
-        </div>
+            {
+                media.length === 0 && (
+                    <p className="no-content">
+                        {optionType === 'ratings' && activeTab === 'movies' && "Vous n'avez pas encore noté de films"}
+                        {optionType === 'favorites' && activeTab === 'movies' && "Vous n'avez pas encore ajouté de films à vos favoris."}
+                        {optionType === 'watchlist' && activeTab === 'movies' && "Vous n'avez pas encore ajouté de films à votre watchlist."}
+                        {optionType === 'ratings' && activeTab === 'series' && "Vous n'avez pas encore noté de séries"}
+                        {optionType === 'favorites' && activeTab === 'series' && "Vous n'avez pas encore ajouté de séries à vos favoris."}
+                        {optionType === 'watchlist' && activeTab === 'series' && "Vous n'avez pas encore ajouté de séries à votre watchlist."}
+                    </p>
+                )
+            }
+        </div >
     );
 }
 

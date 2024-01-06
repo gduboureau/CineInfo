@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import MovieTrailer from "../movies/MovieTrailer";
 
 
 import "./assets/displaySeasonDetails.css";
+import RatingEpisode from "./RatingEpisode";
 
 const DisplaySeasonDetails = ({ serie }) => {
 
@@ -14,6 +16,30 @@ const DisplaySeasonDetails = ({ serie }) => {
     const [seasonsData, setSeasonsData] = useState([]);
     const [videos, setVideos] = useState([]);
     const [selectedSeason, setSelectedSeason] = useState(null);
+    const [selectedSeasonIndex, setSelectedSeasonIndex] = useState(null);
+    const [selectedEpisodeIndex, setSelectedEpisodeIndex] = useState(null);
+    const [ratingModal, setRatingModal] = useState(false);
+    const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
+
+    const token = sessionStorage.getItem("token");
+
+    const handleOpenRatingModal = (seasonIndex, episodeIndex, event) => {
+        const noteElement = event.currentTarget;
+
+        const rect = noteElement.getBoundingClientRect();
+
+        setModalPosition({
+            top: rect.top + window.scrollY,
+            left: rect.right + window.scrollX,
+        });
+        setSelectedSeasonIndex(seasonIndex);
+        setSelectedEpisodeIndex(episodeIndex);
+        setRatingModal(!ratingModal);
+    };
+
+    const handleCloseRatingModal = () => {
+        setRatingModal(false);
+    };
 
     useEffect(() => {
         const fetchSeasonData = async (seasonNumber) => {
@@ -103,10 +129,11 @@ const DisplaySeasonDetails = ({ serie }) => {
                         </div>
                         <div className="season-date">
                             <p>{new Date(season.data.air_date).getFullYear()}  &nbsp;-  &nbsp;
-                                {season.data.episodes.length} épisodes</p>
-                                <span className="trailer-season">
-                                    <MovieTrailer videos={videos[index].videos} />
-                                </span>
+                                {season.data.episodes.length} épisodes</p>&nbsp; &nbsp;
+                            <p className="note"><FontAwesomeIcon icon={faStar} className="icon" /> {season.data.vote_average}/10</p>
+                            <span className="trailer-season">
+                                <MovieTrailer videos={videos[index].videos} />
+                            </span>
                         </div>
                         <div className="season-overview">
                             <p>{season.data.overview}</p>
@@ -129,7 +156,12 @@ const DisplaySeasonDetails = ({ serie }) => {
                                                 <p>Episode {episode.episode_number} : {episode.name}</p>
                                             </div>
                                             <div className="episode-date">
-                                                <p>{new Date(episode.air_date).toLocaleDateString()}</p>
+                                                <p>{new Date(episode.air_date).toLocaleDateString()} {episode.runtime ? (
+                                                    <span> &bull; {episode.runtime}m</span>
+                                                ) : ""} </p> &nbsp; &nbsp;
+                                                <p className="note" onClick={(event) => handleOpenRatingModal(season.seasonNumber, episode.episode_number, event)}><FontAwesomeIcon icon={faStar} className="icon" /> {episode.vote_average ? (
+                                                    <span>{episode.vote_average.toFixed(1)}/10</span>
+                                                ) : ""}</p>
                                             </div>
                                             <div className="episode-overview">
                                                 <p>{episode.overview}</p>
@@ -143,6 +175,17 @@ const DisplaySeasonDetails = ({ serie }) => {
                     </div>
                 </div>
             ))}
+            {ratingModal && token && selectedSeasonIndex !== null && selectedEpisodeIndex !== null && (
+                <RatingEpisode
+                    serieId={serie.id}
+                    seasonNumber={selectedSeasonIndex}
+                    episodeNumber={selectedEpisodeIndex}
+                    onClose={handleCloseRatingModal}
+                    top={modalPosition.top}
+                    left={modalPosition.left}
+                />
+            )}
+
         </div>
     );
 };

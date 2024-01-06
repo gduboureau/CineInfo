@@ -1,0 +1,15 @@
+.rating-episode{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.rating-episode .stars {
+    display: flex;
+    color: #0c0c0c;
+    gap: 2px;
+}

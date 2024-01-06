@@ -29,7 +29,6 @@ const MediaOptions = ({ media, mediaType }) => {
                 },
             });
             const data = await response.json();
-
             data.forEach((item) => {
                 if (item.id === media.id) {
                     setIsFavorited(true);
@@ -62,16 +61,45 @@ const MediaOptions = ({ media, mediaType }) => {
         }
     };
 
+    const fetchWatchlist = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/user/${mediaType}/watchlist`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await response.json();
+            data.forEach((item) => {
+                if (mediaType === "movies" && item.id === media.id) {
+                    setIsWatchlisted(true);
+                }
+                if (mediaType === "series" && item.serieDetails.id === media.id) {
+                    setIsWatchlisted(true);
+                }
+            });
+        } catch (error) {
+            console.error("Erreur de recherche de la watchlist :", error);
+        }
+    };
+
+
     useEffect(() => {
         if (token === null) return;
+
+        setIsFavorited(false);
+        setIsRated(false);
+        setIsWatchlisted(false);
 
         const fetchData = async () => {
             await fetchFavorites();
             await fetchRatings();
+            await fetchWatchlist();
         };
 
         fetchData();
-    }, [media.id, token, rating]);
+    }, [media, token, rating]);
 
     const handleMouseOut = () => {
         setIsHovered("");
@@ -94,7 +122,6 @@ const MediaOptions = ({ media, mediaType }) => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 const successMessage =
                     endpoint === 'addfavorite'
                         ? `Ajouté aux favoris avec succès`
@@ -122,7 +149,6 @@ const MediaOptions = ({ media, mediaType }) => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 const successMessage =
                     endpoint === 'addwatchlist'
                         ? `Ajouté à votre watchlist avec succès`
@@ -158,9 +184,9 @@ const MediaOptions = ({ media, mediaType }) => {
                     />
                     {isHovered === "favorites" && (
                         <span className="tooltip">
-                            {token
-                                ? "Ajouter aux favoris"
-                                : "Connectez-vous pour l'ajouter à vos favoris"}
+                            {token && isFavorited && "Retirer des favoris"}
+                            {token && !isFavorited && "Ajouter aux favoris"}
+                            {!token && "Connectez-vous pour l'ajouter à vos favoris"}
                         </span>
                     )}
                 </li>
@@ -173,9 +199,9 @@ const MediaOptions = ({ media, mediaType }) => {
                     <FontAwesomeIcon icon={faBookmark} style={{ color: isWatchlisted ? "pink" : "white" }} />
                     {isHovered === "watchlist" && (
                         <span className="tooltip">
-                            {token
-                                ? "Ajouter à ma watchlist"
-                                : "Connectez-vous pour l'ajouter à votre watchlist"}
+                            {token && isWatchlisted && "Retirer de ma watchlist"}
+                            {token && !isWatchlisted && "Ajouter à ma watchlist"}
+                            {!token && "Connectez-vous pour l'ajouter à votre watchlist"}
                         </span>
                     )}
                 </li>

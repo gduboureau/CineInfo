@@ -31,6 +31,13 @@
     align-items: center;
 }
 
+.series-season-container .season-container .season-info .note {
+   background-color: #fff;
+   color: black;
+    padding: 3px;
+    border-radius: 8px;
+    cursor: pointer;
+}
 
 .series-season-container .season-container .season-info .season-date .trailer-season {
     margin-left: 20px;
@@ -71,4 +78,11 @@
     font-weight: bold;
     
 }
+
+.series-season-container .season-container .season-episodes .episode-container .episode-date{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 

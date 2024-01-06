@@ -1,5 +1,9 @@
-.account-options-content{
+.account-options-content {
     padding: 0 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .account-options-content .title-group {
@@ -36,3 +40,139 @@
     border-bottom-color: #fff;
 }
 
+details {
+    position: relative;
+    width: 150px;
+    margin-right: 1rem;
+}
+
+details[open] {
+    z-index: 1;
+}
+
+details summary {
+    padding: 0.7rem;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #ddd;
+    list-style: none;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+details summary::-webkit-details-marker {
+    display: none;
+}
+
+details[open] summary:before {
+    content: '';
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+details summary:after {
+    content: '';
+    display: inline-block;
+    float: right;
+    width: .5rem;
+    height: .5rem;
+    border-bottom: 1px solid currentColor;
+    border-left: 1px solid currentColor;
+    border-bottom-left-radius: 2px;
+    transform: rotate(45deg) translate(50%, 0%);
+    transform-origin: center center;
+    transition: transform ease-in-out 100ms;
+    color: #000;
+}
+
+details summary:focus {
+    outline: none;
+}
+
+details[open] summary:after {
+    transform: rotate(-45deg) translate(0%, 0%);
+}
+
+details ul {
+    width: 100%;
+    background: #ddd;
+    position: absolute;
+    list-style: none;
+    color: #000;
+    top: calc(100% + .5rem);
+    left: 0;
+    padding: 0.7rem;
+    margin: 0;
+    box-sizing: border-box;
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+details li {
+    margin: 0;
+    padding: 1rem 0;
+    border-bottom: 1px solid #ccc;
+}
+
+details li:first-child {
+    padding-top: 0;
+}
+
+details li:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+/* FAKE SELECT */
+
+details summary.radios {
+    counter-reset: radios;
+}
+
+details summary.radios:before {
+    content: var(--selection);
+}
+
+details input[type=radio] {
+    counter-increment: radios;
+    appearance: none;
+    display: none;
+}
+
+details input[type=radio]:checked {
+    display: inline;
+    --display: block;
+}
+
+details input[type=radio]:after {
+    content: attr(title);
+    display: inline;
+    font-size: 1rem;
+}
+
+details ul.list {
+    counter-reset: labels;
+}
+
+details label {
+    width: 100%;
+    display: flex;
+    cursor: pointer;
+    justify-content: space-between;
+}
+
+details label span {
+    --display: none;
+    display: var(--display);
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid #727272;
+    border-radius: 3px;
+}

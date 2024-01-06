@@ -4,6 +4,7 @@ import { fetchSerie } from './serieController.js';
 const apiKey = '7f0799a761376830477332b8577e17fe';
 const apiToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZjA3OTlhNzYxMzc2ODMwNDc3MzMyYjg1NzdlMTdmZSIsInN1YiI6IjY1NjlhYjRkZDA0ZDFhMDBlY2ZhOTFhMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Dg7J1QNfiLW7bGCLaFo6Fz8CcwU-HABY89b7Ac_emNw';
 
+
 export const favoriteSeries = async (req, res) => {
     const userId = req.userId;
     let favorites = [];
@@ -166,7 +167,6 @@ export const addSerieToWatchlist = async (req, res) => {
             const episodes = seasonDetails.episodes;
 
             for (const episode of episodes) {
-
                 await db.query('INSERT INTO public."watchlistseries"(user_id, serie_id, season, episode) VALUES($1, $2, $3, $4)',
                     [userId, mediaId, season.season_number, episode.episode_number]);
             }
@@ -231,13 +231,15 @@ export const getWatchlistSeries = async (req, res) => {
 
         const groupedBySeries = series.reduce((acc, item) => {
             const { serieId, serieDetails, seasons } = item;
-            if (!acc[serieId]) {
-                acc[serieId] = {
+            const serieKey = String(serieId);
+
+            if (!acc[serieKey]) {
+                acc[serieKey] = {
                     serieDetails,
                     seasons,
                 };
             } else {
-                const existingSeries = acc[serieId];
+                const existingSeries = acc[serieKey];
                 const existingSeason = existingSeries.seasons.find(season => season.seasonNumber === seasons[0].seasonNumber);
                 if (existingSeason) {
                     existingSeason.episodes.push(...seasons[0].episodes);
@@ -268,6 +270,85 @@ export const seenEpisodeSeries = async (req, res) => {
         res.status(500).json({ message: 'Erreur interne du serveur' });
     }
 }
+
+export const addEpisodeRating = async (req, res) => {
+    const userId = req.userId;
+    const { serieId, seasonNumber, episodeNumber, rating } = req.body;
+    const tmdbRating = rating * 2;
+
+    try {
+        const tmdbResponse = await fetch(`https://api.themoviedb.org/3/tv/${mediaId}/season/${seasonNumber}/episode/${episodeNumber}/rating?api_key=${apiKey}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${apiToken}`,
+            },
+            body: JSON.stringify({
+                value: tmdbRating,
+            }),
+        });
+
+        if (!tmdbResponse.ok) {
+            throw new Error(`TMDB API error: ${tmdbResponse}`);
+        }
+
+        const tmdbData = await tmdbResponse.json();
+        console.log('TMDB Response:', tmdbData);
+        await db.query(`
+            INSERT INTO public."episoderatings" (user_id, serie_id, season, episode, rating)
+            VALUES ($1, $2, $3, $4, $5)
+            ON CONFLICT (user_id, serie_id, season, episode) DO UPDATE
+            SET rating = EXCLUDED.rating
+        `, [userId, serieId, seasonNumber, episodeNumber, rating]);
+
+        res.json({ message: 'Note ajoutée ou mise à jour' });
+    } catch (error) {
+        console.error('Erreur lors de l\'ajout ou de la mise à jour de la note :', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+}
+
+export const deleteEpisodeRating = async (req, res) => {
+    const userId = req.userId;
+    const { serieId, seasonNumber, episodeNumber } = req.body;
+
+    try {
+        const tmdbResponse = await fetch(`https://api.themoviedb.org/3/tv/${mediaId}/season/${seasonNumber}/episode/${episodeNumber}/rating`, {
+            method: "DELETE",
+            headers: {
+                accept: 'application/json',
+                'Content-Type': 'application/json;charset=utf-8',
+                Authorization: `Bearer ${apiToken}`,
+            }
+        });
+
+        if (!tmdbResponse.ok) {
+            throw new Error(`TMDB API error: ${tmdbResponse.statusText}`);
+        }
+
+        const tmdbData = await tmdbResponse.json();
+        console.log('TMDB Response:', tmdbData);
+        await db.query('DELETE FROM public."episoderatings" WHERE user_id = $1 AND serie_id = $2 AND season = $3 AND episode = $4', [userId, serieId, seasonNumber, episodeNumber]);
+        res.json({ message: 'Note supprimée' });
+    } catch (error) {
+        console.error('Erreur lors de la suppression de la note :', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+}
+
+export const getEpisodeRatings = async (req, res) => {
+    const userId = req.userId;
+
+    try {
+        const result = await db.query('SELECT * FROM public."episoderatings" WHERE user_id = $1', [userId]);
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Erreur lors de la récupération de la note :', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+};
+
+
 
 
 

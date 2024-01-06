@@ -63,3 +63,14 @@ CREATE TABLE public.WatchlistSeries (
     seen BOOLEAN DEFAULT FALSE NOT NULL,
     CONSTRAINT unique_serie_watchlist UNIQUE (user_id, serie_id, season, episode)
 );
+
+DROP TABLE IF EXISTS SeriesEpisodeRatings;
+CREATE TABLE public.SeriesEpisodeRatings (
+    id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id uuid REFERENCES users(user_id),
+    serie_id INT NOT NULL,
+    season INT NOT NULL,
+    episode INT NOT NULL,
+    rating DECIMAL(2, 1) NOT NULL,
+    CONSTRAINT unique_episode_rating UNIQUE (user_id, serie_id, season, episode)
+);

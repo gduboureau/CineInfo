@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import AccountHeader from './AccountHeader';
 
 import './assets/accountOptions.css';
@@ -9,18 +9,27 @@ const AccountOptions = ({ optionType }) => {
     const [activeTab, setActiveTab] = useState('movies');
     const [media, setMedia] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [seenFilter, setSeenFilter] = useState('all');
+    const [seenFilter, setSeenFilter] = useState('unseen');
+    const detailsRef = useRef(null);
 
     const token = sessionStorage.getItem('token');
 
     const handleTabChange = (tab) => {
         setLoading(true);
         setActiveTab(tab);
-        setSeenFilter('all');
+        setSeenFilter('unseen');
+        closeDetails();
     };
 
     const handleSeenFilterChange = (filter) => {
         setSeenFilter(filter);
+        closeDetails();
+    };
+
+    const closeDetails = () => {
+        if (detailsRef.current) {
+            detailsRef.current.removeAttribute("open");
+        }
     };
 
     useEffect(() => {
@@ -37,6 +46,7 @@ const AccountOptions = ({ optionType }) => {
         })
             .then((response) => response.json())
             .then((data) => {
+                console.log(data);
                 if (optionType === 'watchlist' && activeTab === 'movies') {
                     const filteredMedia = data.sort((a, b) => {
                         const aSeen = a.seen ? 1 : 0;
@@ -64,35 +74,52 @@ const AccountOptions = ({ optionType }) => {
 
     return (
         <div className="account-options">
-            <AccountHeader />
-            <div className="account-options-content">
-                <div className="title-group">
-                    <h2>
-                        {optionType === 'ratings' && "Mes notes"}
-                        {optionType === 'favorites' && "Mes favoris"}
-                        {optionType === 'watchlist' && "Ma watchlist"}
-                    </h2>
-                    <div className="tabs">
-                        <h3
-                            onClick={() => handleTabChange('movies')}
-                            className={activeTab === 'movies' ? 'active-tab' : ''}
-                        > Films</h3>
-                        <h3
-                            onClick={() => handleTabChange('series')}
-                            className={activeTab === 'series' ? 'active-tab' : ''}
-                        >
-                            Séries
-                        </h3>
+            <div>
+                <AccountHeader />
+                <div className="account-options-content">
+                    <div className="title-group">
+
+                        <h2>
+                            {optionType === 'ratings' && "Mes notes"}
+                            {optionType === 'favorites' && "Mes favoris"}
+                            {optionType === 'watchlist' && "Ma watchlist"}
+                        </h2>
+                        <div className="tabs">
+                            <h3
+                                onClick={() => handleTabChange('movies')}
+                                className={activeTab === 'movies' ? 'active-tab' : ''}
+                            > Films</h3>
+                            <h3
+                                onClick={() => handleTabChange('series')}
+                                className={activeTab === 'series' ? 'active-tab' : ''}
+                            >
+                                Séries
+                            </h3>
+                        </div>
                     </div>
                     {optionType === 'watchlist' && activeTab === "movies" && (
-                        <select
-                            value={seenFilter}
-                            onChange={(e) => handleSeenFilterChange(e.target.value)}
-                        >
-                            <option value="all">Tous</option>
-                            <option value="seen">Vus</option>
-                            <option value="unseen">Non vus</option>
-                        </select>
+
+                        <details ref={detailsRef} className="custom-select">
+                            <summary className="radios">
+                                <input type="radio" name="item" id="Tous" title="Tous" checked={seenFilter === 'all'} onChange={() => handleSeenFilterChange('all')} />
+                                <input type="radio" name="item" id="Vus" title="Vus" checked={seenFilter === 'seen'} onChange={() => handleSeenFilterChange('seen')} />
+                                <input type="radio" name="item" id="Non vus" title="Non vus" checked={seenFilter === 'unseen'} onChange={() => handleSeenFilterChange('unseen')} />
+                            </summary>
+                            <ul className="list">
+                                <li onClick={() => handleSeenFilterChange('all')}>
+                                    <label htmlFor="all">
+                                        Tous
+                                        <span></span>
+                                    </label>
+                                </li>
+                                <li onClick={() => handleSeenFilterChange('seen')}>
+                                    <label htmlFor="seen">Vus</label>
+                                </li>
+                                <li onClick={() => handleSeenFilterChange('unseen')}>
+                                    <label htmlFor="unseen">Non vus</label>
+                                </li>
+                            </ul>
+                        </details>
                     )}
                 </div>
                 <AccountOptionsContent media={media} optionType={optionType} activeTab={activeTab} setMedia={setMedia} />
