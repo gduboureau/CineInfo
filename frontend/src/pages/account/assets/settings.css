@@ -18,7 +18,6 @@
 
 .settings .title-group h2 {
     margin: 0;
-    margin-left: 55px;
 }
 
 .settings .settings-content .settings-infos {
@@ -26,7 +25,9 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    width: 100%;
     overflow: auto;
+    margin-top: 40px;
 }
 
 .settings .settings-content .settings-infos img {
@@ -57,7 +58,7 @@
 
 .settings .settings-content .settings-infos .right-setting {
     margin-bottom: 70px;
-    margin-left: 40px;
+    margin-left: 100px;
 }
 
 .settings .settings-content .settings-infos .left-setting .firstname-lastname {
@@ -128,8 +129,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 180px;
+    height: 180px;
     background-color: rgba(255, 255, 255, 0.8);
     cursor: pointer;
     border-radius: 50%;

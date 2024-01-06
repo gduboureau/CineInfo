@@ -36,7 +36,7 @@ const AccountOptions = ({ optionType }) => {
         if (token === null) return;
         setMedia([]);
         const url = `http://localhost:8080/user/${activeTab}/${optionType}`;
-    
+
         fetch(url, {
             method: 'GET',
             headers: {
@@ -46,19 +46,21 @@ const AccountOptions = ({ optionType }) => {
         })
             .then((response) => response.json())
             .then((data) => {
-                if (optionType === 'watchlist' && activeTab === 'movies') {
-                    const filteredMedia = data.filter((item) => {
-                        if (seenFilter === 'all') {
-                            return true;
-                        } else {
-                            return item.seen === (seenFilter === 'seen');
-                        }
-                    });
-    
-                    setMedia(filteredMedia);
-                } else {
-                    setMedia(data);
-                }
+                const filteredMedia = data.filter((item) => {
+                    if (seenFilter === 'all') {
+                        return true;
+                    } else if (optionType === 'watchlist' && activeTab === 'movies') {
+                        return item.seen === (seenFilter === 'seen');
+                    } else if (optionType === 'watchlist' && activeTab === 'series') {
+                        const hasUnseenEpisode = item.seasons.some((season) => {
+                            return season.episodes.some((episode) => !episode.seen);
+                        });
+                        return hasUnseenEpisode === (seenFilter === 'unseen');
+                    } else {
+                        return true;
+                    }
+                });
+                setMedia(filteredMedia);
             })
             .catch((error) => console.error('Erreur de recherche :', error))
             .finally(() => setLoading(false));
@@ -97,7 +99,7 @@ const AccountOptions = ({ optionType }) => {
                             </h3>
                         </div>
                     </div>
-                    {optionType === 'watchlist' && activeTab === "movies" && (
+                    {optionType === 'watchlist' && (
 
                         <details ref={detailsRef} className="custom-select">
                             <summary className="radios">
