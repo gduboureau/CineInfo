@@ -130,7 +130,7 @@ const DisplaySerieDetails = ({ serie, crew, actors, videos, images, recommendati
                         className={`serie-details-category-title ${selectedCategory === "recommandation" ? "active" : ""}`}
                         onClick={() => setSelectedCategory("recommandation")}
                     >
-                        <p>Recommendations</p>
+                        <p>Recommandations</p>
                     </div>
                     <div
                         className={`serie-details-category-title ${selectedCategory === "avis" ? "active" : ""}`}

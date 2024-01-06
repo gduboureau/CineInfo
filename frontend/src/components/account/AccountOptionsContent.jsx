@@ -10,7 +10,7 @@ import "./assets/accountOptionsContent.css";
 import AccountWatchlistSeries from "./AccountWatchlistSeries";
 
 const AccountOptionsContent = ({ media, optionType, activeTab, setMedia, fetchDataAndUpdateMedia }) => {
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
     const handleMediaClick = (type, id, name) => {
