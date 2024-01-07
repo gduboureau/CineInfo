@@ -102,10 +102,10 @@ const DisplaySeasonDetails = ({ serie }) => {
             {seasonsData.map((season, index) => (
                 <div key={index} className="season-container">
                     <div className="season-poster">
-                        {serie.poster_path !== null? (
+                        {season.data.poster_path !== null ? (
                             <img src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${season.data.poster_path}`} alt={serie.title} />
                         ) : (
-                            <div className="icon-div">
+                            <div className="icon-season">
                                 <FontAwesomeIcon icon={faImage} className="icon" />
                             </div>
                         )}
@@ -131,7 +131,10 @@ const DisplaySeasonDetails = ({ serie }) => {
                         <div className="season-date">
                             <p>{new Date(season.data.air_date).getFullYear()}  &nbsp;-  &nbsp;
                                 {season.data.episodes.length} épisodes</p>&nbsp; &nbsp;
-                            <p className="note"><FontAwesomeIcon icon={faStar} className="icon" /> {season.data.vote_average}/10</p>
+                            <p className="note">
+                                <FontAwesomeIcon icon={faStar} className="icon" />
+                                {season.data.vote_average ? `${season.data.vote_average}/10` : "Aucune note"}
+                            </p>
                             <span className="trailer-season">
                                 <MovieTrailer videos={videos[index].videos} />
                             </span>
@@ -144,10 +147,10 @@ const DisplaySeasonDetails = ({ serie }) => {
                                 {season.data.episodes.map((episode, index) => (
                                     <div key={index} className="episode-container">
                                         <div className="episode-poster">
-                                            {serie.poster_path !== null ? (
+                                            {episode.still_path ? (
                                                 <img src={`https://www.themoviedb.org/t/p/original/${episode.still_path}`} alt={serie.title} />
                                             ) : (
-                                                <div className="icon-div">
+                                                <div className="icon-episode">
                                                     <FontAwesomeIcon icon={faImage} className="icon" />
                                                 </div>
                                             )}
@@ -162,7 +165,7 @@ const DisplaySeasonDetails = ({ serie }) => {
                                                 ) : ""} </p> &nbsp; &nbsp;
                                                 <p className="note" onClick={(event) => handleOpenRatingModal(season.seasonNumber, episode.episode_number, event)} style={{ cursor: "pointer" }}><FontAwesomeIcon icon={faStar} className="icon" /> {episode.vote_average ? (
                                                     <span>{episode.vote_average.toFixed(1)}/10</span>
-                                                ) : ""}</p>
+                                                ) : "Aucune note"}</p>
                                             </div>
                                             <div className="episode-overview">
                                                 <p>{episode.overview}</p>

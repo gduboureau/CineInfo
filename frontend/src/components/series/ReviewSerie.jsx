@@ -6,6 +6,7 @@ import { faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faComment } from "@fortawesome/free-regular-svg-icons";
 import Modal from "react-modal";
+import { accountService } from "../../utils/AccountService";
 
 const ReviewSerie = ({ serie, images }) => {
     const { id } = useParams();
@@ -14,7 +15,7 @@ const ReviewSerie = ({ serie, images }) => {
     const [showModal, setShowModal] = useState(false);
     const [commentText, setCommentText] = useState("");
     const commentsPerPage = 3;
-    const isUserLoggedIn = !!sessionStorage.getItem("token");
+    const isUserLoggedIn = accountService.isLogged();
     const [selectedSeason, setSelectedSeason] = useState(null);
     const [selectSeasonAddComment, setSelectSeasonAddComment] = useState(null);
 
@@ -78,7 +79,7 @@ const ReviewSerie = ({ serie, images }) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
                 body: JSON.stringify({
                     comment: commentText,

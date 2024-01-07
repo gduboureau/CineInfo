@@ -7,12 +7,35 @@
     border-bottom: 0.1px solid rgb(76, 76, 76);
     display: flex;
     padding: 20px;
+    width: 100%;
+}
+
+.series-season-container .season-container .season-poster .icon-season {
+    width: 175px;
+    height: 262.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(128, 128, 128, 0.2);
+    border-radius: 15px;
+    margin-right: 20px;
+}
+
+.series-season-container .season-container .season-poster .icon-season .icon {
+    width: 50%;
+    height: auto;
+    color: rgba(128, 128, 128, 0.5);
 }
 
 .series-season-container .season-container .season-poster img {
     width: 175px;
     border-radius: 15px;
     margin-right: 20px;
+}
+
+.series-season-container .season-container .season-info {
+    flex: 1;
+    margin-right: 30px;
 }
 
 
@@ -63,8 +86,27 @@
     margin-right: 20px;
 }
 
+.series-season-container .season-container .season-episodes .episode-poster .icon-episode {
+    width: 200px;
+    height: 112.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(128, 128, 128, 0.2);
+    border-radius: 15px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+}
+
+.series-season-container .season-container .season-episodes .episode-poster .icon-episode .icon {
+    width: 40%;
+    height: auto;
+    color: rgba(128, 128, 128, 0.5);
+}
+
 .series-season-container .season-container .season-episodes .episode-container {
     display: flex;
+    align-items: center;
     margin: 10px;
     font-size: 14px;
     border-bottom: 0.1px solid rgb(76, 76, 76);

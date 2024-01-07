@@ -11,7 +11,7 @@
 }
 
 .movies-image .movie-image-container .image-item {
-    width: calc(20% + 150px); 
+    width: calc(20% + 10%); 
     margin: 10px;
     box-sizing: border-box; 
 }
