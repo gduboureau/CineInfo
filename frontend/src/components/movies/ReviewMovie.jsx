@@ -14,7 +14,7 @@ const ReviewMovie = ({ images, movie }) => {
     const [showModal, setShowModal] = useState(false);
     const [commentText, setCommentText] = useState("");
     const commentsPerPage = 3;
-    const isUserLoggedIn = !!sessionStorage.getItem("token");
+    const isUserLoggedIn = !!localStorage.getItem("token");
 
 
     useEffect(() => {

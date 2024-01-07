@@ -82,7 +82,7 @@ const DiscoverMedia = ({ mediaType }) => {
             <div className='filter-panel'>
                 <div className='genres-panel'>
                     <div className="genres-title" onClick={toggleGenresVisibility}>
-                    <h3>Genres</h3>
+                    <p>Filtrer</p>
                     <FontAwesomeIcon icon={isGenresVisible ? faChevronDown : faChevronRight} />
                     </div>
                     {isGenresVisible && (
@@ -105,7 +105,7 @@ const DiscoverMedia = ({ mediaType }) => {
 
             <div className="media-display">
                 <DisplayMedia mediaType={mediaType} media={media} />
-                <button onClick={handleLoadMore}>Voir plus</button>
+                <FontAwesomeIcon className="see-more-icone" onClick={handleLoadMore} icon={faChevronDown} size='xl'/>
             </div>
         </div>
     );

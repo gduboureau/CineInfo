@@ -14,7 +14,7 @@ const ReviewSerie = ({ serie, images }) => {
     const [showModal, setShowModal] = useState(false);
     const [commentText, setCommentText] = useState("");
     const commentsPerPage = 3;
-    const isUserLoggedIn = !!sessionStorage.getItem("token");
+    const isUserLoggedIn = !!localStorage.getItem("token");
     const [selectedSeason, setSelectedSeason] = useState(null);
     const [selectSeasonAddComment, setSelectSeasonAddComment] = useState(null);
 
@@ -78,7 +78,7 @@ const ReviewSerie = ({ serie, images }) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
                 body: JSON.stringify({
                     comment: commentText,

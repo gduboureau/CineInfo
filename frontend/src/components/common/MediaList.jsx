@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DisplayMedia from '../../components/common/DisplayMedia';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 import './assets/mediaList.css';
 
@@ -34,7 +36,7 @@ const MediaList = ({ mediaType, mediaList, title }) => {
         <div className={`media-list`}>
             <h2 className="media-title">{title}</h2>
             <DisplayMedia mediaType={mediaType} media={media} />
-            <button onClick={handleLoadMore}>Voir plus</button>
+            <FontAwesomeIcon className="see-more-icone" onClick={handleLoadMore} icon={faChevronDown} size='xl'/>
         </div>
     );
 };
