@@ -18,6 +18,7 @@ import AiringTodaySeries from "../pages/series/AiringTodaySeries";
 import TopRatedSeries from "../pages/series/TopRatedSeries";
 import AllMovies from "../pages/movies/AllMovies";
 import AllSeries from "../pages/series/AllSeries";
+import OnTheAirSeries from "../pages/series/OnTheAirSeries";
 
 
 const PublicRouter = () => {
@@ -37,6 +38,7 @@ const PublicRouter = () => {
                 <Route path="/tv" element={<AllSeries />} />
                 <Route path="/tv/popular" element={<PopularSeries />} />
                 <Route path="/tv/airing-today" element={<AiringTodaySeries />} />
+                <Route path="/tv/on-the-air" element={<OnTheAirSeries />} />
                 <Route path="/tv/top-rated" element={<TopRatedSeries />} />
                 <Route path="/movie/:id/:title" element={<MovieDetails />} />
                 <Route path="/tv/:id/:name" element={<SerieDetails />} />

@@ -6,17 +6,16 @@ const apiKey = process.env.APIkey;
 const fetchSeries = async (req, res, cacheKey, apiUrl) => {
     try {
         await connectToRedis();
-        /*const cachedData = await getFromCache(cacheKey);
+        const cachedData = await getFromCache(cacheKey);
 
         if (cachedData) {
             console.log(`Serving ${cacheKey} from cache.`);
             return res.json(cachedData);
-        }*/
-
+        }
         const tmdbResponse = await fetch(apiUrl);
         const tmdbData = await tmdbResponse.json();
         const series = tmdbData.results;
-        //await saveToCache(cacheKey, series);
+        await saveToCache(cacheKey, series, 86400);
         res.json(series);
     } catch (error) {
         console.error(`Error fetching ${cacheKey}:`, error);
@@ -26,17 +25,17 @@ const fetchSeries = async (req, res, cacheKey, apiUrl) => {
 
 export const fetchSerie = async (cacheKey, apiUrl) => {
     try {
-        /*await connectToRedis();
+        await connectToRedis();
         const cachedData = await getFromCache(cacheKey);
 
         if (cachedData) {
             console.log(`Serving ${cacheKey} from cache.`);
             return cachedData;
-        }*/
+        }
 
         const tmdbResponse = await fetch(apiUrl);
         const serie = await tmdbResponse.json();
-        //await saveToCache(cacheKey, movies);
+        await saveToCache(cacheKey, serie, 86400);
         return serie;
     } catch (error) {
         console.error(`Error fetching ${cacheKey}:`, error);
@@ -49,18 +48,18 @@ export const SerieGenres = async (req, res) => {
     const cacheKey = 'serie_genres';
     const apiUrl = `https://api.themoviedb.org/3/genre/tv/list?api_key=${apiKey}&language=fr-FR`;
     try {
-        /*await connectToRedis();
+        await connectToRedis();
         const cachedData = await getFromCache(cacheKey);
 
         if (cachedData) {
             console.log(`Serving ${cacheKey} from cache.`);
             return res.json(cachedData);
-        }*/
+        }
 
         const tmdbResponse = await fetch(apiUrl);
         const tmdbData = await tmdbResponse.json();
         const genres = tmdbData.genres;
-        //await saveToCache(cacheKey, genres);
+        await saveToCache(cacheKey, genres);
         res.json(genres);
     } catch (error) {
         console.error(`Error fetching ${cacheKey}:`, error);
@@ -75,7 +74,7 @@ export const DiscoverSeries = async (req, res) => {
     if(genres){
         cacheKey += `_${genres}`;
     }
-    let apiUrl = `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&include_adult=false&language=fr-FR&page=${page}`;
+    let apiUrl = `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&include_adult=false&language=fr-FR&page=${page}&region=FR`;
     if (genres) {
         apiUrl += `&with_genres=${genres}`;
     }
@@ -85,21 +84,28 @@ export const DiscoverSeries = async (req, res) => {
 export const PopularSeries = async (req, res) => {
     const page = req.query.page || 1;
     const cacheKey = `popular_series_page-${page}`;
-    const apiUrl = `https://api.themoviedb.org/3/tv/popular?api_key=${apiKey}&language=fr-FR&page=${page}`;
+    const apiUrl = `https://api.themoviedb.org/3/tv/popular?api_key=${apiKey}&language=fr-FR&page=${page}&region=FR`;
     await fetchSeries(req, res, cacheKey, apiUrl);
 };
 
 export const AiringTodaySeries = async (req, res) => {
     const page = req.query.page || 1;
     const cacheKey = `airing-today_series_page-${page}`;
-    const apiUrl = `https://api.themoviedb.org/3/tv/airing_today?api_key=${apiKey}&language=fr-FR&page=${page}`;
+    const apiUrl = `https://api.themoviedb.org/3/tv/airing_today?api_key=${apiKey}&language=fr-FR&page=${page}&region=FR`;
+    await fetchSeries(req, res, cacheKey, apiUrl);
+};
+
+export const OnTheAirSeries = async (req, res) => {
+    const page = req.query.page || 1;
+    const cacheKey = `on-the-air_series_page-${page}`;
+    const apiUrl = `https://api.themoviedb.org/3/tv/on_the_air?api_key=${apiKey}&language=fr-FR&page=${page}&region=FR`;
     await fetchSeries(req, res, cacheKey, apiUrl);
 };
 
 export const TopRatedSeries = async (req, res) => {
     const page = req.query.page || 1;
     const cacheKey = `top_rated_series_page-${page}`;
-    const apiUrl = `https://api.themoviedb.org/3/tv/top_rated?api_key=${apiKey}&language=fr-FR&page=${page}`;
+    const apiUrl = `https://api.themoviedb.org/3/tv/top_rated?api_key=${apiKey}&language=fr-FR&page=${page}&region=FR`;
     await fetchSeries(req, res, cacheKey, apiUrl);
 };
 

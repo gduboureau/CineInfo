@@ -31,7 +31,9 @@ const HeaderComponent = ({ isLogged }) => {
             submenu: [
                 { title: 'Populaires', path: '/tv/popular' },
                 { title: 'Diffusées aujourd\'hui', path: '/tv/airing-today' },
+                { title: 'En cours de diffusion', path: '/tv/on-the-air' },
                 { title: 'Les mieux notées', path: '/tv/top-rated' },
+                
             ],
         },
     ];

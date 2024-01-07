@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import "./assets/mediaOptions.css";
+import Loading from "../../utils/Loading.jsx";
 
 const MediaOptions = ({ media, mediaType }) => {
     const [isFavorited, setIsFavorited] = useState(false);
@@ -16,6 +17,7 @@ const MediaOptions = ({ media, mediaType }) => {
     const [rating, setRating] = useState(0);
     const [isHovered, setIsHovered] = useState(null);
     const [ratingModal, setRatingModal] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const token = localStorage.getItem("token");
 
@@ -86,6 +88,7 @@ const MediaOptions = ({ media, mediaType }) => {
 
 
     useEffect(() => {
+        setLoading(true);
         if (token === null) return;
 
         setIsFavorited(false);
@@ -99,6 +102,7 @@ const MediaOptions = ({ media, mediaType }) => {
         };
 
         fetchData();
+        setLoading(false);
     }, [media, token, rating]);
 
     const handleMouseOut = () => {
@@ -163,6 +167,8 @@ const MediaOptions = ({ media, mediaType }) => {
         if (token === null) return;
         setRatingModal(true);
     }
+
+    if(loading) return <Loading />
 
     return (
         <div className="media-options">
