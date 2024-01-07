@@ -170,8 +170,6 @@ export const getMovieComments = async (req, res) => {
     }
 }
 
-
-
 export const watchlistMovies = async (req, res) => {
     const userId = req.userId;
 
@@ -190,7 +188,6 @@ export const watchlistMovies = async (req, res) => {
         res.status(500).json({ message: 'Erreur interne du serveur' });
     }
 };
-
 
 export const addMovieWatchlist = async (req, res) => {
     const userId = req.userId;

@@ -24,15 +24,20 @@ async function getFromCache(key) {
     }
 }
 
-async function saveToCache(key, data) {
+async function saveToCache(key, data, expirationTimeSeconds = null) {
     console.log(`Saving ${key} to Redis`);
     try {
-        await client.set(key, JSON.stringify(data));
-    }
-    catch (error) {
+        if (expirationTimeSeconds) {
+            await client.setEx(key, expirationTimeSeconds, JSON.stringify(data));
+        } else {
+            await client.set(key, JSON.stringify(data));
+            await client.persist(key);
+        }
+    } catch (error) {
         console.error(error);
     }
 }
+
 
 async function removeFromCache(key) {
     console.log(`Removing ${key} from Redis`);

@@ -191,8 +191,6 @@ export const getSerieComments = async (req, res) => {
     }
 }
 
-
-
 export const addSerieToWatchlist = async (req, res) => {
     const userId = req.userId;
     const { mediaId } = req.body;

@@ -28,8 +28,8 @@ export const search = async (req, res) => {
             return res.json({ movies: cachedDataMovies, tv: cachedDataTV });
         }
 
-        const movieSearchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchValue}&include_adult=false&language=fr-FR`;
-        const tvSearchUrl = `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${searchValue}&include_adult=false&language=fr-FR`;
+        const movieSearchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchValue}&include_adult=false&language=fr-FR&region=FR`;
+        const tvSearchUrl = `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${searchValue}&include_adult=false&language=fr-FR&region=FR`;
 
         const [movieResponse, tvResponse] = await Promise.all([
             fetch(movieSearchUrl),
