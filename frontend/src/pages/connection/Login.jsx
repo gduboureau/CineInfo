@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router';
 import { accountService } from '../../utils/AccountService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -44,18 +46,28 @@ const Login = () => {
       const tokenExpiration = new Date(localStorage.getItem('tokenExpiration'));
       const timeRemaining = tokenExpiration - Date.now();
 
-      if (timeRemaining < 55 * 60 * 1000) {
+      if (timeRemaining < 5 * 60 * 1000) {
         clearInterval(extendTokenInterval);
 
-        const shouldStayLoggedIn = window.confirm("Votre session expire dans 5 minutes. Souhaitez-vous rester connecté ?");
-        if (shouldStayLoggedIn) {
-          extendToken(token);
-        } else {
-          accountService.logout();
-          navigate('/');
-        }
+        confirmAlert({
+          title: 'Session expirante',
+          message: 'Votre session expire dans 20 secondes. Souhaitez-vous rester connecté ?',
+          buttons: [
+            {
+              label: 'Oui',
+              onClick: () => extendToken(token)
+            },
+            {
+              label: 'Non',
+              onClick: () => {
+                accountService.logout();
+                navigate('/');
+              },
+            },
+          ],
+        });
       }
-    }, 55 * 60 * 1000);
+    }, 60 * 1000);
   };
 
   const extendToken = (token) => {
