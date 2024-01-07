@@ -1,5 +1,5 @@
 import db from '../utils/pg.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 export const getUserInfos = async (req, res) => {
     const userId = req.userId;

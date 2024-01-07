@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import db from '../utils/pg.js';
 import dotenv from 'dotenv';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 
