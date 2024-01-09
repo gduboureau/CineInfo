@@ -46,6 +46,7 @@ const AuthForm = ({ type, onSubmit }) => {
             }
 
             if (type === 'login' || type === 'signup') {
+                
                 await onSubmit({ mail, password, username, firstname, lastname, defaultImage });
             } else if (type === 'reset-password') {
                 await onSubmit({ mail });

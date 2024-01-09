@@ -6,8 +6,9 @@ import routes from './routes/index.js';
 const app = express();
 const PORT = process.env.PORT || 8080;
 app.use(cors());
-app.use(bodyParser.json({ limit: '10mb' }));
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
+app.use(bodyParser.json({ limit: '20mb' }));
+app.use(bodyParser.urlencoded({ limit: '20mb', extended: true }));
+app.use(express.json({ limit: '20mb' }));
 
 app.use('/', routes);
 

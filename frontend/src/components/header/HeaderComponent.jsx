@@ -33,7 +33,7 @@ const HeaderComponent = ({ isLogged }) => {
                 { title: 'Diffusées aujourd\'hui', path: '/tv/airing-today' },
                 { title: 'En cours de diffusion', path: '/tv/on-the-air' },
                 { title: 'Les mieux notées', path: '/tv/top-rated' },
-                
+
             ],
         },
     ];
@@ -130,8 +130,9 @@ const HeaderComponent = ({ isLogged }) => {
                             <div className="profile-with-submenu" onMouseEnter={() => setIsProfileSubMenuOpen(true)}
                                 onMouseLeave={() => setIsProfileSubMenuOpen(false)}>
                                 <Link to={`/account/${userInfos.username}`}>
-                                    <img src={userInfos.image} alt="pp"/>
-                                </Link>
+                                    {userInfos.username ? (
+                                        <img src={`http://localhost:8080/user/profile-image/${userInfos.username}`} alt="pp default" className="center-left" />
+                                    ) : null}                                        </Link>
                                 <AnimatePresence>
                                     {isProfileSubMenuOpen && (
                                         <motion.div

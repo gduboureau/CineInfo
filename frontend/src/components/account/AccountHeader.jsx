@@ -25,14 +25,16 @@ const AccountHeader = () => {
     }, [token]);
 
     if (loading) {
-        return <Loading/>
+        return <Loading />
     }
 
     return (
         <div className="account-header">
             <div className="account-infos">
                 <div className="account-logo">
-                    <img src={userInfos.image} alt="Photo de profil par défaut" />
+                    {userInfos.username ? (
+                        <img src={`http://localhost:8080/user/profile-image/${userInfos.username}`} alt="pp default" className="center-left" />
+                    ) : null}                
                 </div>
                 <div className="account-details">
                     {userInfos && (
