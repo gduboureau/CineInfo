@@ -149,8 +149,9 @@ const ReviewSerie = ({ serie, images }) => {
                             >
                                 <div className="review-content">
                                     <div className="comment-header">
-                                        <img src={comment.image} alt={`user pp ${comment.id}`}/>
-                                        <div className="account-pseudo-date">
+                                        {comment.username ? (
+                                            <img src={`http://localhost:8080/user/profile-image/${comment.username}`} alt="pp default" className="center-left" />
+                                        ) : null}                                                <div className="account-pseudo-date">
                                             <p>
                                                 <span>@{comment.username},</span> &nbsp;
                                                 le {formatDate(comment.date)}

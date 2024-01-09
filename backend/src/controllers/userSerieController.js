@@ -181,7 +181,7 @@ export const getSerieComments = async (req, res) => {
     const { id } = req.params;
     try {
         const result = await db.query(
-            'SELECT mc.id, mc.comment, mc.season, mc.date, u.firstname, u.lastname, u.username, u.image, mr.rating FROM public."seriecomments" mc JOIN public.users u ON mc.user_id = u.user_id LEFT JOIN public.SerieRatings mr ON mc.user_id = mr.user_id AND mc.serie_id = mr.serie_id WHERE mc.serie_id = $1',
+            'SELECT mc.id, mc.comment, mc.season, mc.date, u.firstname, u.lastname, u.username, mr.rating FROM public."seriecomments" mc JOIN public.users u ON mc.user_id = u.user_id LEFT JOIN public.SerieRatings mr ON mc.user_id = mr.user_id AND mc.serie_id = mr.serie_id WHERE mc.serie_id = $1',
             [id]
         );
         res.json(result.rows);

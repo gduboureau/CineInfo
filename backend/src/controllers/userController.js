@@ -1,5 +1,6 @@
 import db from '../utils/pg.js';
 import bcrypt from 'bcryptjs';
+import fs from 'fs';
 
 export const getUserInfos = async (req, res) => {
     const userId = req.userId;
@@ -15,11 +16,12 @@ export const getUserInfos = async (req, res) => {
 
 export const updateImage = async (req, res) => {
     const userId = req.userId;
-    const { image } = req.body;
+    const { image, username } = req.body;
 
     try {
-        const result = await db.query('UPDATE public."users" SET image = $1 WHERE user_id = $2 RETURNING *', [image, userId]);
-        res.json(result.rows[0]);
+        const imageBuffer = Buffer.from(image.split(',')[1], 'base64');
+        const imageFileName = `photo-profile-${username}.png`;
+        fs.writeFileSync(`./images/${imageFileName}`, imageBuffer);
     } catch (error) {
         console.error('Erreur lors de la mise à jour de l\'image de l\'utilisateur :', error.message);
         res.status(500).json({ message: 'Erreur interne du serveur' });
@@ -41,6 +43,21 @@ export const updateUserInfo = async (req, res) => {
         }
     } catch (error) {
         console.error('Erreur lors de la mise à jour des informations de l\'utilisateur :', error.message);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+}
+
+export const getImageUser = async (req, res) => {
+    const { username } = req.params;    
+
+    try {
+        const imageFileName = `photo-profile-${username}.png`;
+        const image = fs.readFileSync(`./images/${imageFileName}`, 'base64');
+        
+        res.contentType('image/png');
+        res.send(Buffer.from(image, 'base64'));
+    } catch (error) {
+        console.error('Erreur lors de la récupération de l\'image de profil :', error.message);
         res.status(500).json({ message: 'Erreur interne du serveur' });
     }
 }

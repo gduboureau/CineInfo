@@ -65,19 +65,53 @@ const Settings = () => {
         fileInput.click();
     };
 
-    const handleImageChange = (e) => {
+    const handleImageChange = async (e) => {
         const file = e.target.files[0];
+    
         if (file) {
             const reader = new FileReader();
-            reader.onloadend = () => {
-                setEditableFields(prevState => ({
-                    ...prevState,
-                    image: reader.result
-                }));
+            reader.onloadend = async () => {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+    
+                const image = new Image();
+                image.src = reader.result;
+    
+                image.onload = async () => {
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+    
+                    context.drawImage(image, 0, 0);
+    
+                    const base64Image = canvas.toDataURL('image/png');
+    
+                    try {
+                        const response = await fetch(`http://localhost:8080/user/update-image`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`,
+                            },
+                            body: JSON.stringify({ image: base64Image, username: userInfos.username }),
+                        });
+    
+                        if (!response.ok) {
+                            throw new Error(`HTTP Error! Status: ${response.status}`);
+                        }
+    
+                        const data = await response.json();
+                        
+                    } catch (error) {
+                        console.error('Erreur lors de la mise à jour de l\'image :', error.message);
+                    }
+                };
             };
             reader.readAsDataURL(file);
         }
     };
+    
+    
+    
 
     const validateFields = () => {
         let isValid = true;
@@ -117,6 +151,7 @@ const Settings = () => {
                         image: data.image
                     });
 
+
                     window.location.reload();
                 })
                 .catch(error => console.error('Erreur de requête :', error));
@@ -134,8 +169,9 @@ const Settings = () => {
                     <div className="settings-infos">
                         <div className="left-setting">
                             <div className="settings-image" onClick={handleImageClick}>
-                                <img src={editableFields.image} alt="pp default" className="center-left" />
-                                <div className="overlay">
+                                {userInfos.username ? (
+                                    <img src={`http://localhost:8080/user/profile-image/${userInfos.username}`} alt="pp default" className="center-left" />
+                                ) : null}                                <div className="overlay">
                                     <FontAwesomeIcon icon={faPlus} className="overlay-icon" />
                                 </div>
                                 <input

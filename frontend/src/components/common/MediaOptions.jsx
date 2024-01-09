@@ -93,7 +93,6 @@ const MediaOptions = ({ media, mediaType }) => {
             setLoading(false);
             return;
         }
-
         setIsFavorited(false);
         setIsRated(false);
         setIsWatchlisted(false);
