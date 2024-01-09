@@ -89,8 +89,10 @@ const MediaOptions = ({ media, mediaType }) => {
 
     useEffect(() => {
         setLoading(true);
-        if (token === null) return;
-
+        if (token === null) {
+            setLoading(false);
+            return;
+        }
         setIsFavorited(false);
         setIsRated(false);
         setIsWatchlisted(false);
