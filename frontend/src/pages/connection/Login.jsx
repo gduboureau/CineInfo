@@ -32,7 +32,6 @@ const Login = () => {
       } else {
         handleToken(data.token);
         navigate(`/account/${data.username}`);
-        console.log(data);
       }
     } catch (error) {
       console.error('Erreur de connexion :', error.message);

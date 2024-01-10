@@ -98,9 +98,7 @@ const Settings = () => {
                         if (!response.ok) {
                             throw new Error(`HTTP Error! Status: ${response.status}`);
                         }
-    
-                        const data = await response.json();
-                        
+                            
                     } catch (error) {
                         console.error('Erreur lors de la mise à jour de l\'image :', error.message);
                     }

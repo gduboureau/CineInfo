@@ -13,10 +13,10 @@ services:
       - database
     environment:
       NODE_ENV: development
-      DB_USER: cineinfo
-      DATABASE_HOST: postgresql-cineinfo.alwaysdata.net
-      DATABASE_NAME: cineinfo_projet
-      DB_PASSWORD: cineinfo123/
+      DB_USER: postgres
+      DATABASE_HOST: database
+      DATABASE_NAME: postgres
+      DB_PASSWORD: postgre
       DATABASE_PORT: 5432
   frontend:
     build:
@@ -29,11 +29,11 @@ services:
   database:
     image: postgres:latest
     environment:
-      POSTGRES_DB: cineinfo_projet
-      POSTGRES_USER: cineinfo
-      POSTGRES_PASSWORD: cineinfo123/
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgre
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./database:/docker-entrypoint-initdb.d
   redis:
     image: redis:latest
     volumes:
