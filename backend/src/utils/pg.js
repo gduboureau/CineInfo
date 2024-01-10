@@ -13,6 +13,6 @@ const db = {
     query: (text, params) => {
         return pool.query(text, params)
     }
-  };
-  
+};
+
 export default db;
