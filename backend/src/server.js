@@ -14,7 +14,7 @@ app.use(express.json({ limit: '20mb' }));
 
 app.use('/', routes);
 
-swaggerDocs(app, PORT);
+swaggerDocs(app);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

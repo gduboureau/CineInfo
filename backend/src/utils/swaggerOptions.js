@@ -5,8 +5,8 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'API Voyage',
-      description: "API endpoints for a mini blog services documented on swagger",
+      title: 'CineInfo API',
+      description: "API endpoints for CineInfo - your go-to source for information on movies and TV series, documented on Swagger.",
       version: '1.0.0',
     },
     servers: [
@@ -16,20 +16,13 @@ const options = {
       },
     ],
   },
-  apis: ['./src/routes/*.js'], // Spécifiez le chemin de vos fichiers de route
+  apis: ['./src/routes/*.js'], 
 };
 
 const swaggerSpec = swaggerJsdoc(options);
 
-function swaggerDocs(app, port) {
-  // Swagger Page
+function swaggerDocs(app) {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-  // Documentation en format JSON
-  app.get('/api-docs.json', (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.send(swaggerSpec);
-  });
 }
 
 export default swaggerDocs;
