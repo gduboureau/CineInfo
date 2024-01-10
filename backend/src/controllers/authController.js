@@ -25,14 +25,14 @@ export const login = async (req, res) => {
         const result = await db.query('SELECT * FROM public."users" WHERE mail = $1 OR username = $1', [mail]);
 
         if (result.rows.length === 0) {
-            return res.json({ error: 'Cette adresse mail ou ce nom d\'utilisateur ne correspond à aucun compte' });
+            return res.status(400).json({ error: 'Cette adresse mail ou ce nom d\'utilisateur ne correspond à aucun compte' });
         }
 
         const hashedPassword = result.rows[0].password;
         const passwordMatch = await bcrypt.compare(password, hashedPassword);
 
         if (!passwordMatch) {
-            return res.json({ error: 'Mot de passe incorrect' });
+            return res.status(400).json({ error: 'Mot de passe incorrect' });
         }
 
 
@@ -52,12 +52,12 @@ export const register = async (req, res) => {
 
         const emailExists = await db.query('SELECT * FROM public."users" WHERE mail = $1', [mail]);
         if (emailExists.rows.length > 0) {
-            return res.json({ error: 'Cette adresse mail est déjà utilisée' });
+            return res.status(400).json({ error: 'Cette adresse mail est déjà utilisée' });
         }
 
         const usernameExists = await db.query('SELECT * FROM public."users" WHERE username = $1', [username]);
         if (usernameExists.rows.length > 0) {
-            return res.json({ error: 'Ce nom d\'utilisateur est déjà utilisé' });
+            return res.status(400).json({ error: 'Ce nom d\'utilisateur est déjà utilisé' });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);

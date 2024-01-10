@@ -13,10 +13,10 @@ const router = express.Router();
 
 /**
  * @swagger
- * /auth/login:
+ * /login:
  *   post:
- *     summary: Authenticate a user
- *     description: Authenticate a user by providing email and password.
+ *     summary: User Login
+ *     description: Authenticate a user.
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
@@ -27,13 +27,11 @@ const router = express.Router();
  *             properties:
  *               mail:
  *                 type: string
- *                 description: User's email
  *               password:
  *                 type: string
- *                 description: User's password
  *     responses:
  *       200:
- *         description: Successful login
+ *         description: Success. Returns the authentication token along with user information.
  *         content:
  *           application/json:
  *             schema:
@@ -41,26 +39,38 @@ const router = express.Router();
  *               properties:
  *                 token:
  *                   type: string
- *                   description: Access token for the user
  *                 username:
  *                   type: string
- *                   description: User's username
  *                 expiration:
  *                   type: string
- *                   description: Token expiration time
+ *                   description: Token expiration time (e.g., '1h').
  *       400:
- *         description: Invalid input or user not found
+ *         description: Bad Request. Invalid email or password.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
  *       500:
- *         description: Internal server error
+ *         description: Internal Server Error. Failed to process the request.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
  */
 router.post('/login', login);
 
 /**
  * @swagger
- * /auth/register:
+ * /register:
  *   post:
- *     summary: Register a new user
- *     description: Register a new user by providing required details.
+ *     summary: User Registration
+ *     description: Register a new user.
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
@@ -71,25 +81,19 @@ router.post('/login', login);
  *             properties:
  *               mail:
  *                 type: string
- *                 description: User's email
  *               password:
  *                 type: string
- *                 description: User's password
  *               username:
  *                 type: string
- *                 description: User's username
  *               firstname:
  *                 type: string
- *                 description: User's first name
  *               lastname:
  *                 type: string
- *                 description: User's last name
  *               defaultImage:
  *                 type: string
- *                 description: URL of the user's default image
  *     responses:
  *       200:
- *         description: User successfully registered
+ *         description: Success. Returns the authentication token.
  *         content:
  *           application/json:
  *             schema:
@@ -97,20 +101,33 @@ router.post('/login', login);
  *               properties:
  *                 token:
  *                   type: string
- *                   description: Access token for the new user
  *       400:
- *         description: Invalid input or email/username already exists
+ *         description: Bad Request. Email or password already in use.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
  *       500:
- *         description: Internal server error
+ *         description: Internal Server Error. Failed to process the request.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
  */
 router.post('/register', register);
 
 /**
  * @swagger
- * /auth/reset-password:
+ * /reset-password:
  *   post:
- *     summary: Reset user's password
- *     description: Reset user's password and send the new password via email.
+ *     summary: Reset Password
+ *     description: Reset the password for a user.
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
@@ -121,29 +138,40 @@ router.post('/register', register);
  *             properties:
  *               mail:
  *                 type: string
- *                 description: User's email
  *     responses:
  *       200:
- *         description: Password reset successful, email sent
- *       400:
- *         description: Invalid input or user not found
+ *         description: Success. Returns a success message.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
  *       500:
- *         description: Internal server error
+ *         description: Internal Server Error. Failed to process the request.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
  */
 router.post('/reset-password', resetPassword);
 
 /**
  * @swagger
- * /auth/extend-token:
+ * /extend-token:
  *   post:
- *     summary: Extend user's access token
- *     description: Extend the expiration time of the user's access token.
+ *     summary: Extend Token Validity
+ *     description: Extend the validity of the authentication token.
  *     tags: [Authentication]
  *     security:
- *       - BearerAuth: []
+ *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Token extension successful
+ *         description: Success. Returns the new authentication token.
  *         content:
  *           application/json:
  *             schema:
@@ -151,11 +179,15 @@ router.post('/reset-password', resetPassword);
  *               properties:
  *                 token:
  *                   type: string
- *                   description: Updated access token for the user
- *       400:
- *         description: Invalid input or user not found
  *       500:
- *         description: Internal server error
+ *         description: Internal Server Error. Failed to process the request.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
  */
 router.post('/extend-token', extractUserInfo, extendToken);
 

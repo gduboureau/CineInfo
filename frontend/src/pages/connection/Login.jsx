@@ -21,8 +21,8 @@ const Login = () => {
         body: JSON.stringify({ mail, password }),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP Error! Status: ${response.status}`);
+      if (!response.ok && response.status !== 400) {
+        throw new Error('Erreur de connexion');
       }
 
       const data = await response.json();

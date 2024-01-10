@@ -19,7 +19,7 @@ const Signup = () => {
                 body: JSON.stringify({ mail, password, username, firstname, lastname, defaultImage }),
             });
 
-            if (!response.ok) {
+            if (!response.ok && response.status !== 400) {
                 throw new Error(`HTTP Error! Status: ${response.status}`);
             }
 
