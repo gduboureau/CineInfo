@@ -15,12 +15,12 @@ const router = express.Router();
  * @swagger
  * /movies/genres:
  *   get:
- *     summary: Get movie genres
- *     description: Get the list of movie genres.
+ *     summary: Get movie genres.
+ *     description: Get a list of movie genres.
  *     tags: [Movies]
  *     responses:
  *       200:
- *         description: Successful response
+ *         description: Successful retrieval of movie genres
  *         content:
  *           application/json:
  *             schema:
@@ -38,22 +38,17 @@ const router = express.Router();
 
 router.get('/genres', MovieGenres);
 
+
 /**
  * @swagger
  * /movies/popular:
- *   get:
- *     summary: Get popular movies
- *     description: Get the list of popular movies.
+*   get:
+ *     summary: Get popular movies.
+ *     description: Get a list of popular movies.
  *     tags: [Movies]
- *     parameters:
- *       - in: query
- *         name: page
- *         schema:
- *           type: integer
- *         description: Page number for paginated results
  *     responses:
  *       200:
- *         description: Successful response
+ *         description: Successful retrieval of popular movies
  *         content:
  *           application/json:
  *             schema:
@@ -61,15 +56,259 @@ router.get('/genres', MovieGenres);
  *               items:
  *                 type: object
  *                 properties:
- *                   // ... (Define properties for the movie object)
+ *                   adult:
+ *                     type: boolean
+ *                   backdrop_path:
+ *                     type: string
+ *                   genre_ids:
+ *                     type: array
+ *                     items:
+ *                       type: integer
+ *                   id:
+ *                     type: integer
+ *                   original_language:
+ *                     type: string
+ *                   original_title:
+ *                     type: string
+ *                   overview:
+ *                     type: string
+ *                   popularity:
+ *                     type: number
+ *                   poster_path:
+ *                     type: string
+ *                   release_date:
+ *                     type: string
+ *                   title:
+ *                     type: string
+ *                   video:
+ *                     type: boolean
+ *                   vote_average:
+ *                     type: number
+ *                   vote_count:
+ *                     type: integer
  *       500:
  *         description: Internal server error
  */
+
 router.get('/popular', PopularMovies);
+
+
+/**
+ * @swagger
+ * /movies/now-playing:
+ *   get:
+ *     summary: Get now playing movies.
+ *     description: Get a list of movies currently playing.
+ *     tags: [Movies]
+ *     responses:
+ *       200:
+ *         description: Successful retrieval of now playing movies
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   adult:
+ *                     type: boolean
+ *                   backdrop_path:
+ *                     type: string
+ *                   genre_ids:
+ *                     type: array
+ *                     items:
+ *                       type: integer
+ *                   id:
+ *                     type: integer
+ *                   original_language:
+ *                     type: string
+ *                   original_title:
+ *                     type: string
+ *                   overview:
+ *                     type: string
+ *                   popularity:
+ *                     type: number
+ *                   poster_path:
+ *                     type: string
+ *                   release_date:
+ *                     type: string
+ *                   title:
+ *                     type: string
+ *                   video:
+ *                     type: boolean
+ *                   vote_average:
+ *                     type: number
+ *                   vote_count:
+ *                     type: integer
+ *       500:
+ *         description: Internal server error
+ */
+
 router.get('/now-playing', NowPlayingMovies);
+
+
+/**
+ * @swagger
+ * /movies/upcoming:
+ *   get:
+ *     summary: Get upcoming movies
+ *     description: Get the list of upcoming movies.
+ *     tags: [Movies]
+ *     responses:
+ *       200:
+ *         description: Successful retrieval of upcoming movies
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   adult:
+ *                     type: boolean
+ *                   backdrop_path:
+ *                     type: string
+ *                   genre_ids:
+ *                     type: array
+ *                     items:
+ *                       type: integer
+ *                   id:
+ *                     type: integer
+ *                   original_language:
+ *                     type: string
+ *                   original_title:
+ *                     type: string
+ *                   overview:
+ *                     type: string
+ *                   popularity:
+ *                     type: number
+ *                   poster_path:
+ *                     type: string
+ *                   release_date:
+ *                     type: string
+ *                   title:
+ *                     type: string
+ *                   video:
+ *                     type: boolean
+ *                   vote_average:
+ *                     type: number
+ *                   vote_count:
+ *                     type: integer
+ *       500:
+ *         description: Internal server error
+ */
+
 router.get('/upcoming', UpcomingMovies);
+
+
+/**
+ * @swagger
+ * /movies/top-rated:
+ *   get:
+ *     summary: Get top-rated movies
+ *     description: Get the list of top-rated movies.
+ *     tags: [Movies]
+ *     responses:
+ *       200:
+ *         description: Successful retrieval of top-rated movies
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   adult:
+ *                     type: boolean
+ *                   backdrop_path:
+ *                     type: string
+ *                   genre_ids:
+ *                     type: array
+ *                     items:
+ *                       type: integer
+ *                   id:
+ *                     type: integer
+ *                   original_language:
+ *                     type: string
+ *                   original_title:
+ *                     type: string
+ *                   overview:
+ *                     type: string
+ *                   popularity:
+ *                     type: number
+ *                   poster_path:
+ *                     type: string
+ *                   release_date:
+ *                     type: string
+ *                   title:
+ *                     type: string
+ *                   video:
+ *                     type: boolean
+ *                   vote_average:
+ *                     type: number
+ *                   vote_count:
+ *                     type: integer
+ *       500:
+ *         description: Internal server error
+ */
+
 router.get('/top-rated', TopRatedMovies);
+
+
+/**
+ * @swagger
+ * /movies/discover:
+ *   get:
+ *     summary: Discover movies
+ *     description: Discover movies based on specified criteria.
+ *     tags: [Movies]
+ *     responses:
+ *       200:
+ *         description: Successful retrieval of discovered movies
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   adult:
+ *                     type: boolean
+ *                   backdrop_path:
+ *                     type: string
+ *                   genre_ids:
+ *                     type: array
+ *                     items:
+ *                       type: integer
+ *                   id:
+ *                     type: integer
+ *                   original_language:
+ *                     type: string
+ *                   original_title:
+ *                     type: string
+ *                   overview:
+ *                     type: string
+ *                   popularity:
+ *                     type: number
+ *                   poster_path:
+ *                     type: string
+ *                   release_date:
+ *                     type: string
+ *                   title:
+ *                     type: string
+ *                   video:
+ *                     type: boolean
+ *                   vote_average:
+ *                     type: number
+ *                   vote_count:
+ *                     type: integer
+ *       500:
+ *         description: Internal server error
+ */
+
 router.get('/discover', DiscoverMovies);
+
+
 router.use('/:id', movieDetailsRoutes);
 
 export default router;
