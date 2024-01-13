@@ -10,8 +10,167 @@ const router = express.Router({ mergeParams: true });
  * tags:
  *   name: Movies
  *   description: Endpoints for movie-related operations
+ * components:
+ *   schemas:
+ *     MovieDetailsResponse:
+ *       type: object
+ *       properties:
+ *         adult:
+ *           type: boolean
+ *           description: Indique si le film est destiné aux adultes.
+ *         backdrop_path:
+ *           type: string
+ *           description: URL vers l'image de fond.
+ *         belongs_to_collection:
+ *           type: object
+ *           description: Détails sur la collection à laquelle le film appartient.
+ *           properties:
+ *             id:
+ *               type: integer
+ *               description: L'ID de la collection.
+ *             name:
+ *               type: string
+ *               description: Le nom de la collection.
+ *         budget:
+ *           type: integer
+ *           description: Le budget du film.
+ *         genres:
+ *           type: array
+ *           description: Liste des genres associés au film.
+ *           items:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: integer
+ *                 description: L'ID du genre.
+ *               name:
+ *                 type: string
+ *                 description: Le nom du genre.
+ *         homepage:
+ *           type: string
+ *           description: URL vers la page d'accueil du film.
+ *         id:
+ *           type: integer
+ *           description: L'ID du film.
+ *         imdb_id:
+ *           type: string
+ *           description: L'ID IMDb du film.
+ *         original_language:
+ *           type: string
+ *           description: La langue originale du film.
+ *         original_title:
+ *           type: string
+ *           description: Le titre original du film.
+ *         overview:
+ *           type: string
+ *           description: Aperçu ou résumé du film.
+ *         popularity:
+ *           type: number
+ *           description: Score de popularité du film.
+ *         poster_path:
+ *           type: string
+ *           description: URL vers l'image de l'affiche.
+ *         production_companies:
+ *           type: array
+ *           description: Liste des sociétés de production associées au film.
+ *           items:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: integer
+ *                 description: L'ID de la société de production.
+ *               logo_path:
+ *                 type: string
+ *                 description: URL vers le logo de la société de production.
+ *               name:
+ *                 type: string
+ *                 description: Le nom de la société de production.
+ *               origin_country:
+ *                 type: string
+ *                 description: Le pays d'origine de la société de production.
+ *         production_countries:
+ *           type: array
+ *           description: Liste des pays de production associés au film.
+ *           items:
+ *             type: object
+ *             properties:
+ *               iso_3166_1:
+ *                 type: string
+ *                 description: Le code ISO 3166-1 du pays.
+ *               name:
+ *                 type: string
+ *                 description: Le nom du pays.
+ *         release_date:
+ *           type: string
+ *           format: date
+ *           description: La date de sortie du film.
+ *         revenue:
+ *           type: integer
+ *           description: Les revenus générés par le film.
+ *         runtime:
+ *           type: integer
+ *           description: La durée du film en minutes.
+ *         spoken_languages:
+ *           type: array
+ *           description: Liste des langues parlées dans le film.
+ *           items:
+ *             type: object
+ *             properties:
+ *               english_name:
+ *                 type: string
+ *                 description: Le nom anglais de la langue.
+ *               iso_639_1:
+ *                 type: string
+ *                 description: Le code ISO 639-1 de la langue.
+ *               name:
+ *                 type: string
+ *                 description: Le nom de la langue.
+ *         status:
+ *           type: string
+ *           description: Le statut du film (par exemple, "Sorti").
+ *         tagline:
+ *           type: string
+ *           description: La phrase d'accroche du film.
+ *         title:
+ *           type: string
+ *           description: Le titre du film.
+ *         video:
+ *           type: boolean
+ *           description: Indique s'il y a une vidéo disponible pour le film.
+ *         vote_average:
+ *           type: number
+ *           description: La note moyenne.
+ *         vote_count:
+ *           type: integer
+ *           description: Le nombre total de votes.
  */
 
+/**
+ * @swagger
+ * /movies/{id}:
+ *   get:
+ *     summary: Obtenir les détails d'un film.
+ *     description: Récupérer les détails d'un film en utilisant son ID.
+ *     tags: [Movies]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: L'ID du film.
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 930564
+ *     responses:
+ *       200:
+ *         description: Détails du film récupérés avec succès.
+ *         content:
+ *           application/json:
+ *             schema:
+ *              $ref: '#/components/schemas/MovieDetailsResponse'
+ *               
+ *       500:
+ *         description: Erreur interne du serveur.
+ */
 router.get('/', (req, res) => MovieDetails(req, res));
 
 
@@ -27,6 +186,7 @@ router.get('/', (req, res) => MovieDetails(req, res));
  *         in: path
  *         schema:
  *           type: integer
+ *           example: 930564
  *         required: true
  *         description: Movie ID
  *     responses:
@@ -113,6 +273,7 @@ router.get('/credits', (req, res) => MovieCredits(req, res));
  *         in: path
  *         schema:
  *           type: integer
+ *           example: 930564
  *         required: true
  *         description: Movie ID
  *     responses:
@@ -168,6 +329,7 @@ router.get('/videos', (req, res) => MovieVideos(req, res));
  *         in: path
  *         schema:
  *           type: integer
+ *           example: 930564
  *         required: true
  *         description: Movie ID
  *     responses:
@@ -255,6 +417,7 @@ router.get('/images', (req, res) => MovieImages(req, res));
  *         in: path
  *         schema:
  *           type: integer
+ *           example: 930564
  *         required: true
  *         description: Movie ID
  *     responses:
@@ -335,8 +498,10 @@ router.get('/recommendations', (req, res) => MovieRecommendations(req, res));
  *     parameters:
  *       - in: query
  *         name: id
+ *         type: integer
  *         description: The ID of the movie for which comments are requested.
  *         required: true
+ * 
  *         schema:
  *           type: integer
  *     responses:
@@ -396,6 +561,8 @@ router.get('/comments', getMovieComments);
  *     responses:
  *       200:
  *         description: Comment added successfully.
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error.
  */

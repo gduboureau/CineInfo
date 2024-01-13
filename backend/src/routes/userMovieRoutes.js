@@ -1,7 +1,6 @@
 import express from 'express';
 import { extractUserInfo } from '../utils/token.js';
 import { addFavoriteMovie, removeFavoriteMovie, favoriteMovies, addOrUpdateRatingMovie, getMoviesRatings, deleteRatingMovie, watchlistMovies, addMovieWatchlist, removeMovieWatchlist, seenMovie } from '../controllers/userMovieController.js';
-import e from 'express';
 
 const router = express.Router({ mergeParams: true });
 
@@ -70,7 +69,7 @@ router.get('/favorites', extractUserInfo, favoriteMovies);
 
 /**
  * @swagger
- * /user/movie/addfavorite:
+ * /user/movies/addfavorite:
  *   post:
  *     summary: Add a movie to user's favorites.
  *     description: Add a movie to the list of user's favorite movies.
@@ -108,8 +107,8 @@ router.post('/addfavorite', extractUserInfo, addFavoriteMovie);
 
 /**
  * @swagger
- * /user/movie/removefavorite:
- *   post:
+ * /user/movies/removefavorite:
+ *   delete:
  *     summary: Remove a movie from user's favorites.
  *     description: Remove a movie from the list of user's favorite movies.
  *     tags: [User]
@@ -141,26 +140,26 @@ router.post('/addfavorite', extractUserInfo, addFavoriteMovie);
  *         description: Internal server error
  */
 
-router.post('/removefavorite', extractUserInfo, removeFavoriteMovie);
+router.delete('/removefavorite', extractUserInfo, removeFavoriteMovie);
 
 
 /**
  * @swagger
  * /user/movies/ratings:
  *   get:
- *     summary: Get user's ratings movies.
- *     description: Retrieve a list of user's ratings movies.
+ *     summary: Get user movie ratings.
+ *     description: Retrieve the list of movies rated by the user.
  *     tags: [User]
  *     parameters:
  *       - in: header
  *         name: Authorization
- *         description: Bearer token for authentication. Include the word 'Bearer' followed by the token.
+ *         description: Bearer Token for authentication. Include the word 'Bearer' followed by the token.
  *         required: true
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: Successful retrieval of ratings movies
+ *         description: Successful retrieval of user movie ratings.
  *         content:
  *           application/json:
  *             schema:
@@ -168,49 +167,197 @@ router.post('/removefavorite', extractUserInfo, removeFavoriteMovie);
  *               items:
  *                 type: object
  *                 properties:
- *                   adult:
- *                     type: boolean
- *                   backdrop_path:
- *                     type: string
- *                   genre_ids:
- *                     type: array
- *                     items:
- *                       type: integer
- *                   id:
+ *                   movie_id:
  *                     type: integer
- *                   original_language:
- *                     type: string
- *                   original_title:
- *                     type: string
- *                   overview:
- *                     type: string
- *                   popularity:
- *                     type: number
- *                   poster_path:
- *                     type: string
- *                   release_date:
- *                     type: string
+ *                     description: The ID of the movie.
  *                   title:
  *                     type: string
+ *                     description: The title of the movie.
+ *                   rating:
+ *                     type: number
+ *                     description: The rating given by the user.
+ *                   adult:
+ *                     type: boolean
+ *                     description: Indicates if the movie is for adults.
+ *                   backdrop_path:
+ *                     type: string
+ *                     description: The backdrop path of the movie.
+ *                   genres:
+ *                     type: array
+ *                     description: The genres of the movie.
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: integer
+ *                         name:
+ *                           type: string
+ *                   budget:
+ *                     type: integer
+ *                     description: The budget of the movie.
+ *                   homepage:
+ *                     type: string
+ *                     description: The movie's homepage URL.
+ *                   imdb_id:
+ *                     type: string
+ *                     description: The IMDb ID of the movie.
+ *                   original_language:
+ *                     type: string
+ *                     description: The original language of the movie.
+ *                   original_title:
+ *                     type: string
+ *                     description: The original title of the movie.
+ *                   overview:
+ *                     type: string
+ *                     description: The movie's description.
+ *                   popularity:
+ *                     type: number
+ *                     description: The popularity of the movie.
+ *                   poster_path:
+ *                     type: string
+ *                     description: The poster path of the movie.
+ *                   production_companies:
+ *                     type: array
+ *                     description: The production companies of the movie.
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: integer
+ *                         logo_path:
+ *                           type: string
+ *                         name:
+ *                           type: string
+ *                         origin_country:
+ *                           type: string
+ *                   production_countries:
+ *                     type: array
+ *                     description: The production countries of the movie.
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         iso_3166_1:
+ *                           type: string
+ *                         name:
+ *                           type: string
+ *                   release_date:
+ *                     type: string
+ *                     description: The release date of the movie.
+ *                   revenue:
+ *                     type: integer
+ *                     description: The revenue of the movie.
+ *                   runtime:
+ *                     type: integer
+ *                     description: The duration of the movie in minutes.
+ *                   spoken_languages:
+ *                     type: array
+ *                     description: The spoken languages in the movie.
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         english_name:
+ *                           type: string
+ *                         iso_639_1:
+ *                           type: string
+ *                         name:
+ *                           type: string
+ *                   status:
+ *                     type: string
+ *                     description: The release status of the movie.
+ *                   tagline:
+ *                     type: string
+ *                     description: The tagline of the movie.
  *                   video:
  *                     type: boolean
+ *                     description: Indicates if the movie has an associated video.
  *                   vote_average:
  *                     type: number
+ *                     description: The average votes for the movie.
  *                   vote_count:
  *                     type: integer
+ *                     description: The total number of votes for the movie.
  *       401:
  *         description: Unauthorized
  *       500:
- *         description: Internal server error
+ *         description: Internal Server Error
  */
-
 router.get('/ratings', extractUserInfo, getMoviesRatings);
 
-
-
+/**
+ * @swagger
+ * /user/movies/addrating:
+ *   post:
+ *     summary: Add or update a movie rating by the user.
+ *     description: Add or update a movie rating by the user.
+ *     tags: [User]
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         description: Bearer Token for authentication. Include the word 'Bearer' followed by the token.
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               mediaId:
+ *                 type: integer
+ *                 description: The ID of the movie to be rated.
+ *               rating:
+ *                 type: number
+ *                 description: The rating given by the user.
+ *             required:
+ *               - mediaId
+ *               - rating
+ *     responses:
+ *       200:
+ *         description: Rating added or updated successfully
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal Server Error
+ */
 router.post('/addrating', extractUserInfo, addOrUpdateRatingMovie);
-router.post('/deleterating', extractUserInfo, deleteRatingMovie);
 
+/**
+ * @swagger
+ * /user/movies/deleterating:
+ *   delete:
+ *     summary: Delete a movie rating by the user.
+ *     description: Delete a movie rating by the user.
+ *     tags: [User]
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         description: Bearer Token for authentication. Include the word 'Bearer' followed by the token.
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               mediaId:
+ *                 type: integer
+ *                 description: The ID of the movie whose rating should be deleted.
+ *             required:
+ *               - mediaId
+ *     responses:
+ *       200:
+ *         description: Rating deleted successfully
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal Server Error
+ */
+router.delete('/deleterating', extractUserInfo, deleteRatingMovie);
 
 /**
  * @swagger
@@ -271,13 +418,12 @@ router.post('/deleterating', extractUserInfo, deleteRatingMovie);
  *       500:
  *         description: Internal server error
  */
-
 router.get('/watchlist', extractUserInfo, watchlistMovies);
 
 
 /**
  * @swagger
- * /user/movie/addwatchlist:
+ * /user/movies/addwatchlist:
  *   post:
  *     summary: Add a movie to user's watchlist.
  *     description: Add a movie to the list of user's watchlist movies.
@@ -315,8 +461,8 @@ router.post('/addwatchlist', extractUserInfo, addMovieWatchlist);
 
 /**
  * @swagger
- * /user/movie/removewatchlist:
- *   post:
+ * /user/movies/removewatchlist:
+ *   delete:
  *     summary: Remove a movie from user's watchlist.
  *     description: Remove a movie from the list of user's watchlist movies.
  *     tags: [User]
@@ -348,10 +494,47 @@ router.post('/addwatchlist', extractUserInfo, addMovieWatchlist);
  *         description: Internal server error
  */
 
-router.post('/removewatchlist', extractUserInfo, removeMovieWatchlist);
+router.delete('/removewatchlist', extractUserInfo, removeMovieWatchlist);
 
-
-
+/**
+ * @swagger
+ * /user/movies/seen:
+ *   post:
+ *     summary: Mark a movie as seen or unseen by the user.
+ *     description: Mark a movie as seen or unseen by the user.
+ *     tags: [User]
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         description: Bearer Token for authentication. Include the word 'Bearer' followed by the token.
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               mediaId:
+ *                 type: integer
+ *                 description: The ID of the movie to be marked as seen or unseen.
+ *               seen:
+ *                 type: boolean
+ *                 description: A boolean indicating whether the movie is seen or not.
+ *             required:
+ *               - mediaId
+ *               - seen
+ *     responses:
+ *       200:
+ *         description: Movie marked as seen or unseen successfully.
+ *       401:
+ *         description: Unauthorized.
+ *       500:
+ *         description: Internal Server Error.
+ */
 router.post('/seen', extractUserInfo, seenMovie);
+
 
 export default router;

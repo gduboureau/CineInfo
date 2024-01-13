@@ -7,13 +7,6 @@ import userRoutes from './userRoutes.js';
 
 const router = express.Router();
 
-/**
- * @swagger
- * tags:
- *   name: Index
- *   description: Index routes
- */
-
 router.use('/auth', authRoutes);
 router.use('/movies', movieRoutes);
 router.use('/search', searchRoutes);

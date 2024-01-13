@@ -80,13 +80,6 @@ const router = express.Router();
  *                     type: string
  *       500:
  *         description: Internal Server Error. Failed to process the request.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
  */
 
 router.get('/genres', SerieGenres);
@@ -115,10 +108,6 @@ router.get('/genres', SerieGenres);
  *                 $ref: '#/components/schemas/TVSeries'
  *       500:
  *         description: Internal Server Error. Failed to process the request.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
  */
 
 router.get('/popular', PopularSeries);
@@ -147,10 +136,6 @@ router.get('/popular', PopularSeries);
  *                 $ref: '#/components/schemas/TVSeries'
  *       500:
  *         description: Internal Server Error. Failed to process the request.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
  */
 
 router.get('/airing-today', AiringTodaySeries);
@@ -179,10 +164,6 @@ router.get('/airing-today', AiringTodaySeries);
  *                 $ref: '#/components/schemas/TVSeries'
  *       500:
  *         description: Internal Server Error. Failed to process the request.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
  */
 router.get('/on-the-air', OnTheAirSeries);
 
@@ -210,10 +191,6 @@ router.get('/on-the-air', OnTheAirSeries);
  *                 $ref: '#/components/schemas/TVSeries'
  *       500:
  *         description: Internal Server Error. Failed to process the request.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
  */
 router.get('/top-rated', TopRatedSeries);
 
@@ -246,10 +223,6 @@ router.get('/top-rated', TopRatedSeries);
  *                 $ref: '#/components/schemas/TVSeries'
  *       500:
  *         description: Internal Server Error. Failed to process the request.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
  */
 router.get('/discover', DiscoverSeries);
 

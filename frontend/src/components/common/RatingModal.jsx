@@ -53,7 +53,7 @@ const RatingModal = ({ media, mediaType, rating, setRating, setIsRated, onClose 
 
     const handleDeleteNote = () => {
         fetch(`http://localhost:8080/user/${mediaType}/deleterating`, {
-            method: "POST",
+            method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${localStorage.getItem("token")}`,

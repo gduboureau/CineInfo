@@ -166,10 +166,6 @@ const router = express.Router({ mergeParams: true });
  *                               description: Path to the profile image of the guest star.
  *       500:
  *         description: Internal Server Error. Failed to process the request.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
  */
 
 router.get('/', (req, res) => {SeriesDetailsBySeason(req, res)});
@@ -243,10 +239,6 @@ router.get('/', (req, res) => {SeriesDetailsBySeason(req, res)});
  *                         description: Unique identifier for the video.
  *       500:
  *         description: Internal Server Error. Failed to process the request.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
  */
 
 router.get('/videos', (req, res) => {SeriesVideosBySeason(req, res)});
@@ -292,20 +284,8 @@ router.get('/videos', (req, res) => {SeriesVideosBySeason(req, res)});
  *     responses:
  *       200:
  *         description: Success. Comment added to the TV series for a specific season.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Confirmation message.
  *       500:
  *         description: Internal Server Error. Failed to process the request.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
  */
 router.post('/comments', extractUserInfo, addSerieComment);
 

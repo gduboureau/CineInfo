@@ -27,6 +27,8 @@ const router = express.Router({ mergeParams: true });
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/TVSeries'
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error.
  */
@@ -60,6 +62,8 @@ router.get('/favorites', extractUserInfo, favoriteSeries);
  *     responses:
  *       200:
  *         description: Series successfully added to favorites.
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error.
  */
@@ -68,7 +72,7 @@ router.post('/addfavorite', extractUserInfo, addFavoriteSerie);
 /**
  * @swagger
  * /user/series/removefavorite:
- *   post:
+ *   delete:
  *     summary: Remove a series from the user's favorites.
  *     description: Remove a series from the user's favorite list.
  *     tags: [User]
@@ -93,10 +97,12 @@ router.post('/addfavorite', extractUserInfo, addFavoriteSerie);
  *     responses:
  *       200:
  *         description: Series successfully removed from favorites.
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error.
  */
-router.post('/removefavorite', extractUserInfo, removeFavoriteSerie);
+router.delete('/removefavorite', extractUserInfo, removeFavoriteSerie);
 
 /**
  * @swagger
@@ -170,6 +176,8 @@ router.post('/removefavorite', extractUserInfo, removeFavoriteSerie);
  *                     type: number
  *                     format: decimal
  *                     description: The rating given by the user (out of 5).
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error.
  */
@@ -206,6 +214,8 @@ router.get('/ratings', extractUserInfo, getSeriesRatings);
  *     responses:
  *       200:
  *         description: Rating successfully added or updated.
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error.
  */
@@ -214,7 +224,7 @@ router.post('/addrating', extractUserInfo, addOrUpdateRatingSerie);
 /**
  * @swagger
  * /user/series/deleterating:
- *   post:
+ *   delete:
  *     summary: Delete a series rating for the user.
  *     description: Delete the rating for a series by the user.
  *     tags: [User]
@@ -239,10 +249,12 @@ router.post('/addrating', extractUserInfo, addOrUpdateRatingSerie);
  *     responses:
  *       200:
  *         description: Rating successfully deleted.
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error.
  */
-router.post('/deleterating', extractUserInfo, deleteRatingSerie);
+router.delete('/deleterating', extractUserInfo, deleteRatingSerie);
 
 /**
  * @swagger
@@ -272,6 +284,8 @@ router.post('/deleterating', extractUserInfo, deleteRatingSerie);
  *     responses:
  *       200:
  *         description: Series successfully added to the watchlist.
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error.
  */
@@ -280,7 +294,7 @@ router.post('/addwatchlist', extractUserInfo, addSerieToWatchlist);
 /**
  * @swagger
  * /user/series/removewatchlist:
- *   post:
+ *   delete:
  *     summary: Remove a series from the user's watchlist.
  *     description: Remove a series from the user's watchlist, including all its seasons and episodes.
  *     tags: [User]
@@ -305,10 +319,12 @@ router.post('/addwatchlist', extractUserInfo, addSerieToWatchlist);
  *     responses:
  *       200:
  *         description: Series successfully removed from the watchlist.
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error.
  */
-router.post('/removewatchlist', extractUserInfo, removeSerieWatchlist);
+router.delete('/removewatchlist', extractUserInfo, removeSerieWatchlist);
 
 /**
  * @swagger
@@ -525,6 +541,8 @@ router.post('/removewatchlist', extractUserInfo, removeSerieWatchlist);
  *                                           type: string
  *                                         seen:
  *                                          type: boolean
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error.
  */
@@ -567,6 +585,8 @@ router.get('/watchlist', extractUserInfo, getWatchlistSeries);
  *     responses:
  *       200:
  *         description: Episode marked as seen or unseen successfully.
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error.
  */
@@ -609,6 +629,8 @@ router.post('/seen', extractUserInfo, seenEpisodeSeries);
  *     responses:
  *       200:
  *         description: Episode rating successfully added or updated.
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error.
  */
@@ -617,7 +639,7 @@ router.post('/addepisoderating', extractUserInfo, addEpisodeRating);
 /**
  * @swagger
  * /user/series/deleteepisoderating:
- *   post:
+ *   delete:
  *     summary: Delete an episode rating for the user.
  *     description: Delete the rating for a specific episode of a series by the user.
  *     tags: [User]
@@ -648,10 +670,12 @@ router.post('/addepisoderating', extractUserInfo, addEpisodeRating);
  *     responses:
  *       200:
  *         description: Episode rating successfully deleted.
+*       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error.
  */
-router.post('/deleteepisoderating', extractUserInfo, deleteEpisodeRating);
+router.delete('/deleteepisoderating', extractUserInfo, deleteEpisodeRating);
 
 /**
  * @swagger
@@ -694,6 +718,8 @@ router.post('/deleteepisoderating', extractUserInfo, deleteEpisodeRating);
  *                     type: number
  *                     format: decimal
  *                     description: The rating given by the user (out of 5).
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error.
  */

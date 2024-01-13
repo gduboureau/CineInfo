@@ -113,13 +113,13 @@ const MediaOptions = ({ media, mediaType }) => {
 
     const handleFavoriteClick = () => {
         if (token === null) return;
-
+    
         setIsFavorited(!isFavorited);
-
+    
         const endpoint = isFavorited ? "removefavorite" : "addfavorite";
-
+    
         fetch(`http://localhost:8080/user/${mediaType}/${endpoint}`, {
-            method: "POST",
+            method: endpoint === "addfavorite" ? "POST" : "DELETE",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
@@ -132,12 +132,12 @@ const MediaOptions = ({ media, mediaType }) => {
                     endpoint === 'addfavorite'
                         ? `Ajouté aux favoris avec succès`
                         : `Retiré des favoris avec succès`;
-
+    
                 toast.success(successMessage);
             })
             .catch((error) => console.error("Erreur de recherche :", error));
     };
-
+    
     const handleWatchlistClick = () => {
         if (token === null) return;
 
@@ -146,7 +146,7 @@ const MediaOptions = ({ media, mediaType }) => {
         const endpoint = isWatchlisted ? "removewatchlist" : "addwatchlist";
 
         fetch(`http://localhost:8080/user/${mediaType}/${endpoint}`, {
-            method: "POST",
+            method: endpoint === "addwatchlist" ? "POST" : "DELETE",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,

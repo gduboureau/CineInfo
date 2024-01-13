@@ -46,22 +46,8 @@ const router = express.Router();
  *                   description: Token expiration time (e.g., '1h').
  *       400:
  *         description: Bad Request. Invalid email or password.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
  *       500:
  *         description: Internal Server Error. Failed to process the request.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
  */
 router.post('/login', login);
 
@@ -103,22 +89,8 @@ router.post('/login', login);
  *                   type: string
  *       400:
  *         description: Bad Request. Email or password already in use.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
  *       500:
  *         description: Internal Server Error. Failed to process the request.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
  */
 router.post('/register', register);
 
@@ -140,23 +112,9 @@ router.post('/register', register);
  *                 type: string
  *     responses:
  *       200:
- *         description: Success. Returns a success message.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
+ *         description: Success. Email sent to the user with a new password.
  *       500:
  *         description: Internal Server Error. Failed to process the request.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
  */
 router.post('/reset-password', resetPassword);
 
@@ -167,8 +125,13 @@ router.post('/reset-password', resetPassword);
  *     summary: Extend Token Validity
  *     description: Extend the validity of the authentication token.
  *     tags: [Authentication]
- *     security:
- *       - bearerAuth: []
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         description: Bearer token for authentication. Include the word 'Bearer' followed by the token.
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: Success. Returns the new authentication token.
@@ -179,15 +142,10 @@ router.post('/reset-password', resetPassword);
  *               properties:
  *                 token:
  *                   type: string
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal Server Error. Failed to process the request.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
  */
 router.post('/extend-token', extractUserInfo, extendToken);
 

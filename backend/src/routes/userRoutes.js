@@ -6,8 +6,14 @@ import userSerieRoutes from './userSerieRoutes.js';
 
 const router = express.Router();
 
+
+
 /**
  * @swagger
+ * tags:
+ *  name: User
+ *  description: Endpoints for user-related operations
+ * 
  * components:
  *   schemas:
  *     UserInfo:
@@ -83,6 +89,8 @@ const router = express.Router();
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/UserInfo'
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error.
  */
@@ -115,6 +123,8 @@ router.get('/infos', extractUserInfo, getUserInfos);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/UserInfo'
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Internal server error.
  */
@@ -170,6 +180,8 @@ router.get('/profile-image/{username}', getImageUser);
  *     responses:
  *       200:
  *         description: Profile image updated successfully.
+ *       401:
+ *         description: Unauthorized.
  *       500:
  *         description: Internal server error.
  */

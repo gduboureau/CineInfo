@@ -71,7 +71,7 @@ const RatingEpisode = ({ serieId, seasonNumber, episodeNumber, onClose, top, lef
 
     const handleDeleteNote = () => {
         fetch(`http://localhost:8080/user/series/deleteepisoderating`, {
-            method: "POST",
+            method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
