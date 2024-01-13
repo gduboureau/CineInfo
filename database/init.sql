@@ -64,8 +64,6 @@ CREATE TABLE public.SerieComments (
     date TIMESTAMP NOT NULL
 );
 
-
-
 DROP TABLE IF EXISTS WatchlistMovies;
 CREATE TABLE public.WatchlistMovies (
     id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,

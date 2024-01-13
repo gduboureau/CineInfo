@@ -101,7 +101,6 @@ router.get('/', (req, res) => MovieDetails(req, res));
 
 router.get('/credits', (req, res) => MovieCredits(req, res));
 
-
 /**
  * @swagger
  * /movies/{id}/videos:
@@ -156,7 +155,6 @@ router.get('/credits', (req, res) => MovieCredits(req, res));
  */
 
 router.get('/videos', (req, res) => MovieVideos(req, res));
-
 
 /**
  * @swagger
@@ -245,7 +243,6 @@ router.get('/videos', (req, res) => MovieVideos(req, res));
 
 router.get('/images', (req, res) => MovieImages(req, res));
 
-
 /**
  * @swagger
  * /movies/{id}/recommendations:
@@ -308,49 +305,100 @@ router.get('/images', (req, res) => MovieImages(req, res));
 
 router.get('/recommendations', (req, res) => MovieRecommendations(req, res));
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     MovieCommentRequest:
+ *       type: object
+ *       properties:
+ *         movieId:
+ *           type: integer
+ *           description: The ID of the movie for which the comment is being added.
+ *         comment:
+ *           type: string
+ *           description: The text of the comment.
+ *         date:
+ *           type: string
+ *           format: date-time
+ *           description: The timestamp when the comment is made.
+ */
+
 
 /**
  * @swagger
- * /movies/comments:
+ *  /movie/comments:
  *   get:
- *     summary: Get comments for a movie
- *     description: Get comments associated with a movie.
+ *     summary: Get comments for a specific movie.
+ *     description: Retrieve comments for a movie, including user information and ratings if available.
  *     tags: [Movies]
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         description: The ID of the movie for which comments are requested.
+ *         required: true
+ *         schema:
+ *           type: integer
  *     responses:
  *       200:
- *         description: Successful retrieval of movie comments
+ *         description: Comments retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                     description: The unique identifier for the comment.
+ *                   comment:
+ *                     type: string
+ *                     description: The text of the comment.
+ *                   date:
+ *                     type: string
+ *                     format: date-time
+ *                     description: The timestamp when the comment was made.
+ *                   username:
+ *                     type: string
+ *                     description: The username of the user who made the comment.
+ *                   image:
+ *                     type: string
+ *                     description: The URL or path to the user's profile image.
+ *                   rating:
+ *                     type: integer
+ *                     description: The rating given by the user for the movie (if available).
  *       500:
- *         description: Internal server error
+ *         description: Internal server error.
  */
-
 router.get('/comments', getMovieComments);
 
-
 /**
  * @swagger
- * /movies/comments:
+ *  /movie/comments:
  *   post:
- *     summary: Add a comment to a movie
- *     description: Add a new comment to a movie.
+ *     summary: Add a comment to a movie.
+ *     description: Add a user's comment to a specific movie.
  *     tags: [Movies]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               comment:
- *                 type: string
- *                 description: The comment to be added
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         description: Bearer token for authentication. Include the word 'Bearer' followed by the token.
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: body
+ *         name: commentData
+ *         description: The data for the comment.
+ *         required: true
+ *         schema:
+ *           $ref: '#/components/schemas/MovieCommentRequest'
  *     responses:
  *       200:
- *         description: Comment added successfully
+ *         description: Comment added successfully.
  *       500:
- *         description: Internal server error
+ *         description: Internal server error.
  */
-
 router.post('/comments', extractUserInfo, addMovieComment);
-
 
 export default router;

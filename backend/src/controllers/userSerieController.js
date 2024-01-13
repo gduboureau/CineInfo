@@ -324,7 +324,7 @@ export const addEpisodeRating = async (req, res) => {
         await postRating(url, rating);
 
         await db.query(`
-            INSERT INTO public."episoderatings" (user_id, serie_id, season, episode, rating)
+            INSERT INTO public."SeriesEpisodeRatings" (user_id, serie_id, season, episode, rating)
             VALUES ($1, $2, $3, $4, $5)
             ON CONFLICT (user_id, serie_id, season, episode) DO UPDATE
             SET rating = EXCLUDED.rating
@@ -345,7 +345,7 @@ export const deleteEpisodeRating = async (req, res) => {
         const url = `https://api.themoviedb.org/3/tv/${serieId}/season/${seasonNumber}/episode/${episodeNumber}/rating`;
         await deleteRating(url);
 
-        await db.query('DELETE FROM public."episoderatings" WHERE user_id = $1 AND serie_id = $2 AND season = $3 AND episode = $4', [userId, serieId, seasonNumber, episodeNumber]);
+        await db.query('DELETE FROM public."SeriesEpisodeRatings" WHERE user_id = $1 AND serie_id = $2 AND season = $3 AND episode = $4', [userId, serieId, seasonNumber, episodeNumber]);
         res.json({ message: 'Note supprimée' });
     } catch (error) {
         console.error('Erreur lors de la suppression de la note :', error.message);
@@ -357,7 +357,7 @@ export const getEpisodeRatings = async (req, res) => {
     const userId = req.userId;
 
     try {
-        const result = await db.query('SELECT * FROM public."episoderatings" WHERE user_id = $1', [userId]);
+        const result = await db.query('SELECT * FROM public."SeriesEpisodeRatings" WHERE user_id = $1', [userId]);
         res.json(result.rows);
     } catch (error) {
         console.error('Erreur lors de la récupération de la note :', error.message);
