@@ -6,7 +6,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile.prod
     ports:
-      - "8080:8080"
+      - "8080:80"
     environment:
       NODE_ENV: production
       DB_USER: postgres
@@ -19,7 +19,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.prod
     ports:
-      - "3000:3000"
+      - "3000:80"
   database:
     image: postgres:latest
     environment:

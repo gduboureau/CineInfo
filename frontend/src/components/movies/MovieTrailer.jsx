@@ -12,8 +12,7 @@ const MovieTrailer = ({ videos }) => {
   useEffect(() => {
     const fetchTrailerKey = async () => {
       try {
-        const trailer = videos.find((video) => video.type === "Trailer");
-
+        const trailer = videos.find((video) => video.type === "Trailer" || video.type === "Teaser");
         if (trailer) {
           setTrailerKey(trailer.key);
         }
