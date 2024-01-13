@@ -12,5 +12,4 @@ RUN npm ci --only=production
 COPY --from=builder /app/dist ./dist
 
 EXPOSE 80
-
 CMD ["node", "dist/app.bundle.min.cjs"]

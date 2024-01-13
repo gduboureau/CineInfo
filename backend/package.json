@@ -5,9 +5,9 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/server.js",
-    "start": "node src/./dist/app.bundle.min.cjs",
-    "build": "esbuild ./src/server.js --bundle --minify --platform=node --outfile=./dist/app.bundle.min.cjs"
+    "build": "esbuild ./src/server.js --bundle --minify --platform=node --outfile=./dist/app.bundle.min.cjs",
+    "start": "node ./dist/app.bundle.min.cjs",
+    "dev": "nodemon ./src/server.js"
   },
   "keywords": [],
   "author": "",

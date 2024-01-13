@@ -40,18 +40,19 @@ services:
       - redis-data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf
     command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+
   reverseproxy:
     restart: always
     build:
       context: reverse-proxy/
-      dockerfile: ./Dockerfile.dev
+      dockerfile: Dockerfile.dev
     depends_on:
       - backend
       - frontend
     volumes:
       - ./reverse-proxy/log:/var/log/nginx
     ports:
-      - 8090:80
+      - "8090:80"
 
 volumes:
   postgres_data:

@@ -1,6 +1,17 @@
 # docker-compose.prod.yml
 version: '3'
 services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend/src:/app/src
+
   backend:
     build:
       context: ./backend
@@ -14,12 +25,9 @@ services:
       DATABASE_NAME: postgres
       DB_PASSWORD: postgre
       DATABASE_PORT: 5432
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.prod
-    ports:
-      - "3000:80"
+    volumes:
+      - ./backend/src:/app/src
+
   database:
     image: postgres:latest
     environment:
@@ -28,18 +36,19 @@ services:
       POSTGRES_PASSWORD: postgre
     volumes:
       - ./database:/docker-entrypoint-initdb.d
+
   reverseproxy:
-    restart: always
     build:
       context: reverse-proxy/
-      dockerfile: ./Dockerfile.prod
+      dockerfile: Dockerfile.prod
     depends_on:
       - backend
       - frontend
     volumes:
       - ./reverse-proxy/log:/var/log/nginx
     ports:
-      - 8090:80
+      - "8090:80"
+
   redis:
     image: redis:latest
     volumes:
