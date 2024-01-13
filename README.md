@@ -27,19 +27,6 @@ Pour récupérer l'ensemble des informations concernant les films et les séries
 
 ### Version de développement
 
-#### 1. Installer les dépendances:
-- Backend :
-```bash
-   cb backend
-   npm install nodemon
-```
-- Frontend :
-```bash
-   cb frontend
-   npm install react-scripts
-```
-
-#### 2. Lancer le projet:
 À partir de la racine du projet, exécutez: 
 ```bash
    docker-compose -f docker-compose.dev.yml --build 

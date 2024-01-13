@@ -1,13 +1,16 @@
-# backend/Dockerfile
-FROM node:latest
+FROM node:21 as builder
 WORKDIR /app
-
 COPY package*.json ./
-
-RUN npm install --only=production
-
+RUN npm install
 COPY . .
+RUN mkdir -p ./dist && npm run build
 
-EXPOSE 8080
+FROM node:21
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY --from=builder /app/dist ./dist
 
-CMD ["npm", "run", "start"]
+EXPOSE 80
+
+CMD ["node", "dist/app.bundle.min.cjs"]

@@ -11,7 +11,7 @@ const Homepage = () => {
   const [topRatedMovies, setTopRatedMovies] = useState([]);
 
   useEffect(() => {
-      fetch("http://localhost:8080/movies/popular", {
+      fetch("http://localhost:8080/backend/movies/popular", {
           method: "GET",
           headers: {
               "Content-Type": "application/json",
