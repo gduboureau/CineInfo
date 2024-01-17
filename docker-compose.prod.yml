@@ -16,8 +16,6 @@ services:
       DATABASE_NAME: postgres
       DB_PASSWORD: postgre
       DATABASE_PORT: 5432
-    networks:
-      - app_net
     volumes:
       - backend_data:/app/data
 
@@ -27,8 +25,6 @@ services:
       dockerfile: Dockerfile.prod
     ports:
       - "3000:80"
-    networks:
-      - app_net
     volumes:
       - frontend_data:/usr/share/nginx/html
 
@@ -47,8 +43,6 @@ services:
       - redis-data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf
     command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
-    networks:
-      - app_net
 
   reverse-proxy:
     build:
@@ -59,14 +53,8 @@ services:
     depends_on:
       - backend
       - frontend
-    networks:
-      - app_net
     volumes:
       - reverse_proxy_data:/var/log/nginx
-
-networks:
-  app_net:
-    driver: bridge
 
 volumes:
   redis-data:
