@@ -1,0 +1,310 @@
+\documentclass[a4paper]{article}
+\usepackage{fullpage}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{beraserif}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{titling}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+
+\definecolor{editorGray}{rgb}{0.95, 0.95, 0.95}
+\definecolor{editorGrayC}{rgb}{0.7, 0.7, 0.7}
+\definecolor{editorOcher}{rgb}{1, 0.5, 0} % #FF7F00 -> rgb(239, 169, 0)
+\definecolor{editorGreen}{rgb}{0, 0.5, 0}
+
+\lstdefinelanguage{JavaScript}{
+  morekeywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break, await, const, async},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+  morestring=[b]',
+  morestring=[b]`,
+}
+
+\lstset{
+    backgroundcolor=\color{editorGray},
+    basicstyle={\small\ttfamily},   
+    frame=l,
+    xleftmargin={0.75cm},
+    numbers=left,
+    stepnumber=1,
+    firstnumber=1,
+    numberfirstline=true, 
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{editorGrayC}\ttfamily,
+    ndkeywordstyle=\color{editorGreen}\bfseries,
+    stringstyle=\color{editorOcher},
+    language=JavaScript,
+    alsodigit={.:;},
+    tabsize=2,
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    extendedchars=true,
+    breaklines=true,
+    literate=%
+    {é}{{\'e}}1
+    {ê}{{\'e}}1
+    {à}{{\'a}}1
+}
+
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    
+    \vspace*{1.5cm}
+    \includegraphics[width=0.3\textwidth]{images/Université_Bordeaux_Logo.png}\par\vspace{1cm}
+    
+    {\scshape\LARGE Université de Bordeaux\par}
+    \vspace{1cm}
+    {\scshape\Large Master 2 Génie Logiciel\par}
+    \vspace{3cm}
+    {\Large\bfseries Rapport de Projet Web:\par}
+    \vspace{1cm}
+    {\Huge {Hub de Films et Séries}\par}
+
+    \vspace{1cm}
+    \noindent\rule{0.6\textwidth}{0.7pt}
+    \vspace{0.5cm}
+
+    \textit{\href{https://github.com/gduboureau/CineInfo}{https://github.com/gduboureau/CineInfo}}
+
+
+    \vspace{6cm}
+    \begin{tabular}{@{}p{0.5\linewidth}p{0.5\linewidth}@{}}
+    \raggedright
+    {\large\itshape Réalisé par\par}
+    \vspace{0.5cm}
+    {\Large Ephrem Jennifer\\Loustau Valentin\\Duboureau Guillaume\par}
+    &
+    \vspace{2cm}
+    \raggedleft
+
+    {\large Année universitaire 2023-2024\par}
+    \end{tabular}
+    
+\end{titlepage}
+
+\let\cleardoublepage\clearpage
+
+\vfill
+\begin{center}
+  \tableofcontents
+\end{center}
+\vfill
+\newpage
+
+
+\section{Description du Projet}
+
+\subsection{Objectif}
+L'objectif de ce projet est de créer une application web dédiée aux films et séries, permettant aux utilisateurs de découvrir les contenus du moment, de les ajouter à leur liste de favoris, de les suivre dans leur watchlist, de les marquer comme visionnés et de les noter. Plus précisemment, nous souhaitons pouvoir afficher des films et séries et pouvoir en afficher les détails : trailers, acteurs, description... De plus, nous souhaitons mettre en place une partie "utilisateur connecté" afin qu'il puisse réaliser des actions supplémentaires telle que la personnalisation de son compte par exemple.
+
+\subsection{Fonctionnalités}
+    Voici les différentes fonctionnalités mises en place au sein de notre application web :\newline 
+    \begin{itemize}
+    \item \textbf{Recherche par titre.}
+    \item \textbf{Système de catégorie :} 'Populaires', 'À Venir', 'En Ce Moment', etc.
+    \item \textbf{Filtre par genre :} 'Action', 'Aventure', etc.
+    \item \textbf{Présentation complète d’un contenu :} Description, notes des utilisateurs, acteurs, images, trailers, recommandations, avis.
+    \item \textbf{Création de compte :} déblocage d’un ensemble de fonctionnalités personnalisées.
+    \begin{itemize}[label=\textbullet]
+        \item Ajouter des films/séries à sa liste de favoris.
+        \item Ajouter des films/séries à sa watchlist.
+        \item Rédiger des avis sur des films/séries (+ saisons pour les séries).
+        \item Noter les films/séries (+ épisodes).
+        \item Cocher des films/séries (uniquement épisodes) comme 'vu' ou 'non vu' depuis sa watchlist.
+    \end{itemize}
+    \item \textbf{Depuis la page de son compte :}
+    \begin{itemize}[label=\textbullet]
+        \item Consulter sa watchlist, ses favoris, les notes données.
+        \item Paramètres de compte : modification du prénom, nom, pseudo, photo de profil, adresse mail et mot de passe.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Technologies Utilisées}
+Afin de réaliser ce projet, nous avons utilisé les technologies suivantes :\newline 
+\begin{itemize}
+    \item  \textbf{Backend} : Node.js avec Express (Express v4.18.2, Node v20.8.0)
+    \item  \textbf{Frontend} : React.js (v18.2.0)
+    \item  \textbf{Base de données} : PostgreSQL (v16)
+    \item  \textbf{API tierce} : The Movie Database (TMDB)
+    \item  \textbf{Outil de containerisation} : Docker (v3)
+    \item  \textbf{Cache des données} : Redis (v4.6.12)
+    \item \textbf{Travail en équipe} : Git/Github \newline 
+\end{itemize}
+
+Nous avons également utilisé des librairies/dépendances dans les deux côtés du projet. Par exemple, pour le backend, nous avons utilisé \textit{bcrypt} pour pouvoir crypter les mots de passe de la base de données. Un autre exemple, pour le frontend cette fois-ci, est \textit{slick-carousel} pour pouvoir construire les différents carousels de la page d'acceuil.
+\newpage
+
+\section{Description de l'API Tierce (TMDB)}
+
+\subsection{Fonctionnalités}
+The Movie Database (TMDB) est une API permettant aux développeurs d'accéder à une vaste base de données qui fournit des informations détaillées sur les films et séries. Les fonctionnalités clés de l'API utilisées dans notre projet incluent : \newline 
+
+\begin{itemize}
+    \item \textbf{La recherche de contenu} : Quand les utilisateurs effectuent une recherche par titre sur l'application, on fait appel à l'API pour avoir tous les films et séries correspondants. Cette fonctionnalité permet aux utilisateurs d'accéder rapidement à des contenus spécifiques. \newline 
+    \begin{lstlisting}
+/* Exemple dans le code lorsqu'un utilisateur effectue une recherche */
+const searchQuery = 'Berlin';
+const searchMovieResults = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}&include_adult=false&language=fr-FR&region=FR`);
+const searchTVResults = await fetch(`https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${searchValue}&include_adult=false&language=fr-FR&region=FR`); 
+    \end{lstlisting} 
+    \item \textbf {Obtention de détails} : L'API nous fournit des détails exhaustifs sur les films et séries. Cette fonctionnalité nous permet d'afficher une page détaillé d'un film ou d'une série en particulier en incluant la description, la note utilisateur, les bandes-annonces, les acteurs, les recommandations et pour les séries les saisons avec leurs épisodes. Cette fonctionnalité est utilisé quand l'utilisateur veut voir un contenu spécifique. \newline
+    \begin{lstlisting}
+/* Exemple d'utilisation dans le code pour obtenir les détails du film Oppenheimer avec son id */
+const movieId = 872585;
+const movieDetails = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=fr-FR`);
+/* Exemple pour obtenir les détails de la série Breaking Bad */
+const serieId = 1396
+const serieDetails = await fetch(`https://api.themoviedb.org/3/tv/${serieId}?api_key=${apiKey}&language=fr-FR`);
+    \end{lstlisting}
+    \item \textbf{Listes} : L'API propose des listes de films et séries pré-configurées comme les films populaires, les films à venir, les séries en cours de diffusion, etc. Ces listes sont configurées pour fournir aux utilisateurs des recommandations en fonction des tendances actuelles.\newline 
+    \begin{lstlisting}
+/* Exemple d'utilisation dans le code pour obtenir les films populaires */
+const popularMovies = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=fr-FR&page=1&region=FR`);
+/* Exemple d'utilisation dans le code pour obtenir les séries les mieux notées */
+const topRatedSeries = await fetch(`https://api.themoviedb.org/3/tv/top_rated?api_key=${apiKey}&language=fr-FR&page=1&region=FR`)
+    \end{lstlisting}
+\end{itemize}
+\newpage
+Pour accéder à l'API, on doit obtenir une clé API qui est gratuite mais avec des limitations de requêtes, elle nous autorise 50 requêtes par seconde. \\
+
+Pour intéragir avec l'API nous utilisons des requêtes HTTP telles que GET ou POST, qui nous renvoient une réponse au format JSON. Dans la requête on ajoute notre clé API pour être reconnu et on peut également ajouter des paramètres pour spécifier des critères ou filtrer les résultats, par exemple nous avons ajouté "language=FR-fr" dans nos requêtes pour avoir les résultats en français. 
+
+\subsection{Intégration dans le Projet}
+
+L'intégration de l'API tierce dans le projet permet d'assurer une mise à jour constante des données liées aux films et séries. \\
+Nous utilisons les données de l'API pour afficher les films et séries de toutes les listes présentes dans notre en-tête : Films populaires, films du moments, films à venir, films les mieux notés, séries populaires, séries diffusées aujourd'hui, séries en cours de diffusion, séries les mieux notées. Ces données sont également utilisées pour afficher de manière détaillée les informations sur les films et séries, incluant la description, les acteurs, les bandes-annonces, les images, et les évaluations des utilisateurs. Pour les pages de découverte des films et séries, nous offrons un filtre par genres, obtenant ces informations grâce à une requête à l'API. \\
+
+\noindent A chaque fois que nous effectuons une requête du frontend au backend, notre application vérifie si les données requises sont présentes dans le cache Redis avant de faire appel à l'API TMDB. Si les données sont en cache, elles sont directement envoyées au frontend. Sinon, une requête est effectuée vers l'API, les données sont mises en cache et transmises au frontend. \\
+
+\noindent L'intégration de l'API TMDB dans notre projet présente plusieurs avantages : \\
+\begin{itemize}
+    \item \textbf{Mise à Jour Régulière} : Les données sur les films et séries sont constamment actualisées, garantissant aux utilisateurs les informations les plus récentes. \\
+    
+    \item \textbf{Richesse des Détails} : Les détails complets fournis par l'API TMDB enrichissent l'expérience utilisateur en offrant des informations détaillées sur chaque contenu.\\
+    
+    \item \textbf{Optimisation des Performances} : La gestion intelligente du cache et la limitation des requêtes à l'API contribuent à optimiser les performances globales de l'application.\newline
+\end{itemize}
+
+L'intégration de l'API TMDB se positionne comme un élément clé dans la réussite de notre application en fournissant un accès fluide et actualisé aux informations sur les films et séries.
+
+\newpage
+
+\section{Description de l'API Interne}
+
+\subsection{Requête depuis le Frontend}
+Lorsqu'une page est chargée, une série de requêtes est envoyée au backend pour récupérer des données spécifiques selon les données voulues \textit{(la documentation swagger se trouve à l'adresse \href{http://localhost:8080/api-docs} {http://localhost:8080/api-docs} )}
+\\
+Par exemple pour récupérer la liste des films populaires : \\
+    \begin{lstlisting}
+fetch("http://localhost:8080/movies/popular", {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json",
+    },
+})
+    \end{lstlisting}
+Une fois les données récupérées, elles sont utilisées pour alimenter différents composants de la page, tels que des carrousels affichant les films correspondants.
+
+\subsection{Envoie depuis le Backend}
+Lorsqu'une demande est reçue, le backend utilise une fonction prédéfinie selon les données voulues pour les récupérer à partir d'une source externe, en l'occurrence ici notre API TMDB.\\
+Avant de faire une requête à l'API externe, le backend vérifie si les données correspondantes sont déjà présentes dans le cache Redis. Si c'est le cas, il les renvoie immédiatement au frontend sans interroger l'API externe. En cas d'absence de données en cache, le backend effectue la requête à l'API externe, sauvegarde les données dans le cache Redis pour une utilisation future, puis les renvoie au frontend.\\
+Voici un exemple de fonction : 
+\begin{lstlisting}
+const fetchMovies = async (req, res, cacheKey, apiUrl) => {
+    try {
+        await connectToRedis(); // Connexion à Redis
+        /* Récupération des données depuis le cache */
+        const cachedData = await getFromCache(cacheKey); 
+        if (cachedData) { 
+            return res.json(cachedData);
+        }
+        /* Effectuer une requête à l'API externe (TMDB) */
+        const tmdbResponse = await fetch(apiUrl); 
+        const tmdbData = await tmdbResponse.json();
+        /* Extraire les résultats des films de la réponse TMDB */
+        const movies = tmdbData.results;
+        /* Sauvegarde des données dans le cache avec une expiration de 86400 secondes (1 jour) */
+        await saveToCache(cacheKey, movies, 86400);
+        res.json(movies); /* Puis renvoyer les données */
+    } catch (error) {/* gestion d'erreur ... */}
+};
+\end{lstlisting}
+
+\subsection{Gestion du cache Redis}
+La gestion du cache est centralisée avec Redis (\textit{cf redis.js}), un système de stockage clé-valeur. Cette approche vise à améliorer les performances en minimisant les requêtes coûteuses à l'API externe. Lorsqu'une requête du front-end est traitée par le backend, le cache Redis est consulté en premier.\\
+L'utilisation de Redis offre une solution efficace pour la gestion du cache, permettant de réduire la charge sur l'API externe tout en garantissant des temps de réponse rapides et une expérience utilisateur fluide. Nous allons voir cela en détail dans la partie suivante.\\
+
+\section{Choix Techniques}
+
+\subsection{Backend}
+Pour le backend, nous avons donc utilisé NodeJS avec Express pour pouvoir déployer notre serveur. Pour cela, nous avons organisé notre code afin de rassembler les routes ayant le même préfixe ensemble. Par exemple, nous avons la route générale \textit{/movies}, et ensuite nous rassemblons dans le fichier \textit{movieRoutes.js} toutes les routes qui découllent de celle-ci (\textit{/popular}...). Ainsi le code est mieux réparti et plus compréhensible à lire. Maintenant, pour la gestion du contenu (réception de données, envoie de données..), on traite cela dans le dossier controllers. Comme précedemment, les controlleurs des mêmes routes sont rassemblés.
+
+Comme expliqué précédemment, nous utilisons redis dans le backend pour pouvoir stocker nos valeurs. En effet, Redis est conçu pour offrir des perfomances rapides en stockant les données en mémoire. Dans notre cas, nous avons utilisé le cache pour stocker les données de l'API externe TMDB. En effet, les données pouvant être parfois volumineuses, il est très intéressant de les stocker en mémoire. Nous actualisons les données présentes dans le cache tous les 24h, à l'exception des 'genres' qui sont toujours les mêmes (action, aventure, comédie...). Ainsi, en actualisant nos données, nous récupérons les derniers films et séries ajoutés à l'API. Redis permet donc d'une part d'améliorer le temps de récupération des données et aussi d'améliorer l'expérience utilisateur. D'autre part, le nombre de requêtes étant limité, un trop grand nombre d'utilisateurs provoquerait des problèmes sans le cache.
+
+\subsection{Frontend}
+Pour le frontend, nous avons donc utilisé React. L'un des avantages de react est la réutilisation de composants. Ainsi, nous pouvons diviser nos interfaces en composants indépendants, et les réutiliser à plusieurs endroits dans le code. Par exemple, sur la page d'un film ou d'une série, nous affichons de nombreux détails tels que le nom et la description par exemple dans la première partie de la page. Dans la deuxième partie, nous affichons les acteurs, les vidéos, les images etc., qui sont des composants communs aux films et séries. Cela permet ainsi d'éviter de dupliquer du code et d'appeler ces composants sur la page d'un film ou d'une série. Un autre exemple est dans le header du site. Nous affichons les films du moment, populaires, à venir et les mieux notés. Nous faisons la même chose pour les séries. Ainsi nous utilisons le même composant pour pouvoir afficher nos informations.
+
+Ensuite, React offre de nombreuses librairies utilisables dans notre code. Par exemple, nous utilisons la bibliothèque FontAwesome pour pouvoir afficher des icônes tels que des flèches, des croix et le composant react-slick-carousel pour afficher des carousels d'images sur notre page d'accueil. 
+
+\subsection{Base de Données}
+Nous avons créés des tables afin de stocker nos différents données : les données des comptes utilisateurs et les données liées aux films et séries (favoris, commentaires, avis...).
+
+Pour les données liées au compte d'un utilisateur, on stocke dans une table user, les données de l'utilisateur telles que son nom ou prénom ainsi qu'un pseudo et une adresse mail pour servir d'identifiant lors de la connection. Le mot de passe lui est crypté avant d'être stocké dans la base de données (il sera décrypté dans le backend et sera comparé au mot de passe envoyé par l'utilisateur pour vérifier qu'il est bon).
+
+
+Nous avons également la possibilité d'ajouter des films dans nos favoris, de les noter... Pour cela, nous avons créés des tables afin de stocker toutes ces données. Nous avons donc des tables pour les films : FavoritesMovies, MovieRatings, MovieComments et WatchlistMovies. Cela correspond aux différentes actions que nous pouvons faire sur les films dans notre site. Pour cela, on recupère l'id du film en question que l'on stockera dans la base de données, avec l'id de l'utilisateur qui aura réalisé l'action ainsi que la valeur/entrée associée. Concernant les séries, le fonctionnement est similaire à la différence que pour ajouter une série dans notre watchlist, nous pouvons ajouter les épisodes et saisons à regarder. Pour cela nous avons ajouté ces champs dans notre table (c'est la même chose pour noter les séries et laisser des commentaires).
+
+\subsection{Autres Technologies}
+Pour pouvoir gérer l'authentification dans notre projet, nous avons utilisé JWT (JSON Web Token). Voici le fonctionnement : lorsque l'utilisateur se connecte, il envoie son login et mot de passe au backend. Celui-ci vérifie les informations et si elles sont valides, va générer un token et le renvoyer au frontend. Ce dernier va alors stocker ce token dans stockage local (local storage) du navigateur. Ainsi, lorsque que l'on voudra aller sur un contenu nécessitant d'être connecté, le frontend va envoyer la requête voulue contenant le token en en-tête. Le backend peut alors vérifier la signature du token pour vérifier qu'il soit valide (sinon, il renverra un code HTTP forbidden indiquant au frontend que l'utilisateur ne pourra pas accéder à cette ressource). Nous avons également rajouter un système permettant de garder la connection de l'utilisateur au delà d'une heure s'il le souhaite. En effet, lorsque le backend génére le token il défini une durée de vie de 1h. Dans le frontend, on déclenche alors un timer, qui au bout de 55 minutes, demandera à l'utilisateur s'il souhaite rester connecter. Si oui, alors on générera un nouveau token qui remplacera le précédemment, sinon l'utilisateur sera déconnecté.\newline
+
+Pour pouvoir gérer la perte de mot de passe d'un utilisateur, nous avons utilisé la dépendance "nodemailer" dans le backend. Pour cela on récupère l'adresse email rentrée par l'utilisateur, on vérifie qu'elle soit bien associée à un compte et si c'est le cas, on envoie un mail à cette adresse contenant un nouveau mot de passe provisoire. L'utilisateur pourra ensuite changer ce mot de passe dans son espace personnel.\newline
+
+Nous avons également chiffrer les mots de passe des utilisateurs afin qu'ils n'apparaissent pas en clair dans la base de donnée. Pour cela, nous avons utilisé le module "bcrypt" dans le backend. Lorsque l'utilisateur se connecte, nous vérifions que le mot de passe saisie correspond au mot de passe stocké dans la base de données, que nous déchiffrons au préalable.
+
+\section{Conclusion}
+
+\subsection{Problèmes Rencontrés}
+Au cours du développement de notre application sur les films et séries un problème a été rencontré. Cela concernait la mise en place initiale du projet à l'aide de Docker. Comprendre le fonctionnement de Docker et configurer le projet de manière optimale a constitué une étape initiale exigeante, nécessitant une période d'apprentissage et de résolution de problèmes. 
+
+\subsection{Limitations Connues}
+Actuellement, certaines limitations sont observées au sein de l'application qui sont essentielles à identifier pour orienter nos efforts d'amélioration :
+
+\begin{itemize}
+    \item \textbf{Absence de Section sur les Acteurs} : Actuellement, l'application ne propose pas de section dédiée aux acteurs, limitant ainsi l'accès aux détails spécifiques sur leurs rôles dans les films et séries.
+    \item \textbf{Traitement des Images Volumineuses} : Le traitement des images volumineuses, en particulier pour les utilisateurs connectés, peut entraîner des temps de chargement prolongés sur des connexions Internet plus lentes, impactant ainsi l'expérience utilisateur.
+    \item \textbf{Gestion des Erreurs} : La gestion des erreurs pourrait être améliorée pour fournir des messages d'erreur plus explicites et des solutions de contournement en cas de défaillance temporaire de l'API tierce.
+    \item \textbf{Limitation de la Gestion des Profils Utilisateurs} : Actuellement, la fonctionnalité de gestion des profils utilisateurs ne permet qu'un choix limité, se limitant à la sélection d'une photo de profil sans offrir la possibilité de personnaliser davantage avec une couleur ou une photo de fond.
+\end{itemize}
+
+\subsection{Évolutions Possibles}
+
+Pour assurer la croissance continue de notre application, plusieurs pistes d'évolution prometteuses ont été identifiées :
+
+\begin{itemize}
+    \item \textbf{Amélioration de l'Expérience Utilisateur} : Enrichir l'expérience utilisateur en introduisant davantage de filtres dans les catégories, offrant ainsi aux utilisateurs des options plus précises pour affiner leurs recherches de films et séries.
+
+    \item \textbf{Système de Recommandations Avancé} : Implémenter un système de recommandations plus sophistiqué, prenant en compte les habitudes de visionnage et les genres préférés des utilisateurs pour offrir des suggestions encore plus personnalisées.
+
+    \item \textbf{Support Multi-langues} : Élargir la portée de l'application en introduisant un support multi-langues, avec l'ajout d'au moins l'anglais en plus, pour atteindre un public plus diversifié.
+
+    \item \textbf{Système de Discussion Collaboratif} : Intégrer un système de discussion en complément des avis, offrant aux utilisateurs un espace pour débattre et échanger sur leurs préférences cinématographiques.
+
+    \item \textbf{Chat Intelligent} : Mettre en place un chat disponible en permanence pour les utilisateurs permettant de faire des recherches particulière sur du contenu à la manière d'un moteur de recherche; exemple : "Je cherche le film Marvel le plus regardé", "Les films de The Rock humoristique des 5 dernières années", etc.
+    
+\end{itemize} 
+
+Ces évolutions potentielles visent à répondre aux besoins changeants des utilisateurs et à enrichir significativement leur expérience au sein de l'application. Ces ajustements, orientés vers la personnalisation et une meilleure accessibilité, contribueront à améliorer le statut de notre application au sein du monde cinématographique en ligne.
+
+\end{document}
