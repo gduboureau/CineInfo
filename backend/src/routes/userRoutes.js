@@ -155,7 +155,7 @@ router.post('/update', extractUserInfo, updateUserInfo);
  *       500:
  *         description: Internal server error.
  */
-router.get('/profile-image/{username}', getImageUser);
+router.get('/profile-image/:username', getImageUser);
 
 /**
  * @swagger

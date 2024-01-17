@@ -30,15 +30,31 @@ export const updateImage = async (req, res) => {
 
 export const updateUserInfo = async (req, res) => {
     const userId = req.userId;
-    const { username, mail, password, lastname, firstname, image } = req.body;
-
+    const { username, mail, password, lastname, firstname } = req.body;
     try {
+        const user = await db.query('SELECT username FROM public."users" WHERE user_id = $1', [userId]);
+        if (user.rows[0].username !== username) {
+
+            const oldImageFileName = `photo-profile-${user.rows[0].username}.png`;
+            const oldImagePath = `./images/${oldImageFileName}`;
+            const image = fs.readFileSync(`./images/${oldImageFileName}`, 'base64');
+
+            const imageBuffer = Buffer.from(image, 'base64');
+            const newImageFileName = `photo-profile-${username}.png`;
+            const newImagePath = `./images/${newImageFileName}`;
+
+            fs.writeFileSync(newImagePath, imageBuffer);
+            fs.unlinkSync(oldImagePath);
+        }
+
         if (password !== '') {
             const hashedPassword = await bcrypt.hash(password, 10);
-            const result = await db.query('UPDATE public."users" SET username = $1, mail = $2, password = $3, lastname = $4, firstname = $5, image = $6 WHERE user_id = $7 RETURNING *', [username, mail, hashedPassword, lastname, firstname, image, userId]);
+            const result = await db.query('UPDATE public."users" SET username = $1, mail = $2, password = $3, lastname = $4, firstname = $5 WHERE user_id = $6 RETURNING *', [username, mail, hashedPassword, lastname, firstname, userId]);
+
             return res.json(result.rows[0]);
-        }else{
-            const result = await db.query('UPDATE public."users" SET username = $1, mail = $2, lastname = $3, firstname = $4, image = $5 WHERE user_id = $6 RETURNING *', [username, mail, lastname, firstname, image, userId]);
+        } else {
+            const result = await db.query('UPDATE public."users" SET username = $1, mail = $2, lastname = $3, firstname = $4 WHERE user_id = $5 RETURNING *', [username, mail, lastname, firstname, userId]);
+
             return res.json(result.rows[0]);
         }
     } catch (error) {

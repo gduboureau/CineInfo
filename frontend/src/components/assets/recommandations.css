@@ -29,3 +29,9 @@
     transition: 0.3s;
     opacity: 0.8;
 }
+
+.no-recommandations{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
