@@ -1,23 +1,14 @@
-# docker-compose.prod.yml
 version: '3'
 services:
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.prod
-    ports:
-      - "3000:80"
-    depends_on:
-      - backend
-    volumes:
-      - ./frontend/src:/app/src
-
   backend:
     build:
-      context: ./backend
+      context: backend
       dockerfile: Dockerfile.prod
     ports:
-      - "8080:80"
+      - "8080:8080"
+    depends_on:
+      - database
+      - redis
     environment:
       NODE_ENV: production
       DB_USER: postgres
@@ -25,8 +16,21 @@ services:
       DATABASE_NAME: postgres
       DB_PASSWORD: postgre
       DATABASE_PORT: 5432
+    networks:
+      - app_net
     volumes:
-      - ./backend/src:/app/src
+      - backend_data:/app/data
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile.prod
+    ports:
+      - "3000:80"
+    networks:
+      - app_net
+    volumes:
+      - frontend_data:/usr/share/nginx/html
 
   database:
     image: postgres:latest
@@ -37,24 +41,36 @@ services:
     volumes:
       - ./database:/docker-entrypoint-initdb.d
 
-  reverseproxy:
-    build:
-      context: reverse-proxy/
-      dockerfile: Dockerfile.prod
-    depends_on:
-      - backend
-      - frontend
-    volumes:
-      - ./reverse-proxy/log:/var/log/nginx
-    ports:
-      - "8090:80"
-
   redis:
     image: redis:latest
     volumes:
       - redis-data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    networks:
+      - app_net
+
+  reverse-proxy:
+    build:
+      context: ./reverse-proxy
+      dockerfile: Dockerfile.prod
+    ports:
+      - "8090:80"
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - app_net
+    volumes:
+      - reverse_proxy_data:/var/log/nginx
+
+networks:
+  app_net:
+    driver: bridge
 
 volumes:
   redis-data:
+  backend_data:
+  frontend_data:
+  database_data:
+  reverse_proxy_data:
